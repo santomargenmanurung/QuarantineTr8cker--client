@@ -2,4 +2,10 @@
 
 Front end for QuarantineTr8cker
 
-Test
+di admin pakai
+
+npm i react-router react-redux redux react-router-dom redux-thunk
+
+selain itu pakai
+npm install @react-navigation/native-stack
+npm install @react-navigation/native
