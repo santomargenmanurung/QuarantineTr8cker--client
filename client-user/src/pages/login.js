@@ -1,14 +1,21 @@
 import { StatusBar } from "expo-status-bar";
 import React, { useEffect, useCallback, useRef } from "react";
-import { SearchBar, Card, ListItem, Button, Icon } from "react-native-elements";
+import {
+  SearchBar,
+  Card,
+  ListItem,
+  Button,
+  Input,
+} from "react-native-elements";
+import { TextInput } from "react-native-paper";
+
 import {
   StyleSheet,
-  ActivityIndicator,
+  TouchableWithoutFeedback,
+  Keyboard,
   SafeAreaView,
-  Text,
   View,
-  Alert,
-  TouchableHighlight,
+  Text,
 } from "react-native";
 import { SvgXml } from "react-native-svg";
 
@@ -89,12 +96,8 @@ export default function Detail() {
 </svg>
 `;
   const loginForm = `<svg xmlns="http://www.w3.org/2000/svg" width="217" height="79" viewBox="0 0 217 79">
-  <g id="Group_12" data-name="Group 12" transform="translate(-83 -398)">
-    <rect id="Rectangle_10" data-name="Rectangle 10" width="217" height="33" rx="16.5" transform="translate(83 398)" fill="#fff"/>
-    <rect id="Rectangle_11" data-name="Rectangle 11" width="217" height="33" rx="16.5" transform="translate(83 444)" fill="#fff"/>
-    <text id="ID_Email" data-name="ID/Email" transform="translate(97 419)" fill="rgba(112,112,112,0.63)" font-size="13" font-family="GalanoGrotesqueDEMO-Bold, Galano Grotesque DEMO" font-weight="700"><tspan x="0" y="0">ID/Email</tspan></text>
-    <text id="Password" transform="translate(97 465)" fill="rgba(112,112,112,0.63)" font-size="14" font-family="GalanoGrotesqueDEMO-Bold, Galano Grotesque DEMO" font-weight="700"><tspan x="0" y="0">Password</tspan></text>
-  </g>
+  <rect id="Rectangle_10" data-name="Rectangle 10" width="217" height="33" rx="16.5" fill="#fff"/>
+  <rect id="Rectangle_11" data-name="Rectangle 11" width="217" height="33" rx="16.5" transform="translate(0 46)" fill="#fff"/>
 </svg>
 `;
 
@@ -115,7 +118,7 @@ export default function Detail() {
       <SvgXml
         style={{
           position: "absolute",
-          zIndex: 1,
+          zIndex: 0,
           left: -10,
           top: -220,
         }}
@@ -126,7 +129,7 @@ export default function Detail() {
       <SvgXml
         style={{
           position: "absolute",
-          zIndex: 1,
+          zIndex: 0,
           left: 50,
           top: 200,
         }}
@@ -134,10 +137,40 @@ export default function Detail() {
         height="70%"
         xml={loginForm}
       ></SvgXml>
+
+      <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
+        <View style={{ flex: 1 }}>
+          <Input
+            style={{
+              position: "absolute",
+              zIndex: 9999,
+              left: 50,
+              top: 460,
+              borderColor: "black",
+            }}
+            placeholder="Please input your email"
+            keyboardType="email-address"
+          />
+          <Input
+            style={{
+              position: "absolute",
+              zIndex: 9999,
+              left: 50,
+              top: 500,
+            }}
+            secureTextEntry={true}
+            underlineColorAndroid="transparent"
+            placeholder="Please input your password"
+            keyboardType="defalut"
+          />
+        </View>
+      </TouchableWithoutFeedback>
       <SvgXml
+        onPress={() => alert("SIGN IN")}
         style={{
           position: "absolute",
-          zIndex: 1,
+          borderColor: "black",
+          zIndex: 2,
           left: 100,
           top: 420,
         }}
@@ -146,9 +179,10 @@ export default function Detail() {
         xml={loginButton}
       ></SvgXml>
       <SvgXml
+        onPress={() => alert("REGISTER")}
         style={{
           position: "absolute",
-          zIndex: 1,
+          zIndex: 2,
           left: 100,
           top: 500,
         }}
