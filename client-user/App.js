@@ -5,8 +5,10 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { NavigationContainer } from "@react-navigation/native";
 import { StyleSheet, Text, View } from "react-native";
 
+import register from "./src/pages/register";
+import quarantineDetail from "./src/pages/quarantineDetail";
 import login from "./src/pages/login";
-
+import mytrips from "./src/pages/mytrips";
 const HomeStack = createNativeStackNavigator();
 const Tabsss = createBottomTabNavigator();
 
@@ -14,10 +16,25 @@ export default function App() {
   return (
     <NavigationContainer initialRouteName="Home">
       <HomeStack.Navigator>
-        <HomeStack.Screen
+        {/* <HomeStack.Screen
           options={{ headerShown: false }}
           name="Login"
           component={login}
+        /> */}
+        {/* <HomeStack.Screen
+          options={{ headerShown: false }}
+          name="quarantineDetail"
+          component={register}
+        /> */}
+        {/* <HomeStack.Screen
+          options={{ headerShown: false }}
+          name="quarantineDetail"
+          component={quarantineDetail}
+        /> */}
+        <HomeStack.Screen
+          options={{ headerShown: false }}
+          name="MyTrips"
+          component={mytrips}
         />
       </HomeStack.Navigator>
     </NavigationContainer>

@@ -27,7 +27,7 @@ import {
   loginForm,
   registerButton,
   sideItem,
-} from "../../assets/loginAssets";
+} from "../../assets/register";
 
 export default function Detail() {
   const navigation = useNavigation();
@@ -78,12 +78,12 @@ export default function Detail() {
       <SvgXml
         style={{
           position: "absolute",
-          zIndex: 0,
-          left: -10,
-          top: -220,
+          zIndex: 5,
+          left: -250,
+          top: -720,
         }}
-        width="120%"
-        height="100%"
+        width="200%"
+        height="200%"
         xml={sideItem}
       ></SvgXml>
       <SvgXml
@@ -104,26 +104,67 @@ export default function Detail() {
             style={{
               position: "absolute",
               zIndex: 9999,
-              left: 50,
-              top: 460,
+              left: 70,
+              top: 365,
             }}
             onChangeText={onChangeEmail}
             value={email}
-            placeholder="Please input your email"
+            placeholder="Email"
             keyboardType="email-address"
           />
           <Input
             style={{
               position: "absolute",
               zIndex: 9999,
-              left: 50,
-              top: 500,
+              left: 70,
+              top: 405,
+              width: 250,
             }}
             secureTextEntry={true}
             onChangeText={onChangePassword}
             value={password}
-            placeholder="Please input your password"
+            placeholder="Password"
             keyboardType="defalut"
+          />
+          <Input
+            style={{
+              position: "absolute",
+              zIndex: 9999,
+              left: 70,
+              top: 445,
+              width: 250,
+            }}
+            secureTextEntry={true}
+            // onChangeText={onChangePassword}
+            // value={password}
+            placeholder="Passport Number"
+            keyboardType="defalut"
+          />
+          <Input
+            style={{
+              position: "absolute",
+              zIndex: 9999,
+              left: 70,
+              top: 485,
+              width: 250,
+            }}
+            // onChangeText={onChangePassword}
+            // value={password}
+            keyboardType="numeric"
+            placeholder="Phone Number"
+          />
+          <Input
+            style={{
+              position: "absolute",
+              zIndex: 9999,
+              left: 70,
+              top: 520,
+              width: 250,
+            }}
+            // onChangeText={onChangePassword}
+            // value={password}
+            keyboardType="default"
+            placeholder="Address"
           />
         </View>
       </TouchableWithoutFeedback>
@@ -131,27 +172,26 @@ export default function Detail() {
         onPress={() => loginButtonPress()}
         style={{
           position: "absolute",
-          borderColor: "black",
           zIndex: 2,
           left: 100,
-          top: 420,
-        }}
-        width="50%"
-        height="50%"
-        xml={loginButton}
-      ></SvgXml>
-      <SvgXml
-        onPress={() => alert("REGISTER")}
-        style={{
-          position: "absolute",
-          zIndex: 2,
-          left: 100,
-          top: 500,
+          top: 520,
         }}
         width="50%"
         height="50%"
         xml={registerButton}
       ></SvgXml>
+      <Text
+        style={{
+          top: 780,
+          left: 150,
+          color: "white",
+          position: "absolute",
+          zIndex: 888,
+        }}
+      >
+        {" "}
+        Back to login
+      </Text>
     </>
   );
 }
