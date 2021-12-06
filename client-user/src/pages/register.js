@@ -8,7 +8,6 @@ import {
   Input,
 } from "react-native-elements";
 import { TextInput } from "react-native-paper";
-
 import {
   StyleSheet,
   TouchableWithoutFeedback,
@@ -58,6 +57,8 @@ export default function Detail() {
       })
       .then((response1) => {
         console.log(response1.access_token, "INII");
+        // if (response1.access_token)
+        navigation.navigate("Login");
       })
       .catch((error) => {
         console.log(error.message);
@@ -187,6 +188,9 @@ export default function Detail() {
           color: "white",
           position: "absolute",
           zIndex: 888,
+        }}
+        onPress={() => {
+          navigation.navigate("Login");
         }}
       >
         {" "}

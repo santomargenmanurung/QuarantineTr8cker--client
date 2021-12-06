@@ -8,7 +8,6 @@ import {
   Input,
 } from "react-native-elements";
 import { TextInput } from "react-native-paper";
-
 import {
   StyleSheet,
   TouchableWithoutFeedback,
@@ -58,11 +57,13 @@ export default function Detail() {
       })
       .then((response1) => {
         console.log(response1.access_token, "INII");
+        navigation.navigate("MyTrips");
       })
       .catch((error) => {
         console.log(error.message);
       });
   };
+
   return (
     <>
       <SvgXml
@@ -106,6 +107,7 @@ export default function Detail() {
               zIndex: 9999,
               left: 50,
               top: 460,
+              width: 250,
             }}
             onChangeText={onChangeEmail}
             value={email}
@@ -118,6 +120,7 @@ export default function Detail() {
               zIndex: 9999,
               left: 50,
               top: 500,
+              width: 250,
             }}
             secureTextEntry={true}
             onChangeText={onChangePassword}
@@ -141,7 +144,9 @@ export default function Detail() {
         xml={loginButton}
       ></SvgXml>
       <SvgXml
-        onPress={() => alert("REGISTER")}
+        onPress={() => {
+          navigation.navigate("Register");
+        }}
         style={{
           position: "absolute",
           zIndex: 2,

@@ -10,22 +10,22 @@ import quarantineDetail from "./src/pages/quarantineDetail";
 import login from "./src/pages/login";
 import mytrips from "./src/pages/mytrips";
 const HomeStack = createNativeStackNavigator();
-const Tabsss = createBottomTabNavigator();
+// const Tabsss = createBottomTabNavigator();
 
 export default function App() {
   return (
     <NavigationContainer initialRouteName="Home">
       <HomeStack.Navigator>
-        {/* <HomeStack.Screen
+        <HomeStack.Screen
           options={{ headerShown: false }}
           name="Login"
           component={login}
-        /> */}
-        {/* <HomeStack.Screen
+        />
+        <HomeStack.Screen
           options={{ headerShown: false }}
-          name="quarantineDetail"
+          name="Register"
           component={register}
-        /> */}
+        />
         {/* <HomeStack.Screen
           options={{ headerShown: false }}
           name="quarantineDetail"
