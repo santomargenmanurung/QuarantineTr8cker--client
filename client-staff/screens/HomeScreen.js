@@ -5,6 +5,13 @@ export default function HomeScreen({ navigation }) {
   return (
     <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
       <Text>Home Screen</Text>
+      <Button
+        title="Go to QR SCANNER"
+        s
+        onPress={() => navigation.navigate("QRScanner")}
+      >
+        Go to QRScanner
+      </Button>
     </View>
   );
 }

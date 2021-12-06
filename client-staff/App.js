@@ -4,6 +4,7 @@ import { NativeBaseProvider } from "native-base";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import HomeScreen from './screens/HomeScreen';
+import QRScanner from './components/QRScanner';
 
 import { StyleSheet, Text, View } from 'react-native';
 
@@ -15,6 +16,7 @@ export default function App() {
       <NavigationContainer>
         <Stack.Navigator>
         <Stack.Screen name="Home" component={HomeScreen} />
+        <Stack.Screen name="QRScanner" component={QRScanner} />
         {/* <Stack.Screen name="QR" component={QRScanner} />
         <Stack.Screen name="QRgenerator" component={QRgenerator} />
         <Stack.Screen name="CameraScreen" component={CameraScreen} /> */}
