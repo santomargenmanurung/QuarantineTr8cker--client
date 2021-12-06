@@ -7,17 +7,18 @@ import {
   Button,
   Input,
 } from "react-native-elements";
-import { TextInput } from "react-native-paper";
+// import { TextInput } from "react-native-paper";
 import {
   StyleSheet,
   TouchableWithoutFeedback,
   Keyboard,
   SafeAreaView,
   View,
-  Text,
+  TextInput,
 } from "react-native";
+import { Nunito_700Bold } from "@expo-google-fonts/nunito";
 import { SvgXml } from "react-native-svg";
-
+import { useFonts } from "expo-font";
 import { useState } from "react";
 import { useNavigation } from "@react-navigation/native";
 import {
@@ -28,10 +29,15 @@ import {
   sideItem,
 } from "../../assets/loginAssets";
 
-export default function Detail() {
+export default function Login() {
+  let [fontsLoaded] = useFonts({
+    Nunito_700Bold,
+  });
   const navigation = useNavigation();
   const [email, onChangeEmail] = useState("");
   const [password, onChangePassword] = useState("");
+
+  if (!fontsLoaded) null;
 
   useEffect(() => {
     console.log("INI ADALAH LINK");
@@ -101,12 +107,12 @@ export default function Detail() {
 
       <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
         <View style={{ flex: 1 }}>
-          <Input
+          <TextInput
             style={{
               position: "absolute",
               zIndex: 9999,
-              left: 50,
-              top: 460,
+              left: 60,
+              top: 476,
               width: 250,
             }}
             onChangeText={onChangeEmail}
@@ -114,12 +120,12 @@ export default function Detail() {
             placeholder="Please input your email"
             keyboardType="email-address"
           />
-          <Input
+          <TextInput
             style={{
               position: "absolute",
               zIndex: 9999,
-              left: 50,
-              top: 500,
+              left: 60,
+              top: 535,
               width: 250,
             }}
             secureTextEntry={true}
@@ -138,6 +144,7 @@ export default function Detail() {
           zIndex: 2,
           left: 100,
           top: 420,
+          // fontFamily: "Nunito_700Bold",
         }}
         width="50%"
         height="50%"
@@ -149,6 +156,7 @@ export default function Detail() {
         }}
         style={{
           position: "absolute",
+          // fontFamily: "Nunito_700Bold",
           zIndex: 2,
           left: 100,
           top: 500,

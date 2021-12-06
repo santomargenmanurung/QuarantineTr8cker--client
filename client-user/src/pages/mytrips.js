@@ -9,14 +9,7 @@ import {
 } from "react-native-elements";
 import { TextInput } from "react-native-paper";
 
-import {
-  StyleSheet,
-  TouchableWithoutFeedback,
-  FlatList,
-  SafeAreaView,
-  View,
-  Text,
-} from "react-native";
+import { StyleSheet, SafeAreaView, View, Text } from "react-native";
 import { SvgXml } from "react-native-svg";
 
 import { useState } from "react";
@@ -97,6 +90,9 @@ export default function Detail() {
         xml={triplist}
       ></SvgXml>
       <SvgXml
+        onPress={() => {
+          navigation.navigate("AddQuarantine");
+        }}
         style={{
           position: "absolute",
           zIndex: 40,
