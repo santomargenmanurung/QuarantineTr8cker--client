@@ -3,21 +3,37 @@ import React from 'react';
 import { NativeBaseProvider } from "native-base";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import HomeScreen from './screens/HomeScreen';
 import QRScanner from './components/QRScanner';
 
 import { StyleSheet, Text, View } from 'react-native';
 
+const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
+
+function HomeStack(){
+  return(
+    <Stack.Navigator>
+    <Stack.Screen name="HomeScreen" component={HomeScreen} />
+    <Stack.Screen name="QRScanner" component={QRScanner} />
+    </Stack.Navigator>
+  )
+}
 
 export default function App() {
   return (
     <NativeBaseProvider>
       <NavigationContainer>
-        <Stack.Navigator>
+        <Tab.Navigator>
+          <Tab.Screen name="Home" component={HomeStack} options={{headerShown: false}}/>
+          {/* <Tab.Screen name="QR Scan" component={QRScanner} /> */}
+        </Tab.Navigator>
+        
+        {/* <Stack.Navigator>
         <Stack.Screen name="Home" component={HomeScreen} />
         <Stack.Screen name="QRScanner" component={QRScanner} />
-        </Stack.Navigator>
+        </Stack.Navigator> */}
       </NavigationContainer>
     </NativeBaseProvider>
   );

@@ -7,8 +7,7 @@ export default function HomeScreen({ navigation }) {
       <Text>Home Screen</Text>
       <Button
         title="Go to QR SCANNER"
-        s
-        onPress={() => navigation.navigate("QRScanner")}
+        onPress={() => navigation.navigate("QRScanner", {screen: "QRScanner"})}
       >
         Go to QRScanner
       </Button>
