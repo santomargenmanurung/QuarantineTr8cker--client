@@ -17,9 +17,6 @@ export default function App() {
         <Stack.Navigator>
         <Stack.Screen name="Home" component={HomeScreen} />
         <Stack.Screen name="QRScanner" component={QRScanner} />
-        {/* <Stack.Screen name="QR" component={QRScanner} />
-        <Stack.Screen name="QRgenerator" component={QRgenerator} />
-        <Stack.Screen name="CameraScreen" component={CameraScreen} /> */}
         </Stack.Navigator>
       </NavigationContainer>
     </NativeBaseProvider>

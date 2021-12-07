@@ -7,10 +7,12 @@ import { Camera } from "expo-camera";
 export default function QRScanner({ navigation }) {
     const [hasPermission, setHasPermission] = useState(null);
     const [scanned, setScanned] = useState(false);
+    const [scannedData, setScannedData] = useState('')
 
     const handleBarCodeScanned = ({ type, data }) => {
       console.log(data);
       setScanned(true);
+      setScannedData(data)
       alert(`Bar code with type ${type} and data ${data} has been scanned!`);
     };
 
@@ -20,6 +22,7 @@ export default function QRScanner({ navigation }) {
           setHasPermission(status === "granted");
         })();
       }, []);
+    
 
     if (hasPermission === null) {
         return <Text>Requesting for camera permission</Text>;
