@@ -7,6 +7,11 @@ import {
   Button,
   Input,
 } from "react-native-elements";
+import Animated, {
+  useSharedValue,
+  useAnimatedStyle,
+  withSpring,
+} from "react-native-reanimated";
 // import { TextInput } from "react-native-paper";
 import {
   StyleSheet,
@@ -18,53 +23,64 @@ import {
   Text,
 } from "react-native";
 import { SvgXml } from "react-native-svg";
-
 import { useState } from "react";
 import { useNavigation } from "@react-navigation/native";
 import {
   backgroundSvg,
-  loginButton,
+  addQuarantine,
   loginForm,
-  registerButton,
-  sideItem,
-} from "../../assets/register";
+  LeftTop,
+  RightTop,
+} from "../../assets/addQuarantine";
 
-export default function Detail() {
-  const navigation = useNavigation();
+export default function AddQuarantine({ navigation }) {
+  // const navigation = useNavigation();
   const [email, onChangeEmail] = useState("");
   const [password, onChangePassword] = useState("");
 
-  useEffect(() => {
-    console.log("INI ADALAH LINK");
-  }, []);
+  const kananX = useSharedValue(-1);
+  const kananY = useSharedValue(-19.5);
 
-  const loginButtonPress = (e) => {
-    console.log("email", email);
-    console.log("password", password);
-    fetch(`http://192.168.100.77:3000/login`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        email: email,
-        password: password,
-      }),
-    })
-      .then((response) => {
-        if (!response.ok) throw new Error(response.statusText);
+  const kiriX = useSharedValue(-3);
+  const kiriY = useSharedValue(-47);
 
-        return response.json();
-      })
-      .then((response1) => {
-        console.log(response1.access_token, "INII");
-        // if (response1.access_token)
-        navigation.navigate("Login");
-      })
-      .catch((error) => {
-        console.log(error.message);
-      });
-  };
+  // useEffect(() => {
+  //   const unsubscribe = navigation.addListener("focus", () => {
+  //     kananX.value = 2;
+  //     kananY.value = -21;
+  //   });
+  //   return unsubscribe;
+  // }, [navigation]);
+
+  // useEffect(() => {
+  //   const unsubscribe = navigation.addListener("blur", () => {
+  //     kananX.value = 1;
+  //     kananY.value = -21;
+  //   });
+  //   return unsubscribe;
+  // }, [navigation]);
+
+  const rightStyle = useAnimatedStyle(() => {
+    return {
+      transform: [
+        // { translateX: withSpring(2 * 100) },
+        // { translateY: withSpring(-11 * 100) },
+        { translateX: withSpring(kananX.value * 50) },
+        { translateY: withSpring(kananY.value * 50) },
+      ],
+    };
+  });
+  const leftStyle = useAnimatedStyle(() => {
+    return {
+      transform: [
+        // { translateX: withSpring(2 * 100) },
+        // { translateY: withSpring(-11 * 100) },
+        { translateX: withSpring(kiriX.value * 50) },
+        { translateY: withSpring(kiriY.value * 50) },
+      ],
+    };
+  });
+
   return (
     <>
       <SvgXml
@@ -80,25 +96,40 @@ export default function Detail() {
       <SvgXml
         style={{
           position: "absolute",
-          zIndex: 5,
-          left: -250,
-          top: -720,
-        }}
-        width="200%"
-        height="200%"
-        xml={sideItem}
-      ></SvgXml>
-      <SvgXml
-        style={{
-          position: "absolute",
-          zIndex: 0,
           left: 50,
-          top: 200,
+          top: 80,
         }}
-        width="70%"
-        height="70%"
+        width="75%"
+        height="75%"
         xml={loginForm}
       ></SvgXml>
+      <Animated.View
+        style={
+          ({
+            position: "absolute",
+            zIndex: 998,
+            left: -1,
+            top: 100,
+          },
+          [rightStyle])
+        }
+      >
+        <SvgXml width="150%" height="150%" xml={RightTop}></SvgXml>
+      </Animated.View>
+
+      <Animated.View
+        style={
+          ({
+            position: "absolute",
+            zIndex: 999,
+            left: 1,
+            top: -0.1,
+          },
+          [leftStyle])
+        }
+      >
+        <SvgXml width="150%" height="150%" xml={LeftTop}></SvgXml>
+      </Animated.View>
 
       <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
         <View style={{ flex: 1 }}>
@@ -112,7 +143,7 @@ export default function Detail() {
             }}
             onChangeText={onChangeEmail}
             value={email}
-            placeholder="Email"
+            placeholder="Origin"
             keyboardType="email-address"
           />
           <TextInput
@@ -126,7 +157,7 @@ export default function Detail() {
             secureTextEntry={true}
             onChangeText={onChangePassword}
             value={password}
-            placeholder="Password"
+            placeholder="Arrival Port"
             keyboardType="defalut"
           />
           <TextInput
@@ -153,7 +184,7 @@ export default function Detail() {
             }}
             // onChangeText={onChangePassword}
             // value={password}
-            keyboardType="numeric"
+            keyboardType="default"
             placeholder="Phone Number"
           />
           <TextInput
@@ -181,7 +212,7 @@ export default function Detail() {
         }}
         width="50%"
         height="50%"
-        xml={registerButton}
+        xml={addQuarantine}
       ></SvgXml>
       <Text
         style={{
@@ -192,11 +223,11 @@ export default function Detail() {
           zIndex: 888,
         }}
         onPress={() => {
-          navigation.navigate("Login");
+          navigation.navigate("MyTrips");
         }}
       >
         {" "}
-        Back to login
+        Back to MyTrips
       </Text>
     </>
   );
