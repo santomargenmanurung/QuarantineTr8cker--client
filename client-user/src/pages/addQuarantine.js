@@ -85,7 +85,7 @@ export default function AddQuarantine({ navigation }) {
     <>
       <SvgXml
         style={{
-          position: "absolute",
+          position: "relative",
           left: -1,
           top: -2,
         }}
@@ -96,6 +96,7 @@ export default function AddQuarantine({ navigation }) {
       <SvgXml
         style={{
           position: "absolute",
+          zIndex: 2,
           left: 50,
           top: 80,
         }}
@@ -103,25 +104,25 @@ export default function AddQuarantine({ navigation }) {
         height="75%"
         xml={loginForm}
       ></SvgXml>
-      <Animated.View
+      {/* <Animated.View
         style={
           ({
             position: "absolute",
-            zIndex: 998,
+            zIndex: 99999,
             left: -1,
-            top: 100,
+            top: 1,
           },
           [rightStyle])
         }
       >
         <SvgXml width="150%" height="150%" xml={RightTop}></SvgXml>
-      </Animated.View>
+      </Animated.View> */}
 
       <Animated.View
         style={
           ({
             position: "absolute",
-            zIndex: 999,
+            zIndex: 920,
             left: 1,
             top: -0.1,
           },
@@ -132,73 +133,29 @@ export default function AddQuarantine({ navigation }) {
       </Animated.View>
 
       <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
-        <View style={{ flex: 1 }}>
+        <View style={{ flex: 1, position: "absolute", zIndex: 998 }}>
           <TextInput
             style={{
-              position: "absolute",
-              zIndex: 9999,
               left: 70,
-              top: 380,
+              top: 375,
               width: 250,
             }}
             onChangeText={onChangeEmail}
             value={email}
             placeholder="Origin"
-            keyboardType="email-address"
+            keyboardType="default"
           />
           <TextInput
             style={{
-              position: "absolute",
-              zIndex: 9999,
               left: 70,
-              top: 440,
+              top: 425,
               width: 250,
             }}
             secureTextEntry={true}
             onChangeText={onChangePassword}
             value={password}
             placeholder="Arrival Port"
-            keyboardType="defalut"
-          />
-          <TextInput
-            style={{
-              position: "absolute",
-              zIndex: 9999,
-              left: 70,
-              top: 500,
-              width: 250,
-            }}
-            secureTextEntry={true}
-            // onChangeText={onChangePassword}
-            // value={password}
-            placeholder="Passport Number"
-            keyboardType="defalut"
-          />
-          <TextInput
-            style={{
-              position: "absolute",
-              zIndex: 9999,
-              left: 70,
-              top: 565,
-              width: 250,
-            }}
-            // onChangeText={onChangePassword}
-            // value={password}
             keyboardType="default"
-            placeholder="Phone Number"
-          />
-          <TextInput
-            style={{
-              position: "absolute",
-              zIndex: 9999,
-              left: 70,
-              top: 630,
-              width: 250,
-            }}
-            // onChangeText={onChangePassword}
-            // value={password}
-            keyboardType="default"
-            placeholder="Address"
           />
         </View>
       </TouchableWithoutFeedback>
@@ -233,30 +190,4 @@ export default function AddQuarantine({ navigation }) {
   );
 }
 
-const styles = StyleSheet.create({
-  container: {
-    backgroundColor: "#F6EEFD",
-    padding: 10,
-    paddingTop: 60,
-  },
-  buttonYoutube: {
-    backgroundColor: "#F6EEFD",
-    textAlign: "center",
-    fontSize: 25,
-    fontFamily: "AvenirNextCondensed-BoldItalic",
-    width: 150,
-  },
-  viewbuttonYoutube: {
-    width: 150,
-  },
-  containerLoading: {
-    flex: 1,
-    justifyContent: "center",
-  },
-  horizontalLoading: {
-    flexDirection: "row",
-    justifyContent: "space-around",
-    padding: 10,
-    marginTop: 100,
-  },
-});
+const styles = StyleSheet.create({});

@@ -25,22 +25,22 @@ export default function App() {
           options={{ headerShown: false }}
           name="Login"
           component={login}
-        />
-        <HomeStack.Screen
+        /> */}
+        {/* <HomeStack.Screen
           options={{ headerShown: false }}
           name="Register"
           component={register}
-        />
+        /> */}
         <HomeStack.Screen
           options={{ headerShown: false }}
           name="quarantineDetail"
           component={quarantineDetail}
-        /> */}
-        <HomeStack.Screen
+        />
+        {/* <HomeStack.Screen
           options={{ headerShown: false }}
           name="MyTrips"
           component={mytrips}
-        />
+        /> */}
         <HomeStack.Screen
           options={{ headerShown: false }}
           name="AddQuarantine"

@@ -44,8 +44,7 @@ export default function Login() {
   }, []);
 
   const loginButtonPress = (e) => {
-    console.log("email", email);
-    console.log("password", password);
+    console.log("MASUKK");
     fetch(`http://192.168.100.77:3000/login`, {
       method: "POST",
       headers: {

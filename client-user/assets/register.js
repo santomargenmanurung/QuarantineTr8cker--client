@@ -32,7 +32,7 @@ const loginButton = `<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http:/
 </g>
 </svg>
 `;
-const registerButton = `<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="147.588" height="55.388" viewBox="0 0 147.588 55.388">
+const registerButtonStyle = `<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="147.588" height="55.388" viewBox="0 0 147.588 55.388">
 <defs>
   <linearGradient id="linear-gradient" y1="0.5" x2="1" y2="0.5" gradientUnits="objectBoundingBox">
     <stop offset="0" stop-color="#5a1c94"/>
@@ -80,6 +80,6 @@ module.exports = {
   backgroundSvg,
   loginButton,
   loginForm,
-  registerButton,
+  registerButtonStyle,
   sideItem,
 };

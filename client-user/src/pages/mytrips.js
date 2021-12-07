@@ -21,6 +21,7 @@ import {
   backgroundSvg,
   triplist,
   addtrips,
+  logout,
 } from "../../assets/mytrips";
 
 export default function Detail() {
@@ -82,11 +83,11 @@ export default function Detail() {
         style={{
           position: "absolute",
           zIndex: 40,
-          left: 100,
-          top: 780,
+          left: 50,
+          top: 765,
         }}
-        width="15%"
-        height="15%"
+        width="18%"
+        height="18%"
         xml={triplist}
       ></SvgXml>
       <SvgXml
@@ -96,12 +97,26 @@ export default function Detail() {
         style={{
           position: "absolute",
           zIndex: 40,
-          left: 250,
-          top: 745,
+          left: 170,
+          top: 736,
         }}
         width="30%"
         height="30%"
         xml={addtrips}
+      ></SvgXml>
+      <SvgXml
+        onPress={() => {
+          navigation.navigate("AddQuarantine");
+        }}
+        style={{
+          position: "absolute",
+          zIndex: 40,
+          left: 300,
+          top: 795,
+        }}
+        width="12%"
+        height="12%"
+        xml={logout}
       ></SvgXml>
     </>
   );
