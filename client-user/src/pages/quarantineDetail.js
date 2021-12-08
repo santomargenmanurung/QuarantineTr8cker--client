@@ -8,7 +8,7 @@ import {
   Input,
 } from "react-native-elements";
 import { TextInput } from "react-native-paper";
-
+const axios = require("axios");
 import {
   StyleSheet,
   TouchableWithoutFeedback,
@@ -23,7 +23,7 @@ import { useState } from "react";
 import { useNavigation } from "@react-navigation/native";
 import {
   barButtom,
-  mytrips,
+  logout,
   cardCustom,
   backgroundSvg,
   triplist,
@@ -31,11 +31,31 @@ import {
   QuarantineCard,
 } from "../../assets/quarantinedetail";
 
-export default function Detail() {
+export default function Detail({ route }) {
   const navigation = useNavigation();
+  const [myQuarantine, setMyQuarantine] = useState([]);
+  const { user } = route.params;
+
   useEffect(() => {
-    console.log("INI ADALAH LINK");
-  }, []);
+    const unsubscribe = navigation.addListener("focus", () => {
+      axios({
+        method: "GET",
+        url: "http://192.168.100.77:3000/trips/",
+        headers: {
+          access_token:
+            "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6OSwiZW1haWwiOiJmZmZAYWRtaW4uY29tIiwicm9sZSI6IlVzZXIiLCJpYXQiOjE2Mzg5NzY4MTN9.vh_o3leI2Th8I61yUgwYuijneQakDEI1p25d0VDnzl0",
+        },
+      })
+        .then((data) => {
+          // console.log(data.data, "INII");
+          setMyQuarantine(data.data);
+        })
+        .catch((error) => {
+          console.log(error.message);
+        });
+    });
+    return unsubscribe;
+  }, [navigation]);
 
   return (
     <>
@@ -49,17 +69,6 @@ export default function Detail() {
         height="100%"
         xml={backgroundSvg}
       ></SvgXml>
-      {/* <SvgXml
-        style={{
-          position: "absolute",
-          left: 10,
-          top: -350,
-        }}
-        width="50%"
-        height="100%"
-        xml={mytrips}
-      ></SvgXml> */}
-
       <SvgXml
         style={{
           position: "absolute",
@@ -72,26 +81,39 @@ export default function Detail() {
         xml={barButtom}
       ></SvgXml>
       <SvgXml
+        onPress={() => navigation.navigate("MyTrips")}
         style={{
           position: "absolute",
           zIndex: 40,
-          left: 100,
-          top: 780,
+          left: 50,
+          top: 765,
         }}
-        width="15%"
-        height="15%"
+        width="18%"
+        height="18%"
         xml={triplist}
       ></SvgXml>
       <SvgXml
         style={{
           position: "absolute",
           zIndex: 40,
-          left: 250,
-          top: 745,
+          left: 170,
+          top: 736,
         }}
         width="30%"
         height="30%"
         xml={addtrips}
+      ></SvgXml>
+      <SvgXml
+        onPress={() => navigation.navigate("Login")}
+        style={{
+          position: "absolute",
+          zIndex: 40,
+          left: 300,
+          top: 795,
+        }}
+        width="12%"
+        height="12%"
+        xml={logout}
       ></SvgXml>
       <SvgXml
         style={{
@@ -104,6 +126,61 @@ export default function Detail() {
         height="100%"
         xml={QuarantineCard}
       ></SvgXml>
+      <Text
+        style={{
+          fontFamily: "Helvetica",
+          position: "absolute",
+          color: "#092475",
+          fontWeight: "bold",
+          zIndex: 50,
+          left: 30,
+          top: 185,
+          fontSize: 20,
+        }}
+      >
+        {myQuarantine[0]?.tripOrigin}
+      </Text>
+      <Text
+        style={{
+          fontFamily: "Helvetica",
+          position: "absolute",
+          color: "#092475",
+          fontWeight: "bold",
+          zIndex: 50,
+          left: 300,
+          top: 185,
+          fontSize: 20,
+        }}
+      >
+        {myQuarantine[0]?.tripDestination}
+      </Text>
+      <Text
+        style={{
+          fontFamily: "Helvetica",
+          position: "absolute",
+          color: "#092475",
+          fontWeight: "bold",
+          zIndex: 50,
+          left: 40,
+          top: 440,
+        }}
+      >
+        {myQuarantine[0]?.name}
+      </Text>
+      <Text
+        style={{
+          fontFamily: "Helvetica",
+          position: "absolute",
+          color: "#092475",
+          fontWeight: "bold",
+          zIndex: 50,
+          left: 25,
+          fontSize: 10,
+          top: 530,
+        }}
+      >
+        {new Date(myQuarantine[0].startedAt).toDateString()}
+      </Text>
     </>
   );
 }

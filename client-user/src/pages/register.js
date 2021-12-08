@@ -7,7 +7,7 @@ import {
   Button,
   Input,
 } from "react-native-elements";
-// import { TextInput } from "react-native-paper";
+// const axios = require('axios').default;
 import {
   StyleSheet,
   TouchableWithoutFeedback,
@@ -18,14 +18,14 @@ import {
   Text,
 } from "react-native";
 import { SvgXml } from "react-native-svg";
-
+const axios = require("axios");
 import { useState } from "react";
 import { useNavigation } from "@react-navigation/native";
 import {
   backgroundSvg,
   loginButton,
   loginForm,
-  registerButton,
+  registerButtonStyle,
   sideItem,
 } from "../../assets/register";
 
@@ -33,33 +33,31 @@ export default function Detail() {
   const navigation = useNavigation();
   const [email, onChangeEmail] = useState("");
   const [password, onChangePassword] = useState("");
+  const [passport, onChangePassport] = useState("");
+  const [phone, onChangePhone] = useState("");
+  const [fullName, onChangeFullName] = useState("");
 
   useEffect(() => {
-    console.log("INI ADALAH LINK");
+    // console.log("INI ADALAH LINK");
   }, []);
 
-  const loginButtonPress = (e) => {
+  const registerButton = (e) => {
     console.log("email", email);
     console.log("password", password);
-    fetch(`http://192.168.100.77:3000/login`, {
+    console.log("ASSSSSS");
+    axios({
       method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
+      url: "http://192.168.100.77:3000/register/",
+      data: {
+        name: fullName,
+        passportNumber: passport,
         email: email,
         password: password,
-      }),
+        phoneNumber: phone,
+      },
     })
-      .then((response) => {
-        if (!response.ok) throw new Error(response.statusText);
-
-        return response.json();
-      })
-      .then((response1) => {
-        console.log(response1.access_token, "INII");
-        // if (response1.access_token)
-        navigation.navigate("Login");
+      .then((data) => {
+        if (data.status == 201) navigation.navigate("Login");
       })
       .catch((error) => {
         console.log(error.message);
@@ -110,6 +108,19 @@ export default function Detail() {
               top: 380,
               width: 250,
             }}
+            onChangeText={onChangeFullName}
+            value={fullName}
+            keyboardType="default"
+            placeholder="Full Name"
+          />
+          <TextInput
+            style={{
+              position: "absolute",
+              zIndex: 9999,
+              left: 70,
+              top: 440,
+              width: 250,
+            }}
             onChangeText={onChangeEmail}
             value={email}
             placeholder="Email"
@@ -120,7 +131,7 @@ export default function Detail() {
               position: "absolute",
               zIndex: 9999,
               left: 70,
-              top: 440,
+              top: 500,
               width: 250,
             }}
             secureTextEntry={true}
@@ -134,27 +145,14 @@ export default function Detail() {
               position: "absolute",
               zIndex: 9999,
               left: 70,
-              top: 500,
-              width: 250,
-            }}
-            secureTextEntry={true}
-            // onChangeText={onChangePassword}
-            // value={password}
-            placeholder="Passport Number"
-            keyboardType="defalut"
-          />
-          <TextInput
-            style={{
-              position: "absolute",
-              zIndex: 9999,
-              left: 70,
               top: 565,
               width: 250,
             }}
-            // onChangeText={onChangePassword}
-            // value={password}
-            keyboardType="numeric"
-            placeholder="Phone Number"
+            // secureTextEntry={true}
+            onChangeText={onChangePassport}
+            value={passport}
+            placeholder="Passport Number"
+            keyboardType="defalut"
           />
           <TextInput
             style={{
@@ -164,15 +162,15 @@ export default function Detail() {
               top: 630,
               width: 250,
             }}
-            // onChangeText={onChangePassword}
-            // value={password}
-            keyboardType="default"
-            placeholder="Address"
+            onChangeText={onChangePhone}
+            value={phone}
+            keyboardType="numeric"
+            placeholder="Phone Number"
           />
         </View>
       </TouchableWithoutFeedback>
       <SvgXml
-        onPress={() => loginButtonPress()}
+        onPress={() => registerButton()}
         style={{
           position: "absolute",
           zIndex: 2,
@@ -181,7 +179,7 @@ export default function Detail() {
         }}
         width="50%"
         height="50%"
-        xml={registerButton}
+        xml={registerButtonStyle}
       ></SvgXml>
       <Text
         style={{

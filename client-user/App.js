@@ -21,7 +21,7 @@ export default function App() {
   return (
     <NavigationContainer initialRouteName="Home">
       <HomeStack.Navigator>
-        {/* <HomeStack.Screen
+        <HomeStack.Screen
           options={{ headerShown: false }}
           name="Login"
           component={login}
@@ -35,7 +35,7 @@ export default function App() {
           options={{ headerShown: false }}
           name="quarantineDetail"
           component={quarantineDetail}
-        /> */}
+        />
         <HomeStack.Screen
           options={{ headerShown: false }}
           name="MyTrips"

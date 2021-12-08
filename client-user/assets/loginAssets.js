@@ -24,12 +24,10 @@ const loginButton = `<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http:/
     <feComposite in="SourceGraphic"/>
   </filter>
 </defs>
-<g id="Group_11" data-name="Group 11" transform="translate(-122.349 -497.231)">
-  <g transform="matrix(1, 0, 0, 1, 122.35, 497.23)" filter="url(#Rectangle_12)">
-    <path id="Rectangle_12-2" data-name="Rectangle 12" d="M0,0H110.891a18.7,18.7,0,0,1,18.7,18.7v0A18.691,18.691,0,0,1,110.9,37.388H18.945A18.945,18.945,0,0,1,0,18.443V0A0,0,0,0,1,0,0Z" transform="translate(5 4)" fill="url(#linear-gradient)"/>
-  </g>
-  <text id="Sign-in" transform="translate(169 524)" fill="rgba(255,255,255,0.63)" font-size="13" font-family="GalanoGrotesqueDEMO-Bold, Galano Grotesque DEMO" font-weight="700"><tspan x="0" y="0">Sign-in</tspan></text>
+<g transform="matrix(1, 0, 0, 1, 0, 0)" filter="url(#Rectangle_12)">
+  <path id="Rectangle_12-2" data-name="Rectangle 12" d="M0,0H110.891a18.7,18.7,0,0,1,18.7,18.7v0A18.691,18.691,0,0,1,110.9,37.388H18.945A18.945,18.945,0,0,1,0,18.443V0A0,0,0,0,1,0,0Z" transform="translate(5 4)" fill="url(#linear-gradient)"/>
 </g>
+<text id="Sign-in" transform="translate(46.651 26.769)" fill="rgba(255,255,255,0.63)" font-size="13" font-family="Helvetica-Bold, Helvetica" font-weight="700"><tspan x="0" y="0">Sign-in</tspan></text>
 </svg>
 `;
 const registerButton = `<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="158.588" height="68.388" viewBox="0 0 158.588 68.388">
@@ -42,12 +40,10 @@ const registerButton = `<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="htt
     <feComposite in="SourceGraphic"/>
   </filter>
 </defs>
-<g id="register" transform="translate(-111.437 -623.731)" style="isolation: isolate">
-  <g transform="matrix(1, 0, 0, 1, 111.44, 623.73)" filter="url(#Rectangle_13)">
-    <path id="Rectangle_13-2" data-name="Rectangle 13" d="M18.7,0H127.588a0,0,0,0,1,0,0V18.443a18.945,18.945,0,0,1-18.945,18.945H18.691A18.691,18.691,0,0,1,0,18.7v0A18.7,18.7,0,0,1,18.7,0Z" transform="translate(11.5 5.5)" fill="none" stroke="#fff" stroke-width="1"/>
-  </g>
-  <text id="Register-2" data-name="Register" transform="translate(160 652)" fill="rgba(255,255,255,0.63)" font-size="13" font-family="GalanoGrotesqueDEMO-Bold, Galano Grotesque DEMO" font-weight="700"><tspan x="0" y="0">Register</tspan></text>
+<g transform="matrix(1, 0, 0, 1, 0, 0)" filter="url(#Rectangle_13)">
+  <path id="Rectangle_13-2" data-name="Rectangle 13" d="M18.7,0H127.588a0,0,0,0,1,0,0V18.443a18.945,18.945,0,0,1-18.945,18.945H18.691A18.691,18.691,0,0,1,0,18.7v0A18.7,18.7,0,0,1,18.7,0Z" transform="translate(11.5 5.5)" fill="none" stroke="#fff" stroke-width="1"/>
 </g>
+<text id="Register" transform="translate(48.563 28.269)" fill="rgba(255,255,255,0.63)" font-size="13" font-family="Helvetica-Bold, Helvetica" font-weight="700"><tspan x="0" y="0">Register</tspan></text>
 </svg>
 `;
 const loginForm = `<svg xmlns="http://www.w3.org/2000/svg" width="217" height="79" viewBox="0 0 217 79">
