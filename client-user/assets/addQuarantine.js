@@ -10,28 +10,7 @@ const backgroundSvg = `<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http
   <rect id="Background" width="377" height="815" transform="translate(0.5 0.5)" stroke="#e8a3a3" stroke-miterlimit="10" stroke-width="1" fill="url(#linear-gradient)"/>
 </svg>
 `;
-const loginButton = `<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="147.588" height="55.388" viewBox="0 0 147.588 55.388">
-<defs>
-  <linearGradient id="linear-gradient" y1="0.5" x2="1" y2="0.5" gradientUnits="objectBoundingBox">
-    <stop offset="0" stop-color="#5a1c94"/>
-    <stop offset="1" stop-color="#0e3599"/>
-  </linearGradient>
-  <filter id="Rectangle_12" x="0" y="0" width="147.588" height="55.388" filterUnits="userSpaceOnUse">
-    <feOffset dx="4" dy="5" input="SourceAlpha"/>
-    <feGaussianBlur stdDeviation="3" result="blur"/>
-    <feFlood flood-opacity="0.161"/>
-    <feComposite operator="in" in2="blur"/>
-    <feComposite in="SourceGraphic"/>
-  </filter>
-</defs>
-<g id="Group_11" data-name="Group 11" transform="translate(-122.349 -497.231)">
-  <g transform="matrix(1, 0, 0, 1, 122.35, 497.23)" filter="url(#Rectangle_12)">
-    <path id="Rectangle_12-2" data-name="Rectangle 12" d="M0,0H110.891a18.7,18.7,0,0,1,18.7,18.7v0A18.691,18.691,0,0,1,110.9,37.388H18.945A18.945,18.945,0,0,1,0,18.443V0A0,0,0,0,1,0,0Z" transform="translate(5 4)" fill="url(#linear-gradient)"/>
-  </g>
-  <text id="Sign-in" transform="translate(169 524)" fill="rgba(255,255,255,0.63)" font-size="13" font-family="GalanoGrotesqueDEMO-Bold, Galano Grotesque DEMO" font-weight="700"><tspan x="0" y="0">Sign-in</tspan></text>
-</g>
-</svg>
-`;
+
 const addQuarantine = `<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="147.588" height="55.388" viewBox="0 0 147.588 55.388">
 <defs>
   <linearGradient id="linear-gradient" y1="0.5" x2="1" y2="0.5" gradientUnits="objectBoundingBox">
@@ -50,10 +29,9 @@ const addQuarantine = `<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http
   <g transform="matrix(1, 0, 0, 1, 122.35, 497.23)" filter="url(#Rectangle_12)">
     <path id="Rectangle_12-2" data-name="Rectangle 12" d="M0,0H110.891a18.7,18.7,0,0,1,18.7,18.7v0A18.691,18.691,0,0,1,110.9,37.388H18.945A18.945,18.945,0,0,1,0,18.443V0A0,0,0,0,1,0,0Z" transform="translate(5 4)" fill="url(#linear-gradient)"/>
   </g>
-  <text id="Add_Quarantine" data-name="Add Quarantine" transform="translate(145 524)" fill="rgba(255,255,255,0.63)" font-size="13" font-family="GalanoGrotesqueDEMO-Bold, Galano Grotesque DEMO" font-weight="700"><tspan x="0" y="0">Add Quarantine</tspan></text>
+  <text id="Add_Quarantine" data-name="Add Quarantine" transform="translate(145 524)" fill="rgba(255,255,255,0.63)" font-size="13" font-family="Helvetica-Bold, Helvetica" font-weight="700"><tspan x="0" y="0">Add Quarantine</tspan></text>
 </g>
 </svg>
-
 `;
 const loginForm = `<svg xmlns="http://www.w3.org/2000/svg" width="217" height="79" viewBox="0 0 217 79">
 <g id="Group_12" data-name="Group 12" transform="translate(-83 -398)">

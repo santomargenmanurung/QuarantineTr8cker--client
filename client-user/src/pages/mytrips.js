@@ -8,11 +8,10 @@ import {
   Input,
 } from "react-native-elements";
 import { TextInput } from "react-native-paper";
-
-import { StyleSheet, SafeAreaView, View, Text } from "react-native";
-import { SvgXml } from "react-native-svg";
-
 import { useState } from "react";
+import { StyleSheet, SafeAreaView, View, Text, FlatList } from "react-native";
+import { SvgXml } from "react-native-svg";
+const axios = require("axios");
 import { useNavigation } from "@react-navigation/native";
 import {
   barButtom,
@@ -26,9 +25,33 @@ import {
 
 export default function Detail() {
   const navigation = useNavigation();
+  const [myQuarantine, setMyQuarantine] = useState([]);
+
   useEffect(() => {
-    console.log("INI ADALAH LINK");
-  }, []);
+    const unsubscribe = navigation.addListener("focus", () => {
+      axios({
+        method: "GET",
+        url: "http://192.168.100.77:3000/trips/",
+        headers: {
+          access_token:
+            "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6OSwiZW1haWwiOiJmZmZAYWRtaW4uY29tIiwicm9sZSI6IlVzZXIiLCJpYXQiOjE2Mzg5NzY4MTN9.vh_o3leI2Th8I61yUgwYuijneQakDEI1p25d0VDnzl0",
+        },
+      })
+        .then((data) => {
+          // console.log(data.data, "INII");
+          setMyQuarantine(data.data);
+        })
+        .catch((error) => {
+          console.log(error.message);
+        });
+    });
+    return unsubscribe;
+  }, [navigation]);
+
+  function goToDetail(user) {
+    console.log(user);
+    navigation.navigate("quarantineDetail", { user });
+  }
 
   return (
     <>
@@ -53,20 +76,28 @@ export default function Detail() {
         xml={mytrips}
       ></SvgXml>
 
-      <SafeAreaView style={{ paddingTop: 10, flex: 4 }}>
-        <>
-          <SvgXml
-            style={{
-              position: "absolute",
-              zIndex: 1,
-              left: 0,
-              top: 0,
-            }}
-            width="100%"
-            height="100%"
-            xml={cardCustom}
-          ></SvgXml>
-        </>
+      <SafeAreaView
+        style={{
+          paddingTop: 10,
+          flex: 4,
+          top: 200,
+        }}
+      >
+        <FlatList
+          style={{
+            position: "absolute",
+            zIndex: 70,
+          }}
+          data={myQuarantine}
+          renderItem={({ item }) => (
+            <>
+              <Text onPress={() => goToDetail(item.id)}>
+                {JSON.stringify(myQuarantine)}
+              </Text>
+              {/* <SvgXml width="50%" height="50%" xml={cardCustom}></SvgXml> */}
+            </>
+          )}
+        />
       </SafeAreaView>
       <SvgXml
         style={{
@@ -106,7 +137,7 @@ export default function Detail() {
       ></SvgXml>
       <SvgXml
         onPress={() => {
-          navigation.navigate("AddQuarantine");
+          navigation.navigate("Login");
         }}
         style={{
           position: "absolute",

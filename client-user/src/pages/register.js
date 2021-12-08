@@ -46,8 +46,8 @@ export default function Detail() {
     console.log("password", password);
     console.log("ASSSSSS");
     axios({
-      method: "post",
-      url: "http://192.168.100.77:3000/users/",
+      method: "POST",
+      url: "http://192.168.100.77:3000/register/",
       data: {
         name: fullName,
         passportNumber: passport,
@@ -56,10 +56,8 @@ export default function Detail() {
         phoneNumber: phone,
       },
     })
-      .then(({ data }) => {
-        console.log(data);
-        // console.log(data.access_token, "INII");
-        // if (response1.access_token) navigation.navigate("Login");
+      .then((data) => {
+        if (data.status == 201) navigation.navigate("Login");
       })
       .catch((error) => {
         console.log(error.message);

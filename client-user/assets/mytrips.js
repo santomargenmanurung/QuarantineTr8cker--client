@@ -45,33 +45,31 @@ const cardCustom = `<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://
 </svg>
 `;
 
-const mytrips = `<svg xmlns="http://www.w3.org/2000/svg" width="149" height="47" viewBox="0 0 149 47">
-<text id="My_Trips" data-name="My Trips" transform="translate(0 35)" fill="#fdeded" font-size="35" font-family="GalanoGrotesqueDEMO-Bold, Galano Grotesque DEMO" font-weight="700"><tspan x="0" y="0">My Trips</tspan></text>
+const mytrips = `<svg xmlns="http://www.w3.org/2000/svg" width="263" height="35" viewBox="0 0 263 35">
+<text id="My_Quarantines" data-name="My Quarantines" transform="translate(0 27)" fill="#fdeded" font-size="35" font-family="Helvetica-Bold, Helvetica" font-weight="700"><tspan x="0" y="0">My Quarantines</tspan></text>
 </svg>
 `;
 
-const triplist = `<svg xmlns="http://www.w3.org/2000/svg" width="94" height="83.412" viewBox="0 0 94 83.412">
-<g id="iMyBooking" transform="translate(1)">
-  <g id="Group_15" data-name="Group 15">
-    <text id="My_Quarantines" data-name="My 
-Quarantines" transform="translate(46 67.412)" fill="#0e3599" font-size="15" font-family="GalanoGrotesqueDEMO-Bold, Galano Grotesque DEMO" font-weight="700"><tspan x="-12.938" y="0">My </tspan><tspan x="-46.313" y="11">Quarantines</tspan></text>
-    <g id="Logo" transform="translate(19.53)">
-      <path id="Path_196" data-name="Path 196" d="M564.282,549.5a12.814,12.814,0,0,0,2.894-.321,13.722,13.722,0,0,0,2.644-.823l2,2.969,3.572-2.4-1.962-2.929a12.7,12.7,0,0,0,3.108-4.364,13.047,13.047,0,0,0,.586-1.631l-15.781,9.2A14.335,14.335,0,0,0,564.282,549.5Z" transform="translate(-534.458 -510.649)" fill="#360759"/>
-      <path id="Path_197" data-name="Path 197" d="M273.232,231.353a4.437,4.437,0,0,1,6.925,1.863c.021.045.043.087.064.136a12.894,12.894,0,0,0,5.007-.695,9.166,9.166,0,0,1-.758-1.434,9.836,9.836,0,0,1-.643-3.613,9.568,9.568,0,0,1,.643-3.577,8.461,8.461,0,0,1,1.824-2.79,8.674,8.674,0,0,1,2.715-1.789,8.774,8.774,0,0,1,3.359-.645,8.5,8.5,0,0,1,3.322.644,8.192,8.192,0,0,1,2.582,1.661c.9-1.3,1.737-2.648,2.525-3.988a13.352,13.352,0,0,0-8.428-2.895,14.3,14.3,0,0,0-2.982.3,4.406,4.406,0,0,1-1.313.2,4.61,4.61,0,0,1-4.365-4.778c0-.746.267-1.349.319-2.02.011-.141.017-.284.017-.428a5.373,5.373,0,1,0-5.517,5.378h0c2.4.014,3.836,1.966,3.836,4.372a3.854,3.854,0,0,1-1.036,2.685,13.667,13.667,0,0,0-1.279,2.346,4.182,4.182,0,0,1-4.233,3.208,3.989,3.989,0,0,1-3.187-1.38A5.375,5.375,0,0,0,264.4,230.9,15.938,15.938,0,0,1,273.232,231.353Z" transform="translate(-262.545 -202.142)" fill="#360759"/>
-      <path id="Path_198" data-name="Path 198" d="M383.172,695.73a5.386,5.386,0,0,0,5.157-6.894l.005-.02a4.545,4.545,0,0,1-.386-2.816L378,691.8A5.373,5.373,0,0,0,383.172,695.73Z" transform="translate(-367.045 -643.965)" fill="#360759"/>
-      <path id="Path_199" data-name="Path 199" d="M255.022,304.793A3.027,3.027,0,1,0,252,301.767,3.027,3.027,0,0,0,255.022,304.793Z" transform="translate(-251.991 -290.348)" fill="#360759"/>
-      <path id="Path_200" data-name="Path 200" d="M430.57,674.54Z" transform="translate(-415.048 -633.501)" fill="#fff"/>
-      <path id="Path_201" data-name="Path 201" d="M430.463,674.546Z" transform="translate(-414.943 -633.506)" fill="#fff"/>
-      <path id="Path_202" data-name="Path 202" d="M407.08,379.91a12.683,12.683,0,0,0-2.786-4.257,12.507,12.507,0,0,0-1.11-1c-.786,1.34-1.629,2.683-2.525,3.988.044.043.087.087.134.128a7.786,7.786,0,0,1,1.824,2.789,9.765,9.765,0,0,1,.107,6.868,8.143,8.143,0,0,1-1.5,2.576l-2.786-4.221-3.573,2.432,2.787,4.185a9.346,9.346,0,0,1-1.39.394,7.614,7.614,0,0,1-1.5.143,8.774,8.774,0,0,1-3.359-.644,8.686,8.686,0,0,1-2.715-1.789,8.187,8.187,0,0,1-1.074-1.32,12.894,12.894,0,0,1-5.007.695,13.878,13.878,0,0,0,1.243,2.135,4.474,4.474,0,0,1,.579.758l.006.008h0a4.6,4.6,0,0,1,.652,2.385c0,2.506-2.182,4.263-4.634,4.537h0a5.379,5.379,0,0,0-4.567,6.8l9.948-5.8a4.535,4.535,0,0,1,4.458-3.72,4.343,4.343,0,0,1,.782.057c.125.025.366.087.487.122l.255.055,15.778-9.2a14.108,14.108,0,0,0,.521-3.882A13.176,13.176,0,0,0,407.08,379.91Z" transform="translate(-364.931 -359.664)" fill="#0e3599"/>
-      <path id="Path_203" data-name="Path 203" d="M277.72,531.178a5.353,5.353,0,0,0,3.861-1.638h0a4.254,4.254,0,0,1,.434-.4,15.941,15.941,0,0,0-8.835-.454A5.366,5.366,0,0,0,277.72,531.178Z" transform="translate(-271.331 -499.923)" fill="#0e3599"/>
-      <path id="Path_204" data-name="Path 204" d="M254.931,631.58a3.027,3.027,0,1,0,3.022,3.027A3.027,3.027,0,0,0,254.931,631.58Z" transform="translate(-251.9 -594.273)" fill="#0e3599"/>
-    </g>
+const triplist = `<svg xmlns="http://www.w3.org/2000/svg" width="88" height="82.412" viewBox="0 0 88 82.412">
+<g id="Group_15" data-name="Group 15" transform="translate(-2)">
+  <text id="My_Quarantines" data-name="My 
+Quarantines" transform="translate(46 67.412)" fill="#0e3599" font-size="15" font-family="Helvetica-Bold, Helvetica" font-weight="700"><tspan x="-12.502" y="0">My </tspan><tspan x="-43.762" y="12">Quarantines</tspan></text>
+  <g id="Logo" transform="translate(19.53)">
+    <path id="Path_196" data-name="Path 196" d="M564.282,549.5a12.814,12.814,0,0,0,2.894-.321,13.722,13.722,0,0,0,2.644-.823l2,2.969,3.572-2.4-1.962-2.929a12.7,12.7,0,0,0,3.108-4.364,13.047,13.047,0,0,0,.586-1.631l-15.781,9.2A14.335,14.335,0,0,0,564.282,549.5Z" transform="translate(-534.458 -510.649)" fill="#360759"/>
+    <path id="Path_197" data-name="Path 197" d="M273.232,231.353a4.437,4.437,0,0,1,6.925,1.863c.021.045.043.087.064.136a12.894,12.894,0,0,0,5.007-.695,9.166,9.166,0,0,1-.758-1.434,9.836,9.836,0,0,1-.643-3.613,9.568,9.568,0,0,1,.643-3.577,8.461,8.461,0,0,1,1.824-2.79,8.674,8.674,0,0,1,2.715-1.789,8.774,8.774,0,0,1,3.359-.645,8.5,8.5,0,0,1,3.322.644,8.192,8.192,0,0,1,2.582,1.661c.9-1.3,1.737-2.648,2.525-3.988a13.352,13.352,0,0,0-8.428-2.895,14.3,14.3,0,0,0-2.982.3,4.406,4.406,0,0,1-1.313.2,4.61,4.61,0,0,1-4.365-4.778c0-.746.267-1.349.319-2.02.011-.141.017-.284.017-.428a5.373,5.373,0,1,0-5.517,5.378h0c2.4.014,3.836,1.966,3.836,4.372a3.854,3.854,0,0,1-1.036,2.685,13.667,13.667,0,0,0-1.279,2.346,4.182,4.182,0,0,1-4.233,3.208,3.989,3.989,0,0,1-3.187-1.38A5.375,5.375,0,0,0,264.4,230.9,15.938,15.938,0,0,1,273.232,231.353Z" transform="translate(-262.545 -202.142)" fill="#360759"/>
+    <path id="Path_198" data-name="Path 198" d="M383.172,695.73a5.386,5.386,0,0,0,5.157-6.894l.005-.02a4.545,4.545,0,0,1-.386-2.816L378,691.8A5.373,5.373,0,0,0,383.172,695.73Z" transform="translate(-367.045 -643.965)" fill="#360759"/>
+    <path id="Path_199" data-name="Path 199" d="M255.022,304.793A3.027,3.027,0,1,0,252,301.767,3.027,3.027,0,0,0,255.022,304.793Z" transform="translate(-251.991 -290.348)" fill="#360759"/>
+    <path id="Path_200" data-name="Path 200" d="M430.57,674.54Z" transform="translate(-415.048 -633.501)" fill="#fff"/>
+    <path id="Path_201" data-name="Path 201" d="M430.463,674.546Z" transform="translate(-414.943 -633.506)" fill="#fff"/>
+    <path id="Path_202" data-name="Path 202" d="M407.08,379.91a12.683,12.683,0,0,0-2.786-4.257,12.507,12.507,0,0,0-1.11-1c-.786,1.34-1.629,2.683-2.525,3.988.044.043.087.087.134.128a7.786,7.786,0,0,1,1.824,2.789,9.765,9.765,0,0,1,.107,6.868,8.143,8.143,0,0,1-1.5,2.576l-2.786-4.221-3.573,2.432,2.787,4.185a9.346,9.346,0,0,1-1.39.394,7.614,7.614,0,0,1-1.5.143,8.774,8.774,0,0,1-3.359-.644,8.686,8.686,0,0,1-2.715-1.789,8.187,8.187,0,0,1-1.074-1.32,12.894,12.894,0,0,1-5.007.695,13.878,13.878,0,0,0,1.243,2.135,4.474,4.474,0,0,1,.579.758l.006.008h0a4.6,4.6,0,0,1,.652,2.385c0,2.506-2.182,4.263-4.634,4.537h0a5.379,5.379,0,0,0-4.567,6.8l9.948-5.8a4.535,4.535,0,0,1,4.458-3.72,4.343,4.343,0,0,1,.782.057c.125.025.366.087.487.122l.255.055,15.778-9.2a14.108,14.108,0,0,0,.521-3.882A13.176,13.176,0,0,0,407.08,379.91Z" transform="translate(-364.931 -359.664)" fill="#0e3599"/>
+    <path id="Path_203" data-name="Path 203" d="M277.72,531.178a5.353,5.353,0,0,0,3.861-1.638h0a4.254,4.254,0,0,1,.434-.4,15.941,15.941,0,0,0-8.835-.454A5.366,5.366,0,0,0,277.72,531.178Z" transform="translate(-271.331 -499.923)" fill="#0e3599"/>
+    <path id="Path_204" data-name="Path 204" d="M254.931,631.58a3.027,3.027,0,1,0,3.022,3.027A3.027,3.027,0,0,0,254.931,631.58Z" transform="translate(-251.9 -594.273)" fill="#0e3599"/>
   </g>
 </g>
 </svg>
 `;
-const addtrips = `<svg xmlns="http://www.w3.org/2000/svg" width="139.262" height="139.624" viewBox="0 0 139.262 139.624">
-<g id="Group_13" data-name="Group 13" transform="translate(10.997 3)">
+const addtrips = `<svg xmlns="http://www.w3.org/2000/svg" width="136.262" height="139.624" viewBox="0 0 136.262 139.624">
+<g id="Group_13" data-name="Group 13" transform="translate(7.997 3)">
   <g id="addCard" transform="translate(1 -3)">
     <path id="Path_177" data-name="Path 177" d="M445.049,285.26c-.129.171-.262.336-.4.5h.4Z" transform="translate(-407.506 -261.858)" fill="#00c9aa"/>
     <path id="Path_178" data-name="Path 178" d="M273.006,340.06H268.5v2.074h4.66A15.445,15.445,0,0,1,273.006,340.06Z" transform="translate(-249.626 -311.492)" fill="#fff"/>
@@ -96,17 +94,17 @@ const addtrips = `<svg xmlns="http://www.w3.org/2000/svg" width="139.262" height
     <rect id="Rectangle_39" data-name="Rectangle 39" width="72.605" height="72.605" transform="translate(54.66 67.019)" fill="none"/>
   </g>
 </g>
-<g id="iAccount" transform="translate(1 52.021)">
+<g id="iAccount" transform="translate(-2 52.021)">
   <text id="New_Quarantine" data-name="New 
-Quarantine" transform="translate(42 14.559)" fill="#0e3599" font-size="15" font-family="GalanoGrotesqueDEMO-Bold, Galano Grotesque DEMO" font-weight="700"><tspan x="-17.61" y="0">New </tspan><tspan x="-42.45" y="11">Quarantine</tspan></text>
+Quarantine" transform="translate(42 14.559)" fill="#0e3599" font-size="15" font-family="Helvetica-Bold, Helvetica" font-weight="700"><tspan x="-17.505" y="0">New </tspan><tspan x="-39.591" y="11">Quarantine</tspan></text>
 </g>
 </svg>
 `;
-const logout = `<svg xmlns="http://www.w3.org/2000/svg" width="54" height="62.9" viewBox="0 0 54 62.9">
-<g id="iAccount" transform="translate(-5 34.34)">
-  <text id="Logout" transform="translate(32 23.559)" fill="#0e3599" font-size="15" font-family="GalanoGrotesqueDEMO-Bold, Galano Grotesque DEMO" font-weight="700"><tspan x="-26.085" y="0">Logout</tspan></text>
+const logout = `<svg xmlns="http://www.w3.org/2000/svg" width="52" height="61.9" viewBox="0 0 52 61.9">
+<g id="iAccount" transform="translate(-6 34.34)">
+  <text id="Logout" transform="translate(32 23.559)" fill="#0e3599" font-size="15" font-family="Helvetica-Bold, Helvetica" font-weight="700"><tspan x="-25.404" y="0">Logout</tspan></text>
 </g>
-<g id="Group_24" data-name="Group 24" transform="translate(-291 -732.1)">
+<g id="Group_24" data-name="Group 24" transform="translate(-292 -732.1)">
   <g id="logout-2" data-name="logout" transform="translate(299.699 732.101)">
     <path id="Path_209" data-name="Path 209" d="M225.427,74.46H205.17l10.315,4.711a3.356,3.356,0,0,1,1.953,3.04v2.917c5.011-1.539,7.667-6.166,9.036-9.932A1.114,1.114,0,0,0,225.427,74.46Z" transform="translate(-198.939 -72.232)" fill="none"/>
     <path id="Path_210" data-name="Path 210" d="M131.757,291.8v7.892a1.618,1.618,0,0,0,.008.193,3.424,3.424,0,0,0,.044.395c.015.085.03.163.053.245v.008a4.82,4.82,0,0,0,2.718,3.4l10.948,5a3.3,3.3,0,0,0,.372.144c-.641-3.125-.788-7.368-1.807-12.3C141.824,285.781,138.551,292.595,131.757,291.8Z" transform="translate(-131.76 -269.861)" fill="#360759"/>
