@@ -22,28 +22,29 @@ import {
   addtrips,
   logout,
 } from "../../assets/mytrips";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+// import QRCode from "react-native-qrcode-svg";
+// import { render } from "react-dom";
 
 export default function Detail() {
   const navigation = useNavigation();
   const [myQuarantine, setMyQuarantine] = useState([]);
 
   useEffect(() => {
-    const unsubscribe = navigation.addListener("focus", () => {
-      axios({
-        method: "GET",
-        url: "http://192.168.100.77:3000/trips/",
-        headers: {
-          access_token:
-            "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6OSwiZW1haWwiOiJmZmZAYWRtaW4uY29tIiwicm9sZSI6IlVzZXIiLCJpYXQiOjE2Mzg5NzY4MTN9.vh_o3leI2Th8I61yUgwYuijneQakDEI1p25d0VDnzl0",
-        },
-      })
-        .then((data) => {
-          // console.log(data.data, "INII");
-          setMyQuarantine(data.data);
-        })
-        .catch((error) => {
-          console.log(error.message);
+    const unsubscribe = navigation.addListener("focus", async () => {
+      try {
+        const value = await AsyncStorage.getItem("access_token");
+        // console.log(value, "INI VALUNYE");
+        let resp = await axios.get(`http://192.168.100.77:3000/trips/`, {
+          headers: {
+            access_token: value,
+          },
         });
+        console.log(resp.data, "INIIIREEESS");
+        setMyQuarantine(resp.data);
+      } catch (error) {
+        console.log(error);
+      }
     });
     return unsubscribe;
   }, [navigation]);

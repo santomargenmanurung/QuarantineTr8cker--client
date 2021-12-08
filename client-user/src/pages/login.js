@@ -8,6 +8,7 @@ import {
   Input,
 } from "react-native-elements";
 // import { TextInput } from "react-native-paper";
+const axios = require("axios");
 import {
   StyleSheet,
   TouchableWithoutFeedback,
@@ -28,6 +29,7 @@ import {
   registerButton,
   sideItem,
 } from "../../assets/loginAssets";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export default function Login() {
   let [fontsLoaded] = useFonts({
@@ -43,30 +45,26 @@ export default function Login() {
     console.log("INI ADALAH LINK");
   }, []);
 
-  const loginButtonPress = (e) => {
-    console.log("MASUKK");
-    fetch(`http://192.168.100.77:3000/login`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        email: email,
-        password: password,
-      }),
-    })
-      .then((response) => {
-        if (!response.ok) throw new Error(response.statusText);
-
-        return response.json();
-      })
-      .then((response1) => {
-        console.log(response1.access_token, "INII");
-        navigation.navigate("MyTrips");
-      })
-      .catch((error) => {
-        console.log(error.message);
+  const loginButtonPress = async (e) => {
+    // await AsyncStorage.setItem('key', value)
+    try {
+      // console.log("MASUK");
+      let resp = await axios(`http://192.168.100.77:3000/login`, {
+        method: "POST",
+        data: {
+          email: email,
+          password: password,
+        },
       });
+      console.log(resp);
+      await AsyncStorage.setItem("access_token", resp.data.access_token);
+      const value = await AsyncStorage.getItem("access_token");
+      if (value) navigation.navigate("MyTrips");
+
+      // console.log(value, "RS_");
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (
