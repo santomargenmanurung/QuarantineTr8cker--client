@@ -28,6 +28,8 @@ export default function QRScanner({ navigation }) {
   const handleProceedScan = () => {
     setScanned(false)
     //post method --
+    // asyncstorage -> id user
+    // navigate to form
     navigation.navigate("HomeScreen")
   }
 
@@ -63,16 +65,16 @@ export default function QRScanner({ navigation }) {
           <View style={styles.modalView}>
             <Text style={styles.modalText}>is this Data true? {scannedData}</Text>
             <Pressable
-              style={[styles.button, styles.buttonClose]}
+              style={[styles.button, styles.buttonOpen]}
               onPress={() => handleProceedScan()}
             >
-              <Text style={styles.textStyle}>Hide Modal</Text>
+              <Text style={styles.textStyle}>Benar</Text>
             </Pressable>
             <Pressable
               style={[styles.button, styles.buttonClose]}
               onPress={() => handleCloseModal()}
             >
-              <Text style={styles.textStyle}>Hide Modal</Text>
+              <Text style={styles.textStyle}>Scan Ulang</Text>
             </Pressable>
           </View>
         </View>
@@ -133,13 +135,15 @@ const styles = StyleSheet.create({
   button: {
     borderRadius: 20,
     padding: 10,
-    elevation: 2
+    elevation: 2,
+    width: 100
   },
   buttonOpen: {
-    backgroundColor: "#F194FF",
+    backgroundColor: "#14279B",
+    marginBottom: 15
   },
   buttonClose: {
-    backgroundColor: "#2196F3",
+    backgroundColor: "#E6E6E6",
   },
   textStyle: {
     color: "white",
