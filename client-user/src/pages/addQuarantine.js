@@ -40,12 +40,44 @@ export default function AddQuarantine({ navigation }) {
   const [origin, onChangeOrigin] = useState("");
   const [arrival, onChangeArrival] = useState("");
   const [keyboardStatus, setKeyboardStatus] = useState(undefined);
+  const [newQuarantine, setNewQuarantine] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   // const kananX = useSharedValue(-1);
   // const kananY = useSharedValue(-19.5);
 
   // const kiriX = useSharedValue(-3);
   // const kiriY = useSharedValue(-47);
+
+  useEffect(() => {
+    const unsubscribe = navigation.addListener("focus", async () => {
+      try {
+        const value = await AsyncStorage.getItem("access_token");
+        // console.log(value);
+        setLoading(true);
+        let resp = await axios.get(`http://192.168.100.77:3000/quarantines/`, {
+          headers: {
+            access_token: value,
+          },
+        });
+        //JOKO FALSE
+        console.log(
+          resp.data[resp.data.length - 1].isQuarantined,
+          "LIHAT DISINI"
+        );
+        if (!resp.data[resp.data.length - 1].isQuarantined) {
+          setNewQuarantine(true);
+        }
+        // console.log("MASUK SINI");
+        setLoading(false);
+      } catch (error) {
+        setNewQuarantine(false);
+        setLoading(false);
+        console.log(error, "SINI JANCUCUUU");
+      }
+    });
+    return unsubscribe;
+  }, [navigation]);
 
   // useEffect(() => {
   //   const unsubscribe = navigation.addListener("focus", () => {
@@ -64,9 +96,7 @@ export default function AddQuarantine({ navigation }) {
   // }, [navigation]);
   async function addQuarantineButton() {
     try {
-      console.log(origin, arrival);
       const value = await AsyncStorage.getItem("access_token");
-      console.log(value, "INI VALUNYE");
       let resp = await axios(`http://192.168.100.77:3000/trips/`, {
         method: "POST",
         headers: {
@@ -78,10 +108,8 @@ export default function AddQuarantine({ navigation }) {
         },
       });
       if (resp.data) navigation.navigate("MyTrips");
-      // console.log(resp, "INI VALUE");
-      // console.log(resp.data, "INI VALUE111111111");
     } catch (error) {
-      console.log(error);
+      console.log(error.message, "INI ERROR");
     }
   }
 
@@ -105,6 +133,14 @@ export default function AddQuarantine({ navigation }) {
   //     ],
   //   };
   // });
+
+  if (loading) {
+    return (
+      <>
+        <Text>Loading</Text>
+      </>
+    );
+  }
 
   return (
     <>
@@ -189,22 +225,42 @@ export default function AddQuarantine({ navigation }) {
           />
         </View>
       </TouchableWithoutFeedback>
-      <SvgXml
-        onPress={() => addQuarantineButton()}
-        style={{
-          position: "absolute",
-          zIndex: 2,
-          left: 100,
-          top: 520,
-        }}
-        width="50%"
-        height="50%"
-        xml={addQuarantine}
-      ></SvgXml>
+      {newQuarantine ? (
+        <>
+          <Text
+            style={{
+              position: "absolute",
+              zIndex: 2,
+              left: 30,
+              top: 520,
+              color: "white",
+              textAlign: "center",
+              fontFamily: "Helvetica-Bold",
+              fontSize: 25,
+            }}
+          >
+            UNDERGOING QUARANTINE, PLEASE FOLLOW HEALTH PROTOCOL
+          </Text>
+        </>
+      ) : (
+        <SvgXml
+          onPress={() => addQuarantineButton()}
+          style={{
+            position: "absolute",
+            zIndex: 2,
+            left: 100,
+            top: 520,
+          }}
+          width="50%"
+          height="50%"
+          xml={addQuarantine}
+        ></SvgXml>
+      )}
+
       <Text
         style={{
           top: 780,
-          left: 150,
+          left: 130,
           color: "white",
           position: "absolute",
           zIndex: 888,
@@ -214,7 +270,8 @@ export default function AddQuarantine({ navigation }) {
         }}
       >
         {" "}
-        Back to MyTrips
+        Back to My Quarantines
+        {/* {JSON.stringify(newQuarantine)} */}
       </Text>
     </>
   );

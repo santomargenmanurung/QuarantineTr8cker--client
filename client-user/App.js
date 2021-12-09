@@ -1,5 +1,5 @@
 import { StatusBar } from "expo-status-bar";
-import React from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { NavigationContainer } from "@react-navigation/native";
@@ -9,15 +9,20 @@ import Animated, {
   useAnimatedStyle,
   withSpring,
 } from "react-native-reanimated";
+
 import addQuarantine from "./src/pages/addQuarantine";
 import register from "./src/pages/register";
 import quarantineDetail from "./src/pages/quarantineDetail";
 import login from "./src/pages/login";
 import mytrips from "./src/pages/mytrips";
 const HomeStack = createNativeStackNavigator();
-// const Tabsss = createBottomTabNavigator();
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import isLogedin from "./src/components/isLogedin";
 
 export default function App() {
+  const [password, onChangePassword] = useState(false);
+  console.log(password);
+
   return (
     <NavigationContainer initialRouteName="Home">
       <HomeStack.Navigator>

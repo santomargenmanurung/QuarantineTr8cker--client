@@ -37,15 +37,16 @@ import QRCode from "react-native-qrcode-svg";
 export default function Detail({ route }) {
   const navigation = useNavigation();
   const [myQuarantine, setMyQuarantine] = useState([]);
-  const [quarStatus, setQuarStatus] = useState([]);
+  const [quarStatus, setQuarStatus] = useState({});
+  const [isLoading, setIsloading] = useState(true);
 
   const { user } = route.params;
 
   useEffect(() => {
     const unsubscribe = navigation.addListener("focus", async () => {
       try {
+        setIsloading(true);
         const value = await AsyncStorage.getItem("access_token");
-        console.log(user, "INI VALUNYE");
         let resp1 = await axios.get(`http://192.168.100.77:3000/quarantines/`, {
           headers: {
             access_token: value,
@@ -62,14 +63,23 @@ export default function Detail({ route }) {
             },
           }
         );
-        // console.log(resp.data, "DI DETAILNYA NIH COK");
+        console.log(getId, "myquar");
+        // console.log(resp.data, "quarStatus");
         setQuarStatus(resp.data);
+        if (quarStatus) setIsloading(false);
       } catch (error) {
         console.log(error);
       }
     });
     return unsubscribe;
   }, [navigation]);
+
+  if (isLoading)
+    return (
+      <>
+        <Text>LOADING SOB</Text>
+      </>
+    );
 
   return (
     <>
@@ -167,7 +177,7 @@ export default function Detail({ route }) {
           fontSize: 25,
         }}
       >
-        {quarStatus?.status}
+        {myQuarantine?.User.status}
       </Text>
       <Text
         style={{
@@ -209,6 +219,7 @@ export default function Detail({ route }) {
       >
         {myQuarantine?.roomNumber}
       </Text>
+      {/* disini */}
       <Text
         style={{
           fontFamily: "Helvetica",
@@ -216,11 +227,11 @@ export default function Detail({ route }) {
           color: "#092475",
           fontWeight: "bold",
           zIndex: 50,
-          left: 165,
+          left: 110,
           top: 440,
         }}
       >
-        {myQuarantine?.QuarantineLocation}
+        {myQuarantine?.QuarantineLocation?.name}
       </Text>
       <Text
         style={{
@@ -248,7 +259,9 @@ export default function Detail({ route }) {
           top: 530,
         }}
       >
-        {new Date(myQuarantine?.quarantineUntil).toDateString()}
+        {myQuarantine.quarantineUntil
+          ? new Date(myQuarantine?.quarantineUntil).toDateString()
+          : null}
       </Text>
       <Text
         style={{
@@ -258,7 +271,7 @@ export default function Detail({ route }) {
           top: 660,
         }}
       >
-        <QRCode value="www.google.com" logo={baseLogo} />
+        <QRCode value={JSON.stringify(quarStatus)} logo={baseLogo} />
       </Text>
     </>
   );

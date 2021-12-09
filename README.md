@@ -13,3 +13,5 @@ npm install @react-navigation/native
 todolist:
 
 1. navigation guard
+2. kalau sudah selesai karantina
+3.

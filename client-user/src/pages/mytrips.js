@@ -1,12 +1,5 @@
 import { StatusBar } from "expo-status-bar";
 import React, { useEffect, useCallback, useRef } from "react";
-import {
-  SearchBar,
-  Card,
-  ListItem,
-  Button,
-  Input,
-} from "react-native-elements";
 import { TextInput } from "react-native-paper";
 import { useState } from "react";
 import { StyleSheet, SafeAreaView, View, Text, FlatList } from "react-native";
@@ -17,14 +10,14 @@ import {
   barButtom,
   mytrips,
   cardCustom,
+  buttonNewQuarScreen,
   backgroundSvg,
   triplist,
   addtrips,
   logout,
 } from "../../assets/mytrips";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-// import QRCode from "react-native-qrcode-svg";
-// import { render } from "react-dom";
+// import { fetchMovies } from "../store/actionCreator/itemAction";
 
 export default function Detail() {
   const navigation = useNavigation();
@@ -33,6 +26,7 @@ export default function Detail() {
   useEffect(() => {
     const unsubscribe = navigation.addListener("focus", async () => {
       try {
+        console.log(myQuarantine, "INI DIA TOLONG DI PIRENT");
         const value = await AsyncStorage.getItem("access_token");
         // console.log(value, "INI VALUNYE");
         let resp = await axios.get(`http://192.168.100.77:3000/quarantines/`, {
@@ -40,6 +34,7 @@ export default function Detail() {
             access_token: value,
           },
         });
+        console.log(resp.data, "DISINI");
         setMyQuarantine(resp.data);
       } catch (error) {
         console.log(error);
@@ -49,7 +44,7 @@ export default function Detail() {
   }, [navigation]);
 
   function goToDetail(user) {
-    console.log(user);
+    // console.log(user);
     navigation.navigate("quarantineDetail", { user });
   }
 
@@ -60,6 +55,7 @@ export default function Detail() {
           position: "absolute",
           left: -1,
           top: -2,
+          flex: 4,
         }}
         width="100%"
         height="100%"
@@ -68,6 +64,7 @@ export default function Detail() {
       <SvgXml
         style={{
           position: "absolute",
+          flex: 1,
           left: 10,
           top: -350,
         }}
@@ -79,35 +76,127 @@ export default function Detail() {
       <SafeAreaView
         style={{
           paddingTop: 10,
-          flex: 4,
-          top: 200,
+          top: 120,
+          height: 900,
         }}
       >
-        <FlatList
-          style={{
-            position: "absolute",
-            zIndex: 70,
-            left: 10,
-          }}
-          data={myQuarantine}
-          renderItem={({ item }) => (
-            <>
-              <Text
-                onPress={() => goToDetail(item.id)}
-                style={{ paddingTop: 100 }}
-              >
-                <Text>{item.id}</Text>
-                <Text>{item.tripOrigin}</Text>
-              </Text>
-              {/* <SvgXml width="50%" height="50%" xml={cardCustom}></SvgXml> */}
-            </>
-          )}
-        />
+        {myQuarantine.length == 0 ? (
+          <>
+            <Text
+              style={{
+                position: "absolute",
+                zIndex: 999,
+                left: 40,
+                top: 200,
+                fontSize: 18,
+                fontFamily: "Helvetica",
+                color: "white",
+                fontWeight: "bold",
+              }}
+            >
+              You dont have a quarantine history yet
+            </Text>
+            <Text
+              style={{
+                position: "absolute",
+                zIndex: 999,
+                left: 60,
+                top: 250,
+                fontSize: 12,
+                fontFamily: "Helvetica",
+                color: "white",
+                fontWeight: "bold",
+              }}
+            >
+              Please click the link below to add new quarantine
+            </Text>
+            <SvgXml
+              onPress={() => {
+                navigation.navigate("AddQuarantine");
+              }}
+              style={{
+                position: "absolute",
+                zIndex: 566,
+                flex: 1,
+                left: 100,
+                top: 100,
+              }}
+              width="50%"
+              height="50%"
+              xml={buttonNewQuarScreen}
+            ></SvgXml>
+          </>
+        ) : (
+          <FlatList
+            style={{
+              left: 5,
+              paddingTop: 10,
+            }}
+            data={myQuarantine}
+            renderItem={({ item }) => (
+              <>
+                {item.isQuarantined ? (
+                  <Text
+                    style={{
+                      paddingTop: 20,
+                      left: 10,
+                    }}
+                  >
+                    {/* <Text>{JSON.stringify(item.isQuarantined)}</Text> */}
+                    <View style={styles.rectangleDone} />
+                  </Text>
+                ) : (
+                  <Text
+                    onPress={() => goToDetail(item.id)}
+                    style={{
+                      paddingTop: 20,
+                      left: 10,
+                    }}
+                  >
+                    {/* <Text>{JSON.stringify(item.isQuarantined)}</Text> */}
+                    <View style={styles.rectangle} />
+                  </Text>
+                )}
+
+                <Text
+                  style={{
+                    position: "absolute",
+                    zIndex: 999,
+                    left: 40,
+                    top: 20,
+                    fontSize: 18,
+                    fontFamily: "Helvetica",
+                    color: "#092475",
+                    fontWeight: "bold",
+                  }}
+                >
+                  {item.tripOrigin}
+                </Text>
+                <Text
+                  style={{
+                    position: "absolute",
+                    zIndex: 999,
+                    left: 40,
+                    top: 50,
+                    fontSize: 15,
+                    fontFamily: "Helvetica",
+                    color: "#092475",
+                    fontWeight: "bold",
+                  }}
+                >
+                  {/* {item.createdAt} */}
+                  {new Date(item.createdAt).toDateString()}
+                </Text>
+              </>
+            )}
+          />
+        )}
       </SafeAreaView>
       <SvgXml
         style={{
           position: "absolute",
           zIndex: 1,
+          flex: 1,
           left: -50,
           top: 410,
         }}
@@ -164,24 +253,20 @@ const styles = StyleSheet.create({
     padding: 10,
     paddingTop: 60,
   },
-  buttonYoutube: {
-    backgroundColor: "#F6EEFD",
-    textAlign: "center",
-    fontSize: 25,
-    fontFamily: "AvenirNextCondensed-BoldItalic",
-    width: 150,
+  rectangle: {
+    width: 190 * 2,
+    height: 100,
+    borderRadius: 50,
+    // paddingTop: 50,
+    backgroundColor: "white",
   },
-  viewbuttonYoutube: {
-    width: 150,
-  },
-  containerLoading: {
-    flex: 1,
-    justifyContent: "center",
-  },
-  horizontalLoading: {
-    flexDirection: "row",
-    justifyContent: "space-around",
-    padding: 10,
-    marginTop: 100,
+  rectangleDone: {
+    width: 190 * 2,
+    height: 100,
+    borderRadius: 50,
+    // paddingTop: 50,
+    borderColor: "red",
+    borderWidth: 5,
+    backgroundColor: "white",
   },
 });
