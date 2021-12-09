@@ -6,6 +6,7 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import HomeScreen from './screens/HomeScreen';
 import QRScanner from './components/QRScanner';
+import OfficerForm from './screens/OfficerForm';
 
 import { StyleSheet, Text, View } from 'react-native';
 
@@ -17,6 +18,7 @@ function HomeStack(){
     <Stack.Navigator>
     <Stack.Screen name="HomeScreen" component={HomeScreen} />
     <Stack.Screen name="QRScanner" component={QRScanner} />
+    <Stack.Screen name="OfficerForm" component={OfficerForm} />
     </Stack.Navigator>
   )
 }
