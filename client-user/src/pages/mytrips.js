@@ -35,12 +35,11 @@ export default function Detail() {
       try {
         const value = await AsyncStorage.getItem("access_token");
         // console.log(value, "INI VALUNYE");
-        let resp = await axios.get(`http://192.168.100.77:3000/trips/`, {
+        let resp = await axios.get(`http://192.168.100.77:3000/quarantines/`, {
           headers: {
             access_token: value,
           },
         });
-        console.log(resp.data, "INIIIREEESS");
         setMyQuarantine(resp.data);
       } catch (error) {
         console.log(error);
@@ -88,12 +87,17 @@ export default function Detail() {
           style={{
             position: "absolute",
             zIndex: 70,
+            left: 10,
           }}
           data={myQuarantine}
           renderItem={({ item }) => (
             <>
-              <Text onPress={() => goToDetail(item.id)}>
-                {JSON.stringify(myQuarantine)}
+              <Text
+                onPress={() => goToDetail(item.id)}
+                style={{ paddingTop: 100 }}
+              >
+                <Text>{item.id}</Text>
+                <Text>{item.tripOrigin}</Text>
               </Text>
               {/* <SvgXml width="50%" height="50%" xml={cardCustom}></SvgXml> */}
             </>

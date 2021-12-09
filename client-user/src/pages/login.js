@@ -52,7 +52,7 @@ export default function Login() {
       let resp = await axios(`http://192.168.100.77:3000/login`, {
         method: "POST",
         data: {
-          email: email,
+          email: email.toLowerCase(),
           password: password,
         },
       });

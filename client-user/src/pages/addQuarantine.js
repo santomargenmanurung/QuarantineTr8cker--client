@@ -24,6 +24,7 @@ import {
 } from "react-native";
 import { SvgXml } from "react-native-svg";
 import { useState } from "react";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useNavigation } from "@react-navigation/native";
 import {
   backgroundSvg,
@@ -32,17 +33,19 @@ import {
   LeftTop,
   RightTop,
 } from "../../assets/addQuarantine";
+const axios = require("axios");
 
 export default function AddQuarantine({ navigation }) {
   // const navigation = useNavigation();
-  const [email, onChangeEmail] = useState("");
-  const [password, onChangePassword] = useState("");
+  const [origin, onChangeOrigin] = useState("");
+  const [arrival, onChangeArrival] = useState("");
+  const [keyboardStatus, setKeyboardStatus] = useState(undefined);
 
-  const kananX = useSharedValue(-1);
-  const kananY = useSharedValue(-19.5);
+  // const kananX = useSharedValue(-1);
+  // const kananY = useSharedValue(-19.5);
 
-  const kiriX = useSharedValue(-3);
-  const kiriY = useSharedValue(-47);
+  // const kiriX = useSharedValue(-3);
+  // const kiriY = useSharedValue(-47);
 
   // useEffect(() => {
   //   const unsubscribe = navigation.addListener("focus", () => {
@@ -59,31 +62,54 @@ export default function AddQuarantine({ navigation }) {
   //   });
   //   return unsubscribe;
   // }, [navigation]);
+  async function addQuarantineButton() {
+    try {
+      console.log(origin, arrival);
+      const value = await AsyncStorage.getItem("access_token");
+      console.log(value, "INI VALUNYE");
+      let resp = await axios(`http://192.168.100.77:3000/trips/`, {
+        method: "POST",
+        headers: {
+          access_token: value,
+        },
+        data: {
+          tripOrigin: origin,
+          tripDestination: arrival,
+        },
+      });
+      if (resp.data) navigation.navigate("MyTrips");
+      // console.log(resp, "INI VALUE");
+      // console.log(resp.data, "INI VALUE111111111");
+    } catch (error) {
+      console.log(error);
+    }
+  }
 
-  const rightStyle = useAnimatedStyle(() => {
-    return {
-      transform: [
-        // { translateX: withSpring(2 * 100) },
-        // { translateY: withSpring(-11 * 100) },
-        { translateX: withSpring(kananX.value * 50) },
-        { translateY: withSpring(kananY.value * 50) },
-      ],
-    };
-  });
-  const leftStyle = useAnimatedStyle(() => {
-    return {
-      transform: [
-        // { translateX: withSpring(2 * 100) },
-        // { translateY: withSpring(-11 * 100) },
-        { translateX: withSpring(kiriX.value * 50) },
-        { translateY: withSpring(kiriY.value * 50) },
-      ],
-    };
-  });
+  // const rightStyle = useAnimatedStyle(() => {
+  //   return {
+  //     transform: [
+  //       // { translateX: withSpring(2 * 100) },
+  //       // { translateY: withSpring(-11 * 100) },
+  //       { translateX: withSpring(kananX.value * 50) },
+  //       { translateY: withSpring(kananY.value * 50) },
+  //     ],
+  //   };
+  // });
+  // const leftStyle = useAnimatedStyle(() => {
+  //   return {
+  //     transform: [
+  //       // { translateX: withSpring(2 * 100) },
+  //       // { translateY: withSpring(-11 * 100) },
+  //       { translateX: withSpring(kiriX.value * 50) },
+  //       { translateY: withSpring(kiriY.value * 50) },
+  //     ],
+  //   };
+  // });
 
   return (
     <>
       <SvgXml
+        onPress={Keyboard.dismiss}
         style={{
           position: "relative",
           left: -1,
@@ -118,7 +144,7 @@ export default function AddQuarantine({ navigation }) {
         <SvgXml width="150%" height="150%" xml={RightTop}></SvgXml>
       </Animated.View> */}
 
-      <Animated.View
+      {/* <Animated.View
         style={
           ({
             position: "absolute",
@@ -130,37 +156,41 @@ export default function AddQuarantine({ navigation }) {
         }
       >
         <SvgXml width="150%" height="150%" xml={LeftTop}></SvgXml>
-      </Animated.View>
+      </Animated.View> */}
 
       <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
-        <View style={{ flex: 1, position: "absolute", zIndex: 998 }}>
+        <View style={{ flex: 0, position: "absolute", zIndex: 2 }}>
           <TextInput
             style={{
+              // position: "absolute",
+              // zIndex: 9999,
               left: 70,
               top: 375,
               width: 250,
+              // color: "red",
             }}
-            onChangeText={onChangeEmail}
-            value={email}
+            onChangeText={onChangeOrigin}
+            value={origin}
             placeholder="Origin"
             keyboardType="default"
           />
           <TextInput
             style={{
+              // position: "absolute",
+              // zIndex: 9999,
               left: 70,
               top: 425,
               width: 250,
             }}
-            secureTextEntry={true}
-            onChangeText={onChangePassword}
-            value={password}
+            onChangeText={onChangeArrival}
+            value={arrival}
             placeholder="Arrival Port"
             keyboardType="default"
           />
         </View>
       </TouchableWithoutFeedback>
       <SvgXml
-        onPress={() => loginButtonPress()}
+        onPress={() => addQuarantineButton()}
         style={{
           position: "absolute",
           zIndex: 2,

@@ -9,3 +9,7 @@ npm i react-router react-redux redux react-router-dom redux-thunk
 selain itu pakai
 npm install @react-navigation/native-stack
 npm install @react-navigation/native
+
+todolist:
+
+1. navigation guard
