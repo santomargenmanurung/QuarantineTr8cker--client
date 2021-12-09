@@ -12,7 +12,7 @@ export default function QRScanner({ navigation }) {
   const [modalVisible, setModalVisible] = useState(false);
   const [userData, setUserData] = useState({});
 
-  useEffect(() => {},[]);
+  // useEffect(() => {},[]);
 
   const isFocused = useIsFocused();
 

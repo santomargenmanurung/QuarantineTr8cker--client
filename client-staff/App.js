@@ -27,15 +27,11 @@ export default function App() {
   return (
     <NativeBaseProvider>
       <NavigationContainer>
-        <Tab.Navigator>
-          <Tab.Screen name="Home" component={HomeStack} options={{headerShown: false}}/>
-          {/* <Tab.Screen name="QR Scan" component={QRScanner} /> */}
-        </Tab.Navigator>
-        
-        {/* <Stack.Navigator>
-        <Stack.Screen name="Home" component={HomeScreen} />
-        <Stack.Screen name="QRScanner" component={QRScanner} />
-        </Stack.Navigator> */}
+        <Stack.Navigator>
+          <Stack.Screen name="HomeScreen" component={HomeScreen} />
+          <Stack.Screen name="QRScanner" component={QRScanner} />
+          <Stack.Screen name="OfficerForm" component={OfficerForm} />
+        </Stack.Navigator>
       </NavigationContainer>
     </NativeBaseProvider>
   );

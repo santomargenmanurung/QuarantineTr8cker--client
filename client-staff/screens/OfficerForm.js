@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { View, Button, StyleSheet } from "react-native";
+import { View, Button, StyleSheet, Alert } from "react-native";
 import {
   VStack,
   Center,
@@ -23,10 +23,26 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 //     "phoneNumber": "string",
 //     "status": |> One of the list of Status <|
 //   }
+// const api = create({
+//   baseURL: 'http://192.168.5.11',
+//   headers: { access_token:"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwiZW1haWwiOiJvZmZpY2VyQGFpcnBvcnQuY29tIiwicm9sZSI6Ik9mZmljZXJBaXJwb3J0IiwiaWF0IjoxNjM5MDU4MjY3fQ.2TbWPbxGE0UfjdXY4AeYkFhpIBaxU5Hp-6KRZe9tGFQ"},
+// })
 
 export default function OfficerForm({ navigation, route }) {
   const [officerData, setOfficerData] = useState({})
   const userData = route.params.userData
+
+  const successAlert = () => {
+    Alert.alert(
+      "Berhasil",
+      "Pergantian status telah dilakukan dengan berhasil",
+      [
+        { text: "OK", onPress: () => console.log("OK Pressed") }
+      ]
+    );
+  }
+
+
   
   // const checkOfficer = async () => {
   //   try {
@@ -41,18 +57,9 @@ export default function OfficerForm({ navigation, route }) {
   // useEffect(() => {
   //   checkOfficer()
   // },[]);
-  
-  // const userData = {
-  //   id: "1",
-  //   name: "Denis",
-  //   passportNumber: "1a2b3c",
-  //   role: "User",
-  //   email: "",
-  //   phoneNumber: "",
-  //   status: "ArrivalProcedure",
-  // };
 
   const handleArrivalProcedure = async () => {
+    console.log('pressed')
     let statusData;
     switch (userData.status) {
       case "ArrivalProcedure":
@@ -70,30 +77,31 @@ export default function OfficerForm({ navigation, route }) {
       default:
         break;
     }
-      // axios({
-      //   method: 'put',
-      //   url: `http://localhost:3000/users/${userData.id}`,
-      //   data: {
-      //     status: statusData,
-      //   }
-      // })
-      // .then((data) => {
-      //   console.log(data)
-      //   navigation.navigate('HomeScreen')
-      // })
-      // .catch((err) => {
-      //   console.log(err)
-      // })
-
-      console.log(statusData)
+    try {
+      console.log(userData.id)
+      //await AsyncStorage()
+      const response = await axios(`http://192.168.5.11:3000/users/${userData.id}`,{
+        method: "PUT",
+        headers:{
+          access_token:'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwiZW1haWwiOiJvZmZpY2VyQGFpcnBvcnQuY29tIiwicm9sZSI6Ik9mZmljZXJBaXJwb3J0IiwiaWF0IjoxNjM5MDU4MjY3fQ.2TbWPbxGE0UfjdXY4AeYkFhpIBaxU5Hp-6KRZe9tGFQ'
+        },
+        data: {
+          status: statusData
+        }
+      })
+      console.log(response.data)
+      successAlert()
       navigation.navigate('HomeScreen')
+    } catch (error) {
+      console.log(error)
+    }
   };
 
     return (
-      <Center flex={1} bg="blue.100">
+      <Center flex={1} bg="#193498">
         <VStack space={4} alignItems="center">
           <Box
-          bg="blue.400"
+          bg="white"
           p="5"
           py="10"
           rounded="lg"
