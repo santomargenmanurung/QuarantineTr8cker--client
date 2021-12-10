@@ -9,11 +9,20 @@ export default function HomeScreen({ navigation }) {
   return (
     <VStack space={4} alignItems="center">
       <Heading textAlign="center" mb="10" pt="10">
-        hi, Denis Irawan
+        Hi, Denis Irawan
       </Heading>
-      <Box w="90%" h="60%" p="10" backgroundColor="white" rounded="md" shadow={1}>
+      <Box w="80%" h="50%" p="10" backgroundColor="white" rounded="md" shadow={1}>
         <LottieView source={require('../assets/lottie-qr-scan.json')} autoPlay loop />
       </Box>
+      <Center
+      flex={1}
+      background="blue.100"
+      px={5}
+      rounded="2xl"
+      >
+        Tekan tombol biru dibawah untuk scan
+      </Center>
+
       <Pressable
         _pressed={{ transform: [{ scale: 0.9 }] }}
         onPress={() => navigation.navigate("QRScanner", {screen: "QRScanner"})}

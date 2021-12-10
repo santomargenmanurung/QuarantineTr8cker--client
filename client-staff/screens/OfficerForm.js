@@ -67,13 +67,16 @@ export default function OfficerForm({ navigation, route }) {
         break;
       case "Interviewed":
         statusData = "Exit Terminal"
+        break;
       case "Exit Terminal":
         statusData = "On Route"
         break;
       case "Quarantine":
         statusData = "SwabPertama"
+        break;
       case "SwabPertama":
         statusData = "SwabKedua"
+        break;
       default:
         break;
     }
@@ -93,7 +96,14 @@ export default function OfficerForm({ navigation, route }) {
       successAlert()
       navigation.navigate('HomeScreen')
     } catch (error) {
-      console.log(error)
+      Alert.alert(
+        "Error",
+        `${error.response.data.message}`,
+        [
+          { text: "OK", onPress: () => console.log("OK Pressed") }
+        ]
+      );
+      console.log(error.response.data)
     }
   };
 

@@ -42,7 +42,7 @@ export default function QRScanner({ navigation }) {
     } else if (userData.status === "Interview") {
       navigation.navigate("InterviewForm", { userData });
     } else if (userData.status === "On Route") {
-      navigation.navigate("Briefing", { userData });
+      navigation.navigate("BriefingForm", { userData });
     }
   };
 

@@ -7,6 +7,7 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import HomeScreen from './screens/HomeScreen';
 import QRScanner from './components/QRScanner';
 import OfficerForm from './screens/OfficerForm';
+import InterviewForm from './screens/InterviewForm';
 
 import { StyleSheet, Text, View } from 'react-native';
 
@@ -31,6 +32,7 @@ export default function App() {
           <Stack.Screen name="HomeScreen" component={HomeScreen} />
           <Stack.Screen name="QRScanner" component={QRScanner} />
           <Stack.Screen name="OfficerForm" component={OfficerForm} />
+          <Stack.Screen name="InterviewForm" component={InterviewForm} />
         </Stack.Navigator>
       </NavigationContainer>
     </NativeBaseProvider>
