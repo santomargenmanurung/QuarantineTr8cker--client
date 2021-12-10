@@ -153,7 +153,6 @@ export default function Login() {
         }}
         style={{
           position: "absolute",
-          // fontFamily: "Nunito_700Bold",
           zIndex: 2,
           left: 100,
           top: 500,

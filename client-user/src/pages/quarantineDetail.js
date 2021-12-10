@@ -199,6 +199,7 @@ export default function Detail({ route }) {
           position: "absolute",
           color: "#092475",
           fontWeight: "bold",
+          justifyContent: "center",
           zIndex: 50,
           left: 40,
           top: 440,
