@@ -16,8 +16,6 @@ import { TextInput, View, StyleSheet, Alert } from "react-native";
 import { useFormik } from "formik";
 import { Picker } from "@react-native-picker/picker";
 
-
-
 // GET /locations
 // FORM
 // PUT /quarantines/:userId
@@ -26,130 +24,125 @@ import { Picker } from "@react-native-picker/picker";
 // status -> interviewed
 
 export default function InterviewForm({ navigation, route }) {
-  const [locations, setLocations] = useState([])
-  const userData = route.params.userData
+  const [locations, setLocations] = useState([]);
+  const userData = route.params.userData;
 
-  useEffect(()=>{
-    getLocations()
-  },[])
+  useEffect(() => {
+    getLocations();
+  }, []);
 
   const getLocations = async () => {
     try {
-      const response = await axios(`http://192.168.5.11:3000/locations`,{
+      const response = await axios(`http://192.168.100.61:3000/locations`, {
+        // const response = await axios(`http://192.168.5.11:3000/locations`,{
         method: "GET",
-        headers:{
-          access_token:'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwiZW1haWwiOiJvZmZpY2VyQGFpcnBvcnQuY29tIiwicm9sZSI6Ik9mZmljZXJBaXJwb3J0IiwiaWF0IjoxNjM5MDU4MjY3fQ.2TbWPbxGE0UfjdXY4AeYkFhpIBaxU5Hp-6KRZe9tGFQ'
-        }
-      }) 
-      console.log(response.data)
-      setLocations(response.data)
+        headers: {
+          access_token:
+            "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwiZW1haWwiOiJvZmZpY2VyQGFpcnBvcnQuY29tIiwicm9sZSI6Ik9mZmljZXJBaXJwb3J0IiwiaWF0IjoxNjM5MDU4MjY3fQ.2TbWPbxGE0UfjdXY4AeYkFhpIBaxU5Hp-6KRZe9tGFQ",
+        },
+      });
+      console.log(response.data);
+      setLocations(response.data);
     } catch (error) {
-      console.log(error)
+      console.log(error);
     }
-  }
+  };
 
   const successAlert = () => {
     Alert.alert(
       "Berhasil",
       "Pergantian status telah dilakukan dengan berhasil",
-      [
-        { text: "OK", onPress: () => console.log("OK Pressed") }
-      ]
+      [{ text: "OK", onPress: () => console.log("OK Pressed") }]
     );
-  }
+  };
 
   const changeStatus = async () => {
     try {
-      const response = await axios(`http://192.168.5.11:3000/users/${userData.id}`,{
-        method: "PUT",
-        headers:{
-          access_token:'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwiZW1haWwiOiJvZmZpY2VyQGFpcnBvcnQuY29tIiwicm9sZSI6Ik9mZmljZXJBaXJwb3J0IiwiaWF0IjoxNjM5MTI4MTg1fQ.HPWXOWCglRy4cd6eGsakazGQkAGDVrGxChVQyud-Szc'
-        },
-        data: {
-          status: "Interviewed"
+      const response = await axios(
+        `http://192.168.100.61:3000/users/${userData.id}`,
+        // `http://192.168.5.11:3000/users/${userData.id}`,
+        {
+          method: "PUT",
+          headers: {
+            access_token:
+              "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwiZW1haWwiOiJvZmZpY2VyQGFpcnBvcnQuY29tIiwicm9sZSI6Ik9mZmljZXJBaXJwb3J0IiwiaWF0IjoxNjM5MTI4MTg1fQ.HPWXOWCglRy4cd6eGsakazGQkAGDVrGxChVQyud-Szc",
+          },
+          data: {
+            status: "Interviewed",
+          },
         }
-      })
-      console.log(response.data)
-      successAlert()
-      navigation.navigate('HomeScreen')
-    } catch (error) {
-      Alert.alert(
-        "Error",
-        `${error.response.data.message}`,
-        [
-          { text: "OK", onPress: () => console.log("OK Pressed") }
-        ]
       );
-      console.log(error.response.data)
+      console.log(response.data);
+      successAlert();
+      navigation.navigate("HomeScreen");
+    } catch (error) {
+      Alert.alert("Error", `${error.response.data.message}`, [
+        { text: "OK", onPress: () => console.log("OK Pressed") },
+      ]);
+      console.log(error.response.data);
     }
-  }
+  };
 
-  const putLocation = async (locationId) =>{
+  const putLocation = async (locationId) => {
     try {
-      const response = await axios(`http://192.168.5.11:3000/quarantines/${userData.id}`,{
-        method: "PUT",
-        headers:{
-          access_token:'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwiZW1haWwiOiJvZmZpY2VyQGFpcnBvcnQuY29tIiwicm9sZSI6Ik9mZmljZXJBaXJwb3J0IiwiaWF0IjoxNjM5MTI4MTg1fQ.HPWXOWCglRy4cd6eGsakazGQkAGDVrGxChVQyud-Szc'
-        },
-        data: {
-          locationId: locationId
+      const response = await axios(
+        `http://192.168.100.61:3000/quarantines/${userData.id}`,
+        // `http://192.168.5.11:3000/quarantines/${userData.id}`,
+        {
+          method: "PUT",
+          headers: {
+            access_token:
+              "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwiZW1haWwiOiJvZmZpY2VyQGFpcnBvcnQuY29tIiwicm9sZSI6Ik9mZmljZXJBaXJwb3J0IiwiaWF0IjoxNjM5MTI4MTg1fQ.HPWXOWCglRy4cd6eGsakazGQkAGDVrGxChVQyud-Szc",
+          },
+          data: {
+            locationId: locationId,
+          },
         }
-      })
-      console.log(response.data)
-      successAlert()
-      navigation.navigate('HomeScreen')
-    } catch (error) {
-      Alert.alert(
-        "Error",
-        `${error.response.data.message}`,
-        [
-          { text: "OK", onPress: () => console.log("OK Pressed") }
-        ]
       );
-      console.log(error.response.data)
+      console.log(response.data);
+      successAlert();
+      navigation.navigate("HomeScreen");
+    } catch (error) {
+      Alert.alert("Error", `${error.response.data.message}`, [
+        { text: "OK", onPress: () => console.log("OK Pressed") },
+      ]);
+      console.log(error.response.data);
     }
-  }
- 
+  };
+
   const handleSubmitForm = async (locationId) => {
     try {
-      await putLocation(locationId)
-      await changeStatus()
-      navigation.navigate('HomeScreen')
+      await putLocation(locationId);
+      await changeStatus();
+      navigation.navigate("HomeScreen");
     } catch (error) {
-      console.log(error)
+      console.log(error);
     }
-
-  }
-
+  };
 
   const formik = useFormik({
     initialValues: {
       locations: "",
     },
     onSubmit: (values) => {
-      console.log(JSON.stringify(values, null, 2))
-      handleSubmitForm(values.locations)
+      console.log(JSON.stringify(values, null, 2));
+      handleSubmitForm(values.locations);
       // alert(JSON.stringify(values, null, 2));
     },
   });
 
   return (
     <Box
-    flex={1}
-    bg="blue.500"
-        _text={{
-          fontSize: "md",
-          fontWeight: "medium",
-          color: "warmGray.50",
-          letterSpacing: "lg",
-        }}   
+      flex={1}
+      bg="blue.500"
+      _text={{
+        fontSize: "md",
+        fontWeight: "medium",
+        color: "warmGray.50",
+        letterSpacing: "lg",
+      }}
     >
-      <Center
-      m={4}
-      h="2/4"
-      bg="white"
-      rounded="2xl"
-      >
+      <Center m={4} h="2/4" bg="white" rounded="2xl">
         {JSON.stringify(userData)}
       </Center>
       <Picker
@@ -161,13 +154,17 @@ export default function InterviewForm({ navigation, route }) {
       >
         {locations.map((item) => {
           return (
-            <Picker.Item label={item.name.toString()} value={item.id.toString()} key={item.id} />
+            <Picker.Item
+              label={item.name.toString()}
+              value={item.id.toString()}
+              key={item.id}
+            />
           );
         })}
       </Picker>
-      <Button
-        w="2/4"
-       onPress={formik.handleSubmit}>Submit</Button>
+      <Button w="2/4" onPress={formik.handleSubmit}>
+        Submit
+      </Button>
     </Box>
   );
 }
@@ -178,6 +175,6 @@ const styles = StyleSheet.create({
   },
   picker: {
     flex: 1,
-    backgroundColor: "white"
+    backgroundColor: "white",
   },
 });

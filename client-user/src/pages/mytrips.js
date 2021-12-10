@@ -17,6 +17,8 @@ import {
   logout,
 } from "../../assets/mytrips";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+const { baseUrl } = require("../../assets/baseUrl");
+
 // import { fetchMovies } from "../store/actionCreator/itemAction";
 
 export default function Detail() {
@@ -26,15 +28,15 @@ export default function Detail() {
   useEffect(() => {
     const unsubscribe = navigation.addListener("focus", async () => {
       try {
-        console.log(myQuarantine, "INI DIA TOLONG DI PIRENT");
+        // console.log(myQuarantine, "INI DIA TOLONG DI PIRENT");
         const value = await AsyncStorage.getItem("access_token");
         // console.log(value, "INI VALUNYE");
-        let resp = await axios.get(`http://192.168.100.77:3000/quarantines/`, {
+        let resp = await axios.get(`${baseUrl}/quarantines/`, {
           headers: {
             access_token: value,
           },
         });
-        console.log(resp.data, "DISINI");
+        console.log(resp.data, "DISINI ADA FETCH DATA");
         setMyQuarantine(resp.data);
       } catch (error) {
         console.log(error);

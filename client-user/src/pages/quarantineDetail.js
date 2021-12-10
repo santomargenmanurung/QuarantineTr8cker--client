@@ -18,7 +18,7 @@ import {
   Text,
 } from "react-native";
 import { SvgXml } from "react-native-svg";
-
+const { baseUrl } = require("../../assets/baseUrl");
 import { useState } from "react";
 import { useNavigation } from "@react-navigation/native";
 import {
@@ -47,7 +47,7 @@ export default function Detail({ route }) {
       try {
         setIsloading(true);
         const value = await AsyncStorage.getItem("access_token");
-        let resp1 = await axios.get(`http://192.168.100.77:3000/quarantines/`, {
+        let resp1 = await axios.get(`${baseUrl}/quarantines/`, {
           headers: {
             access_token: value,
           },
@@ -55,17 +55,14 @@ export default function Detail({ route }) {
         // let
         const getId = resp1.data.find((e) => e.id === user);
         setMyQuarantine(getId);
-        let resp = await axios.get(
-          `http://192.168.100.77:3000/users/${getId.userId}`,
-          {
-            headers: {
-              access_token: value,
-            },
-          }
-        );
+        let resp = await axios.get(`${baseUrl}/users/${getId.userId}`, {
+          headers: {
+            access_token: value,
+          },
+        });
         console.log(getId, "myquar");
-        // console.log(resp.data, "quarStatus");
         setQuarStatus(resp.data);
+        // console.log(quarStatus, "quarStatus");
         if (quarStatus) setIsloading(false);
       } catch (error) {
         console.log(error);
