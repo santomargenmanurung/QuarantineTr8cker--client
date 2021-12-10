@@ -51,7 +51,7 @@ export default function Detail() {
       data: {
         name: fullName,
         passportNumber: passport,
-        email: email,
+        email: email.toLowerCase(),
         password: password,
         phoneNumber: phone,
       },

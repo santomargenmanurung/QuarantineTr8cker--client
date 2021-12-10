@@ -29,33 +29,57 @@ import {
   triplist,
   addtrips,
   QuarantineCard,
+  baseLogo,
 } from "../../assets/quarantinedetail";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import QRCode from "react-native-qrcode-svg";
 
 export default function Detail({ route }) {
   const navigation = useNavigation();
   const [myQuarantine, setMyQuarantine] = useState([]);
+  const [quarStatus, setQuarStatus] = useState({});
+  const [isLoading, setIsloading] = useState(true);
+
   const { user } = route.params;
 
   useEffect(() => {
-    const unsubscribe = navigation.addListener("focus", () => {
-      axios({
-        method: "GET",
-        url: "http://192.168.100.77:3000/trips/",
-        headers: {
-          access_token:
-            "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6OSwiZW1haWwiOiJmZmZAYWRtaW4uY29tIiwicm9sZSI6IlVzZXIiLCJpYXQiOjE2Mzg5NzY4MTN9.vh_o3leI2Th8I61yUgwYuijneQakDEI1p25d0VDnzl0",
-        },
-      })
-        .then((data) => {
-          // console.log(data.data, "INII");
-          setMyQuarantine(data.data);
-        })
-        .catch((error) => {
-          console.log(error.message);
+    const unsubscribe = navigation.addListener("focus", async () => {
+      try {
+        setIsloading(true);
+        const value = await AsyncStorage.getItem("access_token");
+        let resp1 = await axios.get(`http://192.168.100.77:3000/quarantines/`, {
+          headers: {
+            access_token: value,
+          },
         });
+        // let
+        const getId = resp1.data.find((e) => e.id === user);
+        setMyQuarantine(getId);
+        let resp = await axios.get(
+          `http://192.168.100.77:3000/users/${getId.userId}`,
+          {
+            headers: {
+              access_token: value,
+            },
+          }
+        );
+        console.log(getId, "myquar");
+        // console.log(resp.data, "quarStatus");
+        setQuarStatus(resp.data);
+        if (quarStatus) setIsloading(false);
+      } catch (error) {
+        console.log(error);
+      }
     });
     return unsubscribe;
   }, [navigation]);
+
+  if (isLoading)
+    return (
+      <>
+        <Text>LOADING SOB</Text>
+      </>
+    );
 
   return (
     <>
@@ -93,6 +117,7 @@ export default function Detail({ route }) {
         xml={triplist}
       ></SvgXml>
       <SvgXml
+        onPress={() => navigation.navigate("AddQuarantine")}
         style={{
           position: "absolute",
           zIndex: 40,
@@ -138,7 +163,21 @@ export default function Detail({ route }) {
           fontSize: 20,
         }}
       >
-        {myQuarantine[0]?.tripOrigin}
+        {myQuarantine?.tripOrigin}
+      </Text>
+      <Text
+        style={{
+          fontFamily: "Helvetica",
+          position: "absolute",
+          color: "#0E3599",
+          fontWeight: "bold",
+          zIndex: 50,
+          left: 100,
+          top: 300,
+          fontSize: 25,
+        }}
+      >
+        {myQuarantine?.User.status}
       </Text>
       <Text
         style={{
@@ -152,7 +191,7 @@ export default function Detail({ route }) {
           fontSize: 20,
         }}
       >
-        {myQuarantine[0]?.tripDestination}
+        {myQuarantine?.tripDestination}
       </Text>
       <Text
         style={{
@@ -165,7 +204,34 @@ export default function Detail({ route }) {
           top: 440,
         }}
       >
-        {myQuarantine[0]?.name}
+        {myQuarantine?.User?.name}
+      </Text>
+      <Text
+        style={{
+          fontFamily: "Helvetica",
+          position: "absolute",
+          color: "#092475",
+          fontWeight: "bold",
+          zIndex: 50,
+          left: 315,
+          top: 440,
+        }}
+      >
+        {myQuarantine?.roomNumber}
+      </Text>
+      {/* disini */}
+      <Text
+        style={{
+          fontFamily: "Helvetica",
+          position: "absolute",
+          color: "#092475",
+          fontWeight: "bold",
+          zIndex: 50,
+          left: 110,
+          top: 440,
+        }}
+      >
+        {myQuarantine?.QuarantineLocation?.name}
       </Text>
       <Text
         style={{
@@ -179,7 +245,33 @@ export default function Detail({ route }) {
           top: 530,
         }}
       >
-        {new Date(myQuarantine[0].startedAt).toDateString()}
+        {new Date(myQuarantine?.createdAt).toDateString()}
+      </Text>
+      <Text
+        style={{
+          fontFamily: "Helvetica",
+          position: "absolute",
+          color: "#092475",
+          fontWeight: "bold",
+          zIndex: 50,
+          left: 150,
+          fontSize: 10,
+          top: 530,
+        }}
+      >
+        {myQuarantine.quarantineUntil
+          ? new Date(myQuarantine?.quarantineUntil).toDateString()
+          : null}
+      </Text>
+      <Text
+        style={{
+          position: "absolute",
+          zIndex: 50,
+          left: 150,
+          top: 660,
+        }}
+      >
+        <QRCode value={JSON.stringify(quarStatus)} logo={baseLogo} />
       </Text>
     </>
   );

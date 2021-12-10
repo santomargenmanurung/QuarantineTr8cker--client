@@ -119,7 +119,20 @@ const logout = `<svg xmlns="http://www.w3.org/2000/svg" width="52" height="61.9"
 </svg>
 `;
 
+const buttonNewQuarScreen = `<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="85.83" height="25.941" viewBox="0 0 85.83 25.941">
+<defs>
+  <linearGradient id="linear-gradient" x1="1.076" y1="0.714" x2="-0.184" y2="0.539" gradientUnits="objectBoundingBox">
+    <stop offset="0" stop-color="#0e3599"/>
+    <stop offset="1" stop-color="#2a2052"/>
+  </linearGradient>
+</defs>
+<path id="Path_217" data-name="Path 217" d="M1,0H67.73a18,18,0,0,1,18,18v6.841a1,1,0,0,1-1,1H18a18,18,0,0,1-18-18V1A1,1,0,0,1,1,0Z" transform="translate(0.05 0.05)" stroke="#fff" stroke-width="0.1" fill="url(#linear-gradient)"/>
+<text id="New_Quarantine" data-name="New Quarantine" transform="translate(16.717 14.907)" fill="#fff" font-size="7" font-family="Helvetica-Bold, Helvetica" font-weight="700"><tspan x="0" y="0">New Quarantine</tspan></text>
+</svg>
+`;
+
 module.exports = {
+  buttonNewQuarScreen,
   barButtom,
   backgroundSvg,
   cardCustom,
