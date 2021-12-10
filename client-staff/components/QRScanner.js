@@ -3,16 +3,19 @@ import { Text, View, StyleSheet, Button, Modal, Pressable } from "react-native";
 import { Box, Center, Factory } from "native-base";
 import { BarCodeScanner } from "expo-barcode-scanner";
 import { Camera } from "expo-camera";
-import { useIsFocused } from '@react-navigation/native';
+import { useIsFocused } from "@react-navigation/native";
 
 export default function QRScanner({ navigation }) {
   const [hasPermission, setHasPermission] = useState(null);
   const [scanned, setScanned] = useState(false);
   const [scannedData, setScannedData] = useState("");
   const [modalVisible, setModalVisible] = useState(false);
+  const [userData, setUserData] = useState({});
 
-  const isFocused = useIsFocused()
-  
+  // useEffect(() => {},[]);
+
+  const isFocused = useIsFocused();
+
   const handleBarCodeScanned = ({ type, data }) => {
     console.log(data);
     setModalVisible(true);
@@ -21,17 +24,27 @@ export default function QRScanner({ navigation }) {
   };
 
   const handleCloseModal = () => {
-    setModalVisible(!modalVisible)
-    setScanned(false)
-  }
-  
+    setModalVisible(!modalVisible);
+    setScanned(false);
+  };
+
   const handleProceedScan = () => {
-    setScanned(false)
-    //post method --
-    // asyncstorage -> id user
-    // navigate to form
-    navigation.navigate("HomeScreen")
-  }
+    setScanned(false);
+    setUserData(JSON.parse(scannedData))
+    if (
+      userData.status === "ArrivalProcedure" ||
+      userData.status === "Interviewed" ||
+      userData.status === "Exit Terminal" ||
+      userData.status === "Quarantine" ||
+      userData.status === "SwabPertama"
+    ) {
+      navigation.navigate("OfficerForm", { userData });
+    } else if (userData.status === "Interview") {
+      navigation.navigate("InterviewForm", { userData });
+    } else if (userData.status === "On Route") {
+      navigation.navigate("BriefingForm", { userData });
+    }
+  };
 
   useEffect(() => {
     (async () => {
@@ -41,8 +54,8 @@ export default function QRScanner({ navigation }) {
   }, []);
 
   useEffect(() => {
-    console.log(scanned)
-  },[])
+    console.log(scanned);
+  }, []);
 
   if (hasPermission === null) {
     return <Text>Requesting for camera permission</Text>;
@@ -63,7 +76,9 @@ export default function QRScanner({ navigation }) {
       >
         <View style={styles.centeredView}>
           <View style={styles.modalView}>
-            <Text style={styles.modalText}>is this Data true? {scannedData}</Text>
+            <Text style={styles.modalText}>
+              is this Data true? {scannedData}
+            </Text>
             <Pressable
               style={[styles.button, styles.buttonOpen]}
               onPress={() => handleProceedScan()}
@@ -79,22 +94,16 @@ export default function QRScanner({ navigation }) {
           </View>
         </View>
       </Modal>
-      {isFocused && <Camera
-        ratio={"16:9"}
-        style={styles.cameraStyle}
-        barCodeScannerSettings={{
-          barCodeTypes: [BarCodeScanner.Constants.BarCodeType.qr],
-        }}
-        onBarCodeScanned={scanned ? undefined : handleBarCodeScanned}
-      />}
-      {/* <Camera
-        ratio={"16:9"}
-        style={styles.cameraStyle}
-        barCodeScannerSettings={{
-          barCodeTypes: [BarCodeScanner.Constants.BarCodeType.qr],
-        }}
-        onBarCodeScanned={scanned ? undefined : handleBarCodeScanned}
-      /> */}
+      {isFocused && (
+        <Camera
+          ratio={"16:9"}
+          style={styles.cameraStyle}
+          barCodeScannerSettings={{
+            barCodeTypes: [BarCodeScanner.Constants.BarCodeType.qr],
+          }}
+          onBarCodeScanned={scanned ? undefined : handleBarCodeScanned}
+        />
+      )}
     </View>
   );
 }
@@ -115,7 +124,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
-    marginTop: 22
+    marginTop: 22,
   },
   modalView: {
     margin: 20,
@@ -126,21 +135,21 @@ const styles = StyleSheet.create({
     shadowColor: "#000",
     shadowOffset: {
       width: 0,
-      height: 2
+      height: 2,
     },
     shadowOpacity: 0.25,
     shadowRadius: 4,
-    elevation: 5
+    elevation: 5,
   },
   button: {
     borderRadius: 20,
     padding: 10,
     elevation: 2,
-    width: 100
+    width: 100,
   },
   buttonOpen: {
     backgroundColor: "#14279B",
-    marginBottom: 15
+    marginBottom: 15,
   },
   buttonClose: {
     backgroundColor: "#E6E6E6",
@@ -148,10 +157,10 @@ const styles = StyleSheet.create({
   textStyle: {
     color: "white",
     fontWeight: "bold",
-    textAlign: "center"
+    textAlign: "center",
   },
   modalText: {
     marginBottom: 15,
-    textAlign: "center"
-  }
+    textAlign: "center",
+  },
 });

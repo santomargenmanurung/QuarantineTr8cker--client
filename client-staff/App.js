@@ -6,6 +6,8 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import HomeScreen from './screens/HomeScreen';
 import QRScanner from './components/QRScanner';
+import OfficerForm from './screens/OfficerForm';
+import InterviewForm from './screens/InterviewForm';
 
 import { StyleSheet, Text, View } from 'react-native';
 
@@ -17,6 +19,7 @@ function HomeStack(){
     <Stack.Navigator>
     <Stack.Screen name="HomeScreen" component={HomeScreen} />
     <Stack.Screen name="QRScanner" component={QRScanner} />
+    <Stack.Screen name="OfficerForm" component={OfficerForm} />
     </Stack.Navigator>
   )
 }
@@ -25,15 +28,12 @@ export default function App() {
   return (
     <NativeBaseProvider>
       <NavigationContainer>
-        <Tab.Navigator>
-          <Tab.Screen name="Home" component={HomeStack} options={{headerShown: false}}/>
-          {/* <Tab.Screen name="QR Scan" component={QRScanner} /> */}
-        </Tab.Navigator>
-        
-        {/* <Stack.Navigator>
-        <Stack.Screen name="Home" component={HomeScreen} />
-        <Stack.Screen name="QRScanner" component={QRScanner} />
-        </Stack.Navigator> */}
+        <Stack.Navigator>
+          <Stack.Screen name="HomeScreen" component={HomeScreen} />
+          <Stack.Screen name="QRScanner" component={QRScanner} />
+          <Stack.Screen name="OfficerForm" component={OfficerForm} />
+          <Stack.Screen name="InterviewForm" component={InterviewForm} />
+        </Stack.Navigator>
       </NavigationContainer>
     </NativeBaseProvider>
   );
