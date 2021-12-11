@@ -8,8 +8,9 @@ import HomeScreen from './screens/HomeScreen';
 import QRScanner from './components/QRScanner';
 import OfficerForm from './screens/OfficerForm';
 import InterviewForm from './screens/InterviewForm';
-
+import BriefingForm from './screens/BriefingForm';
 import { StyleSheet, Text, View } from 'react-native';
+
 
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
@@ -29,10 +30,11 @@ export default function App() {
     <NativeBaseProvider>
       <NavigationContainer>
         <Stack.Navigator>
-          <Stack.Screen name="HomeScreen" component={HomeScreen} />
+          {/* <Stack.Screen name="HomeScreen" component={HomeScreen} />
           <Stack.Screen name="QRScanner" component={QRScanner} />
           <Stack.Screen name="OfficerForm" component={OfficerForm} />
-          <Stack.Screen name="InterviewForm" component={InterviewForm} />
+          <Stack.Screen name="InterviewForm" component={InterviewForm} /> */}
+          <Stack.Screen name="BriefingForm" component={BriefingForm} />
         </Stack.Navigator>
       </NavigationContainer>
     </NativeBaseProvider>
