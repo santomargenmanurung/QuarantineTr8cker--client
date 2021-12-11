@@ -30,6 +30,7 @@ export default function Login() {
   const [email, onChangeEmail] = useState("");
   const [password, onChangePassword] = useState("");
   const [errorLogin, setErrorLogin] = useState(false);
+  const [isUser, setIsUser] = useState(false);
 
   //   if (!fontsLoaded) null;
 
@@ -48,11 +49,16 @@ export default function Login() {
           password: password,
         },
       });
-      //   console.log(resp.data.access_token, "INI HASIL");
-      await AsyncStorage.setItem("access_token", resp.data.access_token);
-      const value = await AsyncStorage.getItem("access_token");
-      setErrorLogin(false);
-      if (value) navigation.navigate("HomeScreen");
+      if (resp.data.role == "User") {
+        setIsUser(true);
+        console.log("USERRRRRRRRRRR");
+      } else {
+        await AsyncStorage.setItem("access_token", resp.data.access_token);
+        const value = await AsyncStorage.getItem("access_token");
+        setErrorLogin(false);
+        setIsUser(false);
+        if (value) navigation.navigate("HomeScreen");
+      }
 
       // console.log(value, "RS_");
     } catch (error) {
@@ -166,6 +172,24 @@ export default function Login() {
           }}
         >
           PLEASE CHECK YOUR LOGIN OR PASSWORD
+        </Text>
+      ) : (
+        <></>
+      )}
+      {isUser ? (
+        <Text
+          style={{
+            fontFamily: "Helvetica",
+            position: "absolute",
+            color: "white",
+            fontWeight: "bold",
+            zIndex: 50,
+            left: 130,
+            top: 580,
+            fontSize: 10,
+          }}
+        >
+          YOU ARE UNAUTHORIZED
         </Text>
       ) : (
         <></>
