@@ -135,7 +135,7 @@ export default function Login() {
             onChangeText={onChangePassword}
             value={password}
             placeholder="Please input your password"
-            keyboardType="defalut"
+            keyboardType="default"
           />
         </View>
       </TouchableWithoutFeedback>

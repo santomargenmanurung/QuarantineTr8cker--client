@@ -35,7 +35,11 @@ export default function App() {
             name="LoginScreen"
             component={LoginScreen}
           />
-          <Stack.Screen name="HomeScreen" component={HomeScreen} />
+          <Stack.Screen
+            options={{ headerShown: false }}
+            name="HomeScreen"
+            component={HomeScreen}
+          />
           <Stack.Screen name="QRScanner" component={QRScanner} />
           <Stack.Screen name="OfficerForm" component={OfficerForm} />
           <Stack.Screen name="InterviewForm" component={InterviewForm} />
