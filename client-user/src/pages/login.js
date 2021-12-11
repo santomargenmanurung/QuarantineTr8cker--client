@@ -34,18 +34,13 @@ import {
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export default function Login() {
-  let [fontsLoaded] = useFonts({
-    Nunito_700Bold,
-  });
   const navigation = useNavigation();
   const [email, onChangeEmail] = useState("");
   const [password, onChangePassword] = useState("");
   const [errorLogin, setErrorLogin] = useState(false);
 
-  if (!fontsLoaded) null;
-
   useEffect(() => {
-    console.log("INI ADALAH LINK");
+    // console.log("INI ADALAH LINK");
   }, []);
 
   const loginButtonPress = async (e) => {
@@ -59,9 +54,10 @@ export default function Login() {
           password: password,
         },
       });
-      console.log(resp, "INI HASIL");
+      // console.log(resp, "INI HASIL");
       await AsyncStorage.setItem("access_token", resp.data.access_token);
       const value = await AsyncStorage.getItem("access_token");
+      console.log(value);
       setErrorLogin(false);
       if (value) navigation.navigate("MyTrips");
 
@@ -136,7 +132,7 @@ export default function Login() {
             onChangeText={onChangePassword}
             value={password}
             placeholder="Please input your password"
-            keyboardType="defalut"
+            keyboardType="default"
           />
         </View>
       </TouchableWithoutFeedback>

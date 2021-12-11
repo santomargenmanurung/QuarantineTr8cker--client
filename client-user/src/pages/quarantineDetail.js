@@ -60,7 +60,7 @@ export default function Detail({ route }) {
             access_token: value,
           },
         });
-        console.log(getId, "myquar");
+        // console.log(getId, "myquar");
         setQuarStatus(resp.data);
         // console.log(quarStatus, "quarStatus");
         if (quarStatus) setIsloading(false);

@@ -139,7 +139,7 @@ export default function Detail() {
             onChangeText={onChangePassword}
             value={password}
             placeholder="Password"
-            keyboardType="defalut"
+            keyboardType="default"
           />
           <TextInput
             style={{
@@ -153,7 +153,7 @@ export default function Detail() {
             onChangeText={onChangePassport}
             value={passport}
             placeholder="Passport Number"
-            keyboardType="defalut"
+            keyboardType="default"
           />
           <TextInput
             style={{

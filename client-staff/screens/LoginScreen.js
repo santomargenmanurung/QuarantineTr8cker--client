@@ -35,7 +35,7 @@ export default function Login() {
   //   if (!fontsLoaded) null;
 
   useEffect(() => {
-    console.log("INI ADALAH LINK");
+    // console.log("INI ADALAH LINK");
   }, []);
 
   const loginButtonPress = async (e) => {
