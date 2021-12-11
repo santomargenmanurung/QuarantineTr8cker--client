@@ -3,12 +3,13 @@ import {
   FormControl,
   Input,
   Stack,
-  WarningOutlineIcon,
+  HStack,
   Box,
   Button,
   TextField,
+  Text,
   Center,
-  NativeBaseProvider,
+  Divider,
   Heading,
 } from "native-base";
 import axios from "axios";
@@ -33,18 +34,17 @@ export default function InterviewForm({ navigation, route }) {
 
   const getLocations = async () => {
     try {
-      const response = await axios(`http://192.168.100.61:3000/locations`, {
-        // const response = await axios(`http://192.168.5.11:3000/locations`,{
+      const response = await axios(`http://192.168.5.11:3000/locations`, {
         method: "GET",
         headers: {
           access_token:
-            "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwiZW1haWwiOiJvZmZpY2VyQGFpcnBvcnQuY29tIiwicm9sZSI6Ik9mZmljZXJBaXJwb3J0IiwiaWF0IjoxNjM5MDU4MjY3fQ.2TbWPbxGE0UfjdXY4AeYkFhpIBaxU5Hp-6KRZe9tGFQ",
+            "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwiZW1haWwiOiJvZmZpY2VyQGFpcnBvcnQuY29tIiwicm9sZSI6Ik9mZmljZXJBaXJwb3J0IiwiaWF0IjoxNjM5MTQwNTA5fQ.3cxJG7o9nSM5ffAnM2RdLHJWTJc9I1PQY1GkAqQMd-I",
         },
       });
-      console.log(response.data);
+      //jangan lupa diganti jadi response.data.pageData
       setLocations(response.data);
     } catch (error) {
-      console.log(error);
+      console.log(error, "error getLocation");
     }
   };
 
@@ -59,64 +59,58 @@ export default function InterviewForm({ navigation, route }) {
   const changeStatus = async () => {
     try {
       const response = await axios(
-        `http://192.168.100.61:3000/users/${userData.id}`,
-        // `http://192.168.5.11:3000/users/${userData.id}`,
+        `http://192.168.5.11:3000/users/${userData.id}`,
         {
           method: "PUT",
           headers: {
             access_token:
-              "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwiZW1haWwiOiJvZmZpY2VyQGFpcnBvcnQuY29tIiwicm9sZSI6Ik9mZmljZXJBaXJwb3J0IiwiaWF0IjoxNjM5MTI4MTg1fQ.HPWXOWCglRy4cd6eGsakazGQkAGDVrGxChVQyud-Szc",
+              "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwiZW1haWwiOiJvZmZpY2VyQGFpcnBvcnQuY29tIiwicm9sZSI6Ik9mZmljZXJBaXJwb3J0IiwiaWF0IjoxNjM5MTQwNTA5fQ.3cxJG7o9nSM5ffAnM2RdLHJWTJc9I1PQY1GkAqQMd-I",
           },
           data: {
             status: "Interviewed",
           },
         }
       );
-      console.log(response.data);
-      successAlert();
-      navigation.navigate("HomeScreen");
+      console.log("changeStatus berhasil");
+      console.log(response.data, "from changeStatus");
     } catch (error) {
-      Alert.alert("Error", `${error.response.data.message}`, [
-        { text: "OK", onPress: () => console.log("OK Pressed") },
-      ]);
-      console.log(error.response.data);
+      throw error;
     }
   };
 
   const putLocation = async (locationId) => {
     try {
       const response = await axios(
-        `http://192.168.100.61:3000/quarantines/${userData.id}`,
-        // `http://192.168.5.11:3000/quarantines/${userData.id}`,
+        `http://192.168.5.11:3000/quarantines/${userData.id}`,
         {
           method: "PUT",
           headers: {
             access_token:
-              "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwiZW1haWwiOiJvZmZpY2VyQGFpcnBvcnQuY29tIiwicm9sZSI6Ik9mZmljZXJBaXJwb3J0IiwiaWF0IjoxNjM5MTI4MTg1fQ.HPWXOWCglRy4cd6eGsakazGQkAGDVrGxChVQyud-Szc",
+              "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwiZW1haWwiOiJvZmZpY2VyQGFpcnBvcnQuY29tIiwicm9sZSI6Ik9mZmljZXJBaXJwb3J0IiwiaWF0IjoxNjM5MTQwNTA5fQ.3cxJG7o9nSM5ffAnM2RdLHJWTJc9I1PQY1GkAqQMd-I",
           },
           data: {
             locationId: locationId,
           },
         }
       );
-      console.log(response.data);
-      successAlert();
-      navigation.navigate("HomeScreen");
+      console.log("putLocation berhasil");
+      console.log(response.data, "dari putLocation");
     } catch (error) {
-      Alert.alert("Error", `${error.response.data.message}`, [
-        { text: "OK", onPress: () => console.log("OK Pressed") },
-      ]);
-      console.log(error.response.data);
+      throw error;
     }
   };
 
   const handleSubmitForm = async (locationId) => {
     try {
-      await putLocation(locationId);
-      await changeStatus();
+      const locationResponse = await putLocation(locationId);
+      const statusResponse = await changeStatus();
+      successAlert();
       navigation.navigate("HomeScreen");
     } catch (error) {
-      console.log(error);
+      console.log(error, "error di handleSubmitForm");
+      Alert.alert("Error", `${error.response.data.message}`, [
+        { text: "OK", onPress: () => console.log("OK Pressed") },
+      ]);
     }
   };
 
@@ -126,15 +120,15 @@ export default function InterviewForm({ navigation, route }) {
     },
     onSubmit: (values) => {
       console.log(JSON.stringify(values, null, 2));
+      console.log(values.locations);
       handleSubmitForm(values.locations);
-      // alert(JSON.stringify(values, null, 2));
     },
   });
 
   return (
     <Box
       flex={1}
-      bg="blue.500"
+      bg="#193498"
       _text={{
         fontSize: "md",
         fontWeight: "medium",
@@ -142,29 +136,91 @@ export default function InterviewForm({ navigation, route }) {
         letterSpacing: "lg",
       }}
     >
-      <Center m={4} h="2/4" bg="white" rounded="2xl">
-        {JSON.stringify(userData)}
+      <Box m={5} h="2/4" bg="white" rounded="2xl">
+        <Box my={5} mx={5}>
+          <Heading>Profil Pengunjung</Heading>
+          <Divider my="2" />
+          <HStack mt={6}>
+            <Text fontSize="xl" w="1/3" bold>
+              Nama:
+            </Text>
+            <Text fontSize="xl" ml="2">
+              {userData?.name}
+            </Text>
+          </HStack>
+          <HStack mt={6}>
+            <Text fontSize="xl" w="1/3" bold>
+              Passport:
+            </Text>
+            <Text fontSize="xl" ml="2">
+              {userData?.passportNumber}
+            </Text>
+          </HStack>
+          <HStack mt={6} fontSize="xl">
+            <Text fontSize="xl" w="1/3" bold>
+              Status:{" "}
+            </Text>
+            <Text fontSize="xl" ml="2">
+              {userData?.status}
+            </Text>
+          </HStack>
+          <HStack mt={6} fontSize="xl">
+            <Text fontSize="xl" w="1/3" bold>
+              Email:{" "}
+            </Text>
+            <Text fontSize="xl" ml="2">
+              {userData?.email}
+            </Text>
+          </HStack>
+          <HStack mt={6} fontSize="xl">
+            <Text fontSize="xl" w="1/3" bold>
+              Telepon:{" "}
+            </Text>
+            <Text fontSize="xl" ml="2">
+              {userData?.phoneNumber}
+            </Text>
+          </HStack>
+        </Box>
+      </Box>
+      <Center>
+        <View
+          style={{
+            width: "90%",
+            borderRadius: 10,
+            borderWidth: 1,
+            borderColor: "white",
+            overflow: "hidden",
+          }}
+        >
+          <Picker
+            enabled={true}
+            mode="dropdown"
+            placeholder="Select City"
+            onValueChange={formik.handleChange("locations")}
+            selectedValue={formik.values.locations}
+            style={{
+              color: "black",
+              placeholderTextColor: "black",
+              backgroundColor: "white",
+              margin: 5,
+              borderRadius: 10,
+            }}
+          >
+            {locations.map((item) => {
+              return (
+                <Picker.Item
+                  label={item.name.toString()}
+                  value={item.id.toString()}
+                  key={item.id}
+                />
+              );
+            })}
+          </Picker>
+        </View>
+        <Button w="2/4" p={5} mt={5} borderRadius={"md"} bg="#ABA5DB" shadow={5} onPress={formik.handleSubmit}>
+          Lanjut
+        </Button>
       </Center>
-      <Picker
-        enabled={true}
-        mode="dropdown"
-        placeholder="Select City"
-        onValueChange={formik.handleChange("locations")}
-        selectedValue={formik.values.locations}
-      >
-        {locations.map((item) => {
-          return (
-            <Picker.Item
-              label={item.name.toString()}
-              value={item.id.toString()}
-              key={item.id}
-            />
-          );
-        })}
-      </Picker>
-      <Button w="2/4" onPress={formik.handleSubmit}>
-        Submit
-      </Button>
     </Box>
   );
 }

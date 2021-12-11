@@ -30,9 +30,10 @@ export default function QRScanner({ navigation }) {
 
   const handleProceedScan = () => {
     setScanned(false);
-    console.log("MSAOOOOOOOOKKK");
-    console.log(JSON.parse(scannedData), "INI PAHRUL");
-    setUserData(JSON.parse(scannedData));
+
+    console.log(scannedData)
+    setUserData(JSON.parse(scannedData))
+
     if (
       userData.status === "ArrivalProcedure" ||
       userData.status === "Interviewed" ||
