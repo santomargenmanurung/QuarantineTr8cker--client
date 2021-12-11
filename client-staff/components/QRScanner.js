@@ -38,13 +38,14 @@ export default function QRScanner({ navigation }) {
       userData.status === "ArrivalProcedure" ||
       userData.status === "Interviewed" ||
       userData.status === "Exit Terminal" ||
+      userData.status === "On Route" ||
       userData.status === "Quarantine" ||
       userData.status === "SwabPertama"
     ) {
       navigation.navigate("OfficerForm", { userData });
     } else if (userData.status === "Interview") {
       navigation.navigate("InterviewForm", { userData });
-    } else if (userData.status === "On Route") {
+    } else if (userData.status === "Briefing") {
       navigation.navigate("BriefingForm", { userData });
     }
   };
