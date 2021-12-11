@@ -7,7 +7,8 @@ import {
   Button,
   Input,
 } from "react-native-elements";
-// const axios = require('axios').default;
+const { baseUrl } = require("../../assets/baseUrl");
+
 import {
   StyleSheet,
   TouchableWithoutFeedback,
@@ -47,7 +48,7 @@ export default function Detail() {
     console.log("ASSSSSS");
     axios({
       method: "POST",
-      url: "http://192.168.100.77:3000/register/",
+      url: `${baseUrl}/register/`,
       data: {
         name: fullName,
         passportNumber: passport,

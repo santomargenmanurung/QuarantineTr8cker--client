@@ -34,6 +34,7 @@ import {
   RightTop,
 } from "../../assets/addQuarantine";
 const axios = require("axios");
+const { baseUrl } = require("../../assets/baseUrl");
 
 export default function AddQuarantine({ navigation }) {
   // const navigation = useNavigation();
@@ -42,6 +43,7 @@ export default function AddQuarantine({ navigation }) {
   const [keyboardStatus, setKeyboardStatus] = useState(undefined);
   const [newQuarantine, setNewQuarantine] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [errorLogin, setErrorLogin] = useState(false);
 
   // const kananX = useSharedValue(-1);
   // const kananY = useSharedValue(-19.5);
@@ -55,7 +57,7 @@ export default function AddQuarantine({ navigation }) {
         const value = await AsyncStorage.getItem("access_token");
         // console.log(value);
         setLoading(true);
-        let resp = await axios.get(`http://192.168.100.77:3000/quarantines/`, {
+        let resp = await axios.get(`${baseUrl}/quarantines/`, {
           headers: {
             access_token: value,
           },
@@ -96,8 +98,9 @@ export default function AddQuarantine({ navigation }) {
   // }, [navigation]);
   async function addQuarantineButton() {
     try {
+      console.log("MASUK SINII0", origin, arrival);
       const value = await AsyncStorage.getItem("access_token");
-      let resp = await axios(`http://192.168.100.77:3000/trips/`, {
+      let resp = await axios(`${baseUrl}/trips/`, {
         method: "POST",
         headers: {
           access_token: value,
@@ -107,9 +110,16 @@ export default function AddQuarantine({ navigation }) {
           tripDestination: arrival,
         },
       });
-      if (resp.data) navigation.navigate("MyTrips");
+      navigation.navigate("MyTrips");
     } catch (error) {
-      console.log(error.message, "INI ERROR");
+      if (error.message == "Request failed with status code 400") {
+        setErrorLogin(true);
+      } else {
+        console.log("MASUK ERROR");
+        setErrorLogin(false);
+        navigation.navigate("MyTrips");
+        console.log(error.message, "INI ERROR");
+      }
     }
   }
 
@@ -273,6 +283,24 @@ export default function AddQuarantine({ navigation }) {
         Back to My Quarantines
         {/* {JSON.stringify(newQuarantine)} */}
       </Text>
+      {errorLogin ? (
+        <Text
+          style={{
+            fontFamily: "Helvetica",
+            position: "absolute",
+            color: "white",
+            fontWeight: "bold",
+            zIndex: 50,
+            left: 85,
+            top: 500,
+            fontSize: 10,
+          }}
+        >
+          PLEASE INPUT ORIGIN AND ARRIVAL PORT
+        </Text>
+      ) : (
+        <></>
+      )}
     </>
   );
 }

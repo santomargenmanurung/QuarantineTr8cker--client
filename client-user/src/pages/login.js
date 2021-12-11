@@ -8,6 +8,7 @@ import {
   Input,
 } from "react-native-elements";
 // import { TextInput } from "react-native-paper";
+const { baseUrl } = require("../../assets/baseUrl");
 const axios = require("axios");
 import {
   StyleSheet,
@@ -15,6 +16,7 @@ import {
   Keyboard,
   SafeAreaView,
   View,
+  Text,
   TextInput,
 } from "react-native";
 import { Nunito_700Bold } from "@expo-google-fonts/nunito";
@@ -38,6 +40,7 @@ export default function Login() {
   const navigation = useNavigation();
   const [email, onChangeEmail] = useState("");
   const [password, onChangePassword] = useState("");
+  const [errorLogin, setErrorLogin] = useState(false);
 
   if (!fontsLoaded) null;
 
@@ -48,22 +51,26 @@ export default function Login() {
   const loginButtonPress = async (e) => {
     // await AsyncStorage.setItem('key', value)
     try {
-      // console.log("MASUK");
-      let resp = await axios(`http://192.168.100.77:3000/login`, {
+      // console.log(email, password, "MASUK");
+      let resp = await axios(`${baseUrl}/login`, {
         method: "POST",
         data: {
           email: email.toLowerCase(),
           password: password,
         },
       });
-      console.log(resp);
+      console.log(resp, "INI HASIL");
       await AsyncStorage.setItem("access_token", resp.data.access_token);
       const value = await AsyncStorage.getItem("access_token");
+      setErrorLogin(false);
       if (value) navigation.navigate("MyTrips");
 
       // console.log(value, "RS_");
     } catch (error) {
-      console.log(error);
+      console.log(error.message, "INI ERRORNYA");
+      if (error.message == "Request failed with status code 400")
+        setErrorLogin(true);
+      // console.log("SALAAAHHH");
     }
   };
 
@@ -161,6 +168,24 @@ export default function Login() {
         height="50%"
         xml={registerButton}
       ></SvgXml>
+      {errorLogin ? (
+        <Text
+          style={{
+            fontFamily: "Helvetica",
+            position: "absolute",
+            color: "white",
+            fontWeight: "bold",
+            zIndex: 50,
+            left: 80,
+            top: 580,
+            fontSize: 10,
+          }}
+        >
+          PLEASE CHECK YOUR LOGIN OR PASSWORD
+        </Text>
+      ) : (
+        <></>
+      )}
     </>
   );
 }
