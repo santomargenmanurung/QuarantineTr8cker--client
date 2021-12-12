@@ -4,13 +4,16 @@ import { NativeBaseProvider } from "native-base";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import HomeScreen from "./screens/HomeScreen";
-import QRScanner from "./components/QRScanner";
-import OfficerForm from "./screens/OfficerForm";
-import InterviewForm from "./screens/InterviewForm";
-import LoginScreen from "./screens/LoginScreen";
 
-import { StyleSheet, Text, View } from "react-native";
+import HomeScreen from './screens/HomeScreen';
+import QRScanner from './components/QRScanner';
+import OfficerForm from './screens/OfficerForm';
+import InterviewForm from './screens/InterviewForm';
+import BriefingForm from './screens/BriefingForm';
+import LoginScreen from "./screens/LoginScreen";
+import { StyleSheet, Text, View } from 'react-native';
+
+
 
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
@@ -39,6 +42,7 @@ export default function App() {
           <Stack.Screen name="QRScanner" component={QRScanner} />
           <Stack.Screen name="OfficerForm" component={OfficerForm} />
           <Stack.Screen name="InterviewForm" component={InterviewForm} />
+          <Stack.Screen name="BriefingForm" component={BriefingForm} />
         </Stack.Navigator>
       </NavigationContainer>
     </NativeBaseProvider>

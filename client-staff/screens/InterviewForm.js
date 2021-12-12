@@ -42,7 +42,7 @@ export default function InterviewForm({ navigation, route }) {
         },
       });
       //jangan lupa diganti jadi response.data.pageData
-      setLocations(response.data);
+      setLocations(response.data.pageData);
     } catch (error) {
       console.log(error, "error getLocation");
     }
