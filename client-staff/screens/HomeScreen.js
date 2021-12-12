@@ -11,10 +11,6 @@ export default function HomeScreen({ navigation }) {
   let dispatch = useDispatch()
   let state = useSelector(state => state)
 
-  useEffect(() => {
-    dispatch(setToken("IniTokenTesting"))
-  }, [])
-  
   return (
     <VStack flex={1} space={4} alignItems="center" bg="#193498">
       <Box
@@ -28,6 +24,7 @@ export default function HomeScreen({ navigation }) {
       <Text fontSize="xl" textAlign="left" color="black" shadow={5}>
         Nama    : Denis Irawan{'\n'}
         Jabatan : Airport Officer
+        {state.access_token}
       </Text>
       </Box>
       <Box w="80%" h="50%" p="10" backgroundColor="white" rounded="md" shadow={1}>
