@@ -1,15 +1,7 @@
 import { StatusBar } from "expo-status-bar";
-import React, { useEffect, useCallback, useRef } from "react";
-import {
-  SearchBar,
-  Card,
-  ListItem,
-  Button,
-  Input,
-} from "react-native-elements";
-// import { TextInput } from "react-native-paper";
 const { baseUrl } = require("../../assets/baseUrl");
 const axios = require("axios");
+import React, { useEffect, useCallback, useRef } from "react";
 import {
   StyleSheet,
   TouchableWithoutFeedback,
@@ -19,11 +11,15 @@ import {
   Text,
   TextInput,
 } from "react-native";
-import { Nunito_700Bold } from "@expo-google-fonts/nunito";
 import { SvgXml } from "react-native-svg";
-import { useFonts } from "expo-font";
 import { useState } from "react";
 import { useNavigation } from "@react-navigation/native";
+// import { useDispatch, useSelector } from "react-redux"
+import Animated, {
+  useSharedValue,
+  useAnimatedStyle,
+  withSpring,
+} from "react-native-reanimated";
 import {
   backgroundSvg,
   loginButton,
@@ -33,23 +29,39 @@ import {
 } from "../../assets/loginAssets";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
-export default function Login() {
-  let [fontsLoaded] = useFonts({
-    Nunito_700Bold,
-  });
-  const navigation = useNavigation();
+export default function Login({ navigation }) {
+  // const navigation = useNavigation();
   const [email, onChangeEmail] = useState("");
   const [password, onChangePassword] = useState("");
   const [errorLogin, setErrorLogin] = useState(false);
-
-  if (!fontsLoaded) null;
+  // const dispatch = useDispatch();
+  // const offset = useSharedValue(-0.18);
+  const offset = useSharedValue(2);
 
   useEffect(() => {
-    console.log("INI ADALAH LINK");
-  }, []);
+    const unsubscribe = navigation.addListener("focus", () => {
+      offset.value = -0.18;
+    });
+    return unsubscribe;
+  }, [navigation]);
+
+  useEffect(() => {
+    const unsubscribe = navigation.addListener("blur", () => {
+      offset.value = 4;
+    });
+    return unsubscribe;
+  }, [navigation]);
+
+  const rightStyle = useAnimatedStyle(() => {
+    return {
+      transform: [
+        { translateX: withSpring(offset.value * 50) },
+        { translateY: withSpring(1 * 255) },
+      ],
+    };
+  });
 
   const loginButtonPress = async (e) => {
-    // await AsyncStorage.setItem('key', value)
     try {
       // console.log(email, password, "MASUK");
       let resp = await axios(`${baseUrl}/login`, {
@@ -59,13 +71,15 @@ export default function Login() {
           password: password,
         },
       });
-      console.log(resp, "INI HASIL");
+      // console.log(resp, "INI HASIL");
       await AsyncStorage.setItem("access_token", resp.data.access_token);
       const value = await AsyncStorage.getItem("access_token");
+      console.log(value);
       setErrorLogin(false);
       if (value) navigation.navigate("MyTrips");
       // console.log(value, "RS_");
     } catch (error) {
+      // console.log("MASUK SINI JANCOOOKKK");
       console.log(error.message, "INI ERRORNYA");
       if (error.message == "Request failed with status code 400")
         setErrorLogin(true);
@@ -85,17 +99,28 @@ export default function Login() {
         height="100%"
         xml={backgroundSvg}
       ></SvgXml>
-      <SvgXml
-        style={{
-          position: "absolute",
-          zIndex: 0,
-          left: -10,
-          top: -220,
-        }}
-        width="120%"
-        height="100%"
-        xml={sideItem}
-      ></SvgXml>
+      <Animated.View
+        style={[
+          {
+            flex: 1,
+            // borderColor: "black",
+            color: "#520F9A",
+          },
+          rightStyle,
+        ]}
+      >
+        <SvgXml
+          style={{
+            position: "absolute",
+            zIndex: 3,
+            left: -180,
+            top: -340,
+          }}
+          width="200%"
+          height="200%"
+          xml={sideItem}
+        ></SvgXml>
+      </Animated.View>
       <SvgXml
         style={{
           position: "absolute",
@@ -109,13 +134,13 @@ export default function Login() {
       ></SvgXml>
 
       <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
-        <View style={{ flex: 1 }}>
+        <View style={{ flex: 2 }}>
           <TextInput
             style={{
               position: "absolute",
               zIndex: 9999,
               left: 60,
-              top: 476,
+              top: 175,
               width: 250,
             }}
             onChangeText={onChangeEmail}
@@ -128,14 +153,14 @@ export default function Login() {
               position: "absolute",
               zIndex: 9999,
               left: 60,
-              top: 535,
+              top: 235,
               width: 250,
             }}
             secureTextEntry={true}
             onChangeText={onChangePassword}
             value={password}
             placeholder="Please input your password"
-            keyboardType="defalut"
+            keyboardType="default"
           />
         </View>
       </TouchableWithoutFeedback>
@@ -215,4 +240,5 @@ const styles = StyleSheet.create({
     padding: 10,
     marginTop: 100,
   },
+  anim: { position: "absolute", zIndex: 0, left: -10, top: -220 },
 });

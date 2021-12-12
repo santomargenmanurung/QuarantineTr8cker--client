@@ -36,7 +36,7 @@ export default function Detail() {
             access_token: value,
           },
         });
-        console.log(resp.data, "DISINI ADA FETCH DATA");
+        // console.log(resp.data, "DISINI ADA FETCH DATA");
         setMyQuarantine(resp.data);
       } catch (error) {
         console.log(error);
@@ -49,6 +49,16 @@ export default function Detail() {
     // console.log(user);
     navigation.navigate("quarantineDetail", { user });
   }
+
+  const logoutAction = async () => {
+    try {
+      await AsyncStorage.removeItem("access_token");
+      // setFoundToken(""); //kalau logout
+      navigation.navigate("Login");
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   return (
     <>
@@ -233,7 +243,7 @@ export default function Detail() {
       ></SvgXml>
       <SvgXml
         onPress={() => {
-          navigation.navigate("Login");
+          logoutAction();
         }}
         style={{
           position: "absolute",

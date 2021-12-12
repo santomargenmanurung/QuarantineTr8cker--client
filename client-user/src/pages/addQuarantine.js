@@ -63,10 +63,10 @@ export default function AddQuarantine({ navigation }) {
           },
         });
         //JOKO FALSE
-        console.log(
-          resp.data[resp.data.length - 1].isQuarantined,
-          "LIHAT DISINI"
-        );
+        // console.log(
+        //   resp.data[resp.data.length - 1].isQuarantined,
+        //   "LIHAT DISINI"
+        // );
         if (!resp.data[resp.data.length - 1].isQuarantined) {
           setNewQuarantine(true);
         }
@@ -98,7 +98,7 @@ export default function AddQuarantine({ navigation }) {
   // }, [navigation]);
   async function addQuarantineButton() {
     try {
-      console.log("MASUK SINII0", origin, arrival);
+      // console.log("MASUK SINII0", origin, arrival);
       const value = await AsyncStorage.getItem("access_token");
       let resp = await axios(`${baseUrl}/trips/`, {
         method: "POST",

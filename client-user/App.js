@@ -16,13 +16,87 @@ import quarantineDetail from "./src/pages/quarantineDetail";
 import login from "./src/pages/login";
 import mytrips from "./src/pages/mytrips";
 const HomeStack = createNativeStackNavigator();
+const Stack = createNativeStackNavigator();
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import isLogedin from "./src/components/isLogedin";
 
 export default function App() {
-  const [password, onChangePassword] = useState(false);
-  console.log(password);
+  const [foundToken, setFoundToken] = useState("");
+  const [isLoad, setIsLoad] = useState(true);
 
+  const checkToken = async () => {
+    try {
+      // console.log("MASUKKKK");
+      let findingToken = await AsyncStorage.getItem("access_token");
+      // console.log(findingToken, "INI DI APPP");
+      setFoundToken(findingToken); //kalau sudah login
+      setIsLoad(false);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const logoutAction = async () => {
+    try {
+      await AsyncStorage.removeItem("access_token");
+      setFoundToken(""); //kalau logout
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    checkToken();
+    // console.log("JALAN GA?");
+  }, [foundToken]);
+
+  // if (isLoad == true) {
+  //   return (
+  //     <>
+  //       <Text>HALOOOOOOO SABAR YAAAA</Text>
+  //     </>
+  //   );
+  // }
+
+  // return (
+  //   <NavigationContainer initialRouteName="Home">
+  //     <HomeStack.Navigator>
+  //       {!foundToken ? (
+  //         <>
+  //           {/* <Text>{JSON.stringify("ASSAS")}</Text> */}
+  //           <HomeStack.Screen
+  //             options={{ headerShown: false }}
+  //             name="Login"
+  //             component={login}
+  //           />
+  //           <HomeStack.Screen
+  //             options={{ headerShown: false }}
+  //             name="Register"
+  //             component={register}
+  //           />
+  //         </>
+  //       ) : (
+  //         <>
+  //           <HomeStack.Screen
+  //             options={{ headerShown: false }}
+  //             name="MyTrips"
+  //             component={mytrips}
+  //           />
+  //           <HomeStack.Screen
+  //             options={{ headerShown: false }}
+  //             name="quarantineDetail"
+  //             component={quarantineDetail}
+  //           />
+  //           <HomeStack.Screen
+  //             options={{ headerShown: false }}
+  //             name="AddQuarantine"
+  //             component={addQuarantine}
+  //           />
+  //         </>
+  //       )}
+  //     </HomeStack.Navigator>
+  //   </NavigationContainer>
+  // );
   return (
     <NavigationContainer initialRouteName="Home">
       <HomeStack.Navigator>
