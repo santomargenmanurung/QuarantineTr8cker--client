@@ -30,18 +30,22 @@ export default function QRScanner({ navigation }) {
 
   const handleProceedScan = () => {
     setScanned(false);
+
+    console.log(scannedData)
     setUserData(JSON.parse(scannedData))
+
     if (
       userData.status === "ArrivalProcedure" ||
       userData.status === "Interviewed" ||
       userData.status === "Exit Terminal" ||
+      userData.status === "On route" ||
       userData.status === "Quarantine" ||
       userData.status === "SwabPertama"
     ) {
       navigation.navigate("OfficerForm", { userData });
     } else if (userData.status === "Interview") {
       navigation.navigate("InterviewForm", { userData });
-    } else if (userData.status === "On Route") {
+    } else if (userData.status === "Briefing") {
       navigation.navigate("BriefingForm", { userData });
     }
   };

@@ -1,14 +1,6 @@
 import { StatusBar } from "expo-status-bar";
 import React, { useEffect, useCallback, useRef } from "react";
-import {
-  SearchBar,
-  Card,
-  ListItem,
-  Button,
-  Input,
-} from "react-native-elements";
-// import { TextInput } from "react-native-paper";
-const { baseUrl } = require("../../assets/baseUrl");
+const { baseUrl } = require("../assets/baseUrl");
 const axios = require("axios");
 import {
   StyleSheet,
@@ -19,30 +11,27 @@ import {
   Text,
   TextInput,
 } from "react-native";
-import { Nunito_700Bold } from "@expo-google-fonts/nunito";
+// import { Nunito_700Bold } from "@expo-google-fonts/nunito";
 import { SvgXml } from "react-native-svg";
-import { useFonts } from "expo-font";
+// import { useFonts } from "expo-font";
 import { useState } from "react";
 import { useNavigation } from "@react-navigation/native";
 import {
   backgroundSvg,
+  logo,
   loginButton,
   loginForm,
-  registerButton,
   sideItem,
-} from "../../assets/loginAssets";
+} from "../assets/loginAssets";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export default function Login() {
-  let [fontsLoaded] = useFonts({
-    Nunito_700Bold,
-  });
   const navigation = useNavigation();
   const [email, onChangeEmail] = useState("");
   const [password, onChangePassword] = useState("");
   const [errorLogin, setErrorLogin] = useState(false);
 
-  if (!fontsLoaded) null;
+  //   if (!fontsLoaded) null;
 
   useEffect(() => {
     console.log("INI ADALAH LINK");
@@ -59,18 +48,17 @@ export default function Login() {
           password: password,
         },
       });
-      console.log(resp, "INI HASIL");
+      //   console.log(resp.data.access_token, "INI HASIL");
       await AsyncStorage.setItem("access_token", resp.data.access_token);
       const value = await AsyncStorage.getItem("access_token");
       setErrorLogin(false);
-      if (value) navigation.navigate("MyTrips");
+      if (value) navigation.navigate("HomeScreen");
 
       // console.log(value, "RS_");
     } catch (error) {
       console.log(error.message, "INI ERRORNYA");
       if (error.message == "Request failed with status code 400")
         setErrorLogin(true);
-      // console.log("SALAAAHHH");
     }
   };
 
@@ -90,12 +78,23 @@ export default function Login() {
         style={{
           position: "absolute",
           zIndex: 0,
-          left: -10,
-          top: -220,
+          left: -170,
+          top: -600,
         }}
-        width="120%"
-        height="100%"
+        width="150%"
+        height="150%"
         xml={sideItem}
+      ></SvgXml>
+      <SvgXml
+        style={{
+          position: "absolute",
+          zIndex: 0,
+          left: 0,
+          top: -445,
+        }}
+        width="100%"
+        height="100%"
+        xml={logo}
       ></SvgXml>
       <SvgXml
         style={{
@@ -148,25 +147,10 @@ export default function Login() {
           zIndex: 2,
           left: 100,
           top: 420,
-          // fontFamily: "Nunito_700Bold",
         }}
         width="50%"
         height="50%"
         xml={loginButton}
-      ></SvgXml>
-      <SvgXml
-        onPress={() => {
-          navigation.navigate("Register");
-        }}
-        style={{
-          position: "absolute",
-          zIndex: 2,
-          left: 100,
-          top: 500,
-        }}
-        width="50%"
-        height="50%"
-        xml={registerButton}
       ></SvgXml>
       {errorLogin ? (
         <Text
@@ -186,34 +170,20 @@ export default function Login() {
       ) : (
         <></>
       )}
+      <Text
+        style={{
+          position: "absolute",
+          zIndex: 2,
+          left: 70,
+          top: 160,
+          color: "#02023A",
+          textAlign: "center",
+          fontFamily: "Helvetica-Bold",
+          fontSize: 15,
+        }}
+      >
+        Indonesian Quarantine Official App
+      </Text>
     </>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    backgroundColor: "#F6EEFD",
-    padding: 10,
-    paddingTop: 60,
-  },
-  buttonYoutube: {
-    backgroundColor: "#F6EEFD",
-    textAlign: "center",
-    fontSize: 25,
-    fontFamily: "AvenirNextCondensed-BoldItalic",
-    width: 150,
-  },
-  viewbuttonYoutube: {
-    width: 150,
-  },
-  containerLoading: {
-    flex: 1,
-    justifyContent: "center",
-  },
-  horizontalLoading: {
-    flexDirection: "row",
-    justifyContent: "space-around",
-    padding: 10,
-    marginTop: 100,
-  },
-});
