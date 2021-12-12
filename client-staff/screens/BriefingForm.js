@@ -17,18 +17,17 @@ import axios from "axios";
 import { TextInput, View, StyleSheet, Alert } from "react-native";
 import { useFormik } from "formik";
 import DateTimePicker from "@react-native-community/datetimepicker";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+const { baseUrl } = require('../assets/baseUrl')
 
 export default function BriefingForm({ navigation, route }) {
   const userData = route.params.userData;
-  // const userData = {
-  //   id: 8,
-  //   name: "John Doe",
-  //   passportNumber: "B0123456",
-  //   role: "User",
-  //   email: "john@doe.com",
-  //   phoneNumber: "08123456789",
-  //   status: "Interviewed",
-  // };
+  const [OfficerToken, setOfficerToken] = useState('')
+
+  useEffect(async ()=>{
+    const token = await AsyncStorage.getItem('access_token')
+    setOfficerToken(token)
+   },[])
 
   const [date, setDate] = useState(new Date());
   const [mode, setMode] = useState("date");
@@ -59,12 +58,11 @@ export default function BriefingForm({ navigation, route }) {
   const changeStatus = async () => {
     try {
       const response = await axios(
-        `http://192.168.5.11:3000/users/${userData.id}`,
+        `${baseUrl}/users/${userData.id}`,
         {
           method: "PUT",
           headers: {
-            access_token:
-              "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NiwiZW1haWwiOiJvZmZpY2VyQHdpc21hLmNvbSIsInJvbGUiOiJPZmZpY2VyV2lzbWEiLCJpYXQiOjE2MzkyNzgyNzR9.4hG_gYybT__pYqom9SpL6elcD-i2Funvq1l-F_er8EI",
+            access_token: OfficerToken
           },
         }
       );
@@ -79,12 +77,11 @@ export default function BriefingForm({ navigation, route }) {
   const putQuarantine = async (roomNumber, date) => {
     try {
       const response = await axios(
-        `http://192.168.5.11:3000/quarantines/${userData.id}`,
+        `${baseUrl}/quarantines/${userData.id}`,
         {
           method: "PUT",
           headers: {
-            access_token:
-              "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NiwiZW1haWwiOiJvZmZpY2VyQHdpc21hLmNvbSIsInJvbGUiOiJPZmZpY2VyV2lzbWEiLCJpYXQiOjE2MzkyNzgyNzR9.4hG_gYybT__pYqom9SpL6elcD-i2Funvq1l-F_er8EI",
+            access_token: OfficerToken
           },
           data: {
             roomNumber: roomNumber,

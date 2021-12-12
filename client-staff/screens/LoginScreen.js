@@ -185,7 +185,6 @@ export default function Login() {
       {isUser ? (
         <Text
           style={{
-            fontFamily: "Helvetica",
             position: "absolute",
             color: "white",
             fontWeight: "bold",
@@ -208,7 +207,6 @@ export default function Login() {
           top: 160,
           color: "#02023A",
           textAlign: "center",
-          fontFamily: "Helvetica-Bold",
           fontSize: 15,
         }}
       >
