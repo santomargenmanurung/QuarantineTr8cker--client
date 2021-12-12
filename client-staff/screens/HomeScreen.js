@@ -1,15 +1,26 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux"
 import { setToken } from "../store/actions";
-import { View, Button, StyleSheet } from "react-native";
+import { View, Button, StyleSheet} from "react-native";
 import { VStack, Center, Heading, Box, Icon, Pressable, Circle, Text} from "native-base"
 import LottieView from 'lottie-react-native';
 import { MaterialIcons, Ionicons } from "@expo/vector-icons"
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
 
 
 export default function HomeScreen({ navigation }) {
   let dispatch = useDispatch()
   let state = useSelector(state => state)
+  const [officerName, setOfficerName] = useState('')
+  const [officerRole, setOfficerRole] = useState('')
+
+  useEffect(async ()=>{
+   const name = await AsyncStorage.getItem('name')
+   const role = await AsyncStorage.getItem('role')
+   setOfficerName(name)
+   setOfficerRole(role)
+  },[])
 
   return (
     <VStack flex={1} space={4} alignItems="center" bg="#193498">
@@ -22,9 +33,8 @@ export default function HomeScreen({ navigation }) {
       rounded={"md"}
       >
       <Text fontSize="xl" textAlign="left" color="black" shadow={5}>
-        Nama    : Denis Irawan{'\n'}
-        Jabatan : Airport Officer
-        {state.access_token}
+        Nama    : {officerName}{'\n'}
+        Jabatan : {officerRole}
       </Text>
       </Box>
       <Box w="80%" h="50%" p="10" backgroundColor="white" rounded="md" shadow={1}>

@@ -15,23 +15,16 @@ import {
 import { MaterialIcons, Ionicons } from "@expo/vector-icons";
 import axios from "axios";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-
-// {
-//     "id": "integer",
-//     "name": "string",
-//     "passportNumber": "string",
-//     "role": |> One of the list of Roles <|,
-//     "email": "string",
-//     "phoneNumber": "string",
-//     "status": |> One of the list of Status <|
-//   }
-// const api = create({
-//   baseURL: 'http://192.168.5.11',
-//   headers: { access_token:"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwiZW1haWwiOiJvZmZpY2VyQGFpcnBvcnQuY29tIiwicm9sZSI6Ik9mZmljZXJBaXJwb3J0IiwiaWF0IjoxNjM5MDU4MjY3fQ.2TbWPbxGE0UfjdXY4AeYkFhpIBaxU5Hp-6KRZe9tGFQ"},
-// })
+const {baseUrl} = require('../assets/baseUrl')
 
 export default function OfficerForm({ navigation, route }) {
-  const [officerData, setOfficerData] = useState({});
+  const [officerToken, setOfficerToken] = useState('');
+
+  useEffect(async ()=>{
+    const token = await AsyncStorage.getItem('access_token')
+    setOfficerToken(token)
+   },[])
+  
   const userData = route.params.userData;
 
   const successAlert = () => {
@@ -82,12 +75,11 @@ export default function OfficerForm({ navigation, route }) {
       console.log(userData.id);
       //await AsyncStorage()
       const response = await axios(
-        `http://192.168.5.11:3000/users/${userData.id}`,
+        `${baseUrl}/users/${userData.id}`,
         {
           method: "PUT",
           headers: {
-            access_token:
-              "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NSwiZW1haWwiOiJvZmZpY2VyQGhvdGVsLmNvbSIsInJvbGUiOiJPZmZpY2VySG90ZWwiLCJpYXQiOjE2MzkyODA5ODB9.fnBcqg-NT179MCd06dKvW5wJ2NRxBeEy6-Blmdi6pj0",
+            access_token: officerToken
           },
         }
       );
