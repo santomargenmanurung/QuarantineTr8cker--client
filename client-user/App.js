@@ -26,7 +26,7 @@ export default function App() {
 
   const checkToken = async () => {
     try {
-      console.log("MASUKKKK");
+      // console.log("MASUKKKK");
       let findingToken = await AsyncStorage.getItem("access_token");
       // console.log(findingToken, "INI DI APPP");
       setFoundToken(findingToken); //kalau sudah login
@@ -47,30 +47,8 @@ export default function App() {
 
   useEffect(() => {
     checkToken();
-  }, []);
-
-  // return (
-  //   <NavigationContainer>
-  //     <Stack.Navigator>
-  //       {
-  //         foundToken
-  //         ?<Stack.Screen name="Home">
-  //           {props => <HomeScreen {...props} logout={logoutAction} />}
-  //         </Stack.Screen>
-  //         :(isLoad
-  //          ?<Stack.Screen
-  //             name="Load"
-  //             options={{headerShown:false}}>
-  //             {props => <LoadScreen {...props}/>}
-  //           </Stack.Screen>
-  //          :<Stack.Screen name="Login">
-  //             {props => <LoginScreen {...props} login={loginAction} />}
-  //           </Stack.Screen>
-  //         )
-  //       }
-  //     </Stack.Navigator>
-  //   </NavigationContainer>
-  // );
+    // console.log("JALAN GA?");
+  }, [foundToken]);
 
   // if (isLoad == true) {
   //   return (
@@ -80,76 +58,76 @@ export default function App() {
   //   );
   // }
 
-  return (
-    <NavigationContainer initialRouteName="Home">
-      <HomeStack.Navigator>
-        {!foundToken ? (
-          <>
-            {/* <Text>{JSON.stringify("ASSAS")}</Text> */}
-            <HomeStack.Screen
-              options={{ headerShown: false }}
-              name="Login"
-              component={login}
-            />
-            <HomeStack.Screen
-              options={{ headerShown: false }}
-              name="Register"
-              component={register}
-            />
-          </>
-        ) : (
-          <>
-            <HomeStack.Screen
-              options={{ headerShown: false }}
-              name="MyTrips"
-              component={mytrips}
-            />
-            <HomeStack.Screen
-              options={{ headerShown: false }}
-              name="quarantineDetail"
-              component={quarantineDetail}
-            />
-            <HomeStack.Screen
-              options={{ headerShown: false }}
-              name="AddQuarantine"
-              component={addQuarantine}
-            />
-          </>
-        )}
-      </HomeStack.Navigator>
-    </NavigationContainer>
-  );
   // return (
   //   <NavigationContainer initialRouteName="Home">
   //     <HomeStack.Navigator>
-  //       <HomeStack.Screen
-  //         options={{ headerShown: false }}
-  //         name="Login"
-  //         component={login}
-  //       />
-  //       <HomeStack.Screen
-  //         options={{ headerShown: false }}
-  //         name="Register"
-  //         component={register}
-  //       />
-  //       <HomeStack.Screen
-  //         options={{ headerShown: false }}
-  //         name="quarantineDetail"
-  //         component={quarantineDetail}
-  //       />
-  //       <HomeStack.Screen
-  //         options={{ headerShown: false }}
-  //         name="MyTrips"
-  //         component={mytrips}
-  //       />
-  //       <HomeStack.Screen
-  //         options={{ headerShown: false }}
-  //         name="AddQuarantine"
-  //         component={addQuarantine}
-  //       />
+  //       {!foundToken ? (
+  //         <>
+  //           {/* <Text>{JSON.stringify("ASSAS")}</Text> */}
+  //           <HomeStack.Screen
+  //             options={{ headerShown: false }}
+  //             name="Login"
+  //             component={login}
+  //           />
+  //           <HomeStack.Screen
+  //             options={{ headerShown: false }}
+  //             name="Register"
+  //             component={register}
+  //           />
+  //         </>
+  //       ) : (
+  //         <>
+  //           <HomeStack.Screen
+  //             options={{ headerShown: false }}
+  //             name="MyTrips"
+  //             component={mytrips}
+  //           />
+  //           <HomeStack.Screen
+  //             options={{ headerShown: false }}
+  //             name="quarantineDetail"
+  //             component={quarantineDetail}
+  //           />
+  //           <HomeStack.Screen
+  //             options={{ headerShown: false }}
+  //             name="AddQuarantine"
+  //             component={addQuarantine}
+  //           />
+  //         </>
+  //       )}
   //     </HomeStack.Navigator>
   //   </NavigationContainer>
   // );
+  return (
+    <NavigationContainer initialRouteName="Home">
+      <HomeStack.Navigator>
+        <HomeStack.Screen
+          options={{ headerShown: false }}
+          name="Login"
+          component={login}
+        />
+        <HomeStack.Screen
+          options={{ headerShown: false }}
+          name="Register"
+          component={register}
+        />
+        <HomeStack.Screen
+          options={{ headerShown: false }}
+          name="quarantineDetail"
+          component={quarantineDetail}
+        />
+        <HomeStack.Screen
+          options={{ headerShown: false }}
+          name="MyTrips"
+          component={mytrips}
+        />
+        <HomeStack.Screen
+          options={{ headerShown: false }}
+          name="AddQuarantine"
+          component={addQuarantine}
+        />
+      </HomeStack.Navigator>
+    </NavigationContainer>
+  );
 }
 
 const styles = StyleSheet.create({
