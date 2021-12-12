@@ -30,10 +30,10 @@ export default function App() {
     <NativeBaseProvider>
       <NavigationContainer>
         <Stack.Navigator>
-          {/* <Stack.Screen name="HomeScreen" component={HomeScreen} />
+          <Stack.Screen name="HomeScreen" component={HomeScreen} />
           <Stack.Screen name="QRScanner" component={QRScanner} />
           <Stack.Screen name="OfficerForm" component={OfficerForm} />
-          <Stack.Screen name="InterviewForm" component={InterviewForm} /> */}
+          <Stack.Screen name="InterviewForm" component={InterviewForm} />
           <Stack.Screen name="BriefingForm" component={BriefingForm} />
         </Stack.Navigator>
       </NavigationContainer>

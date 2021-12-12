@@ -87,10 +87,7 @@ export default function OfficerForm({ navigation, route }) {
           method: "PUT",
           headers: {
             access_token:
-              "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwiZW1haWwiOiJvZmZpY2VyQGFpcnBvcnQuY29tIiwicm9sZSI6Ik9mZmljZXJBaXJwb3J0IiwiaWF0IjoxNjM5MTkzNjQ1fQ.EF7kobteWlY2VmYmfVwxucgT6HZM5EgNJwgdrg2_Eqc",
-          },
-          data: {
-            status: statusData,
+              "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NSwiZW1haWwiOiJvZmZpY2VyQGhvdGVsLmNvbSIsInJvbGUiOiJPZmZpY2VySG90ZWwiLCJpYXQiOjE2MzkyODA5ODB9.fnBcqg-NT179MCd06dKvW5wJ2NRxBeEy6-Blmdi6pj0",
           },
         }
       );

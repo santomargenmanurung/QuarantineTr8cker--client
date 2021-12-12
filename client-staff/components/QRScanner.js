@@ -38,7 +38,7 @@ export default function QRScanner({ navigation }) {
       userData.status === "ArrivalProcedure" ||
       userData.status === "Interviewed" ||
       userData.status === "Exit Terminal" ||
-      userData.status === "On Route" ||
+      userData.status === "On route" ||
       userData.status === "Quarantine" ||
       userData.status === "SwabPertama"
     ) {
