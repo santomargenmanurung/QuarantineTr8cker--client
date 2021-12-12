@@ -6,3 +6,12 @@ export function setToken(token){
     })
   }
 }
+
+export function clearToken(){
+  return(dispatch) => {
+    dispatch({
+      type: 'user/set',
+      payload: ''
+    })
+  }
+}

@@ -64,7 +64,6 @@ export default function Login() {
       const value = await AsyncStorage.getItem("access_token");
       setErrorLogin(false);
       if (value) navigation.navigate("MyTrips");
-
       // console.log(value, "RS_");
     } catch (error) {
       console.log(error.message, "INI ERRORNYA");
