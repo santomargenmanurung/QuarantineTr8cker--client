@@ -1,5 +1,7 @@
 import { StatusBar } from 'expo-status-bar';
 import React from 'react';
+import { Provider } from 'react-redux'
+import store from './store'
 import { NativeBaseProvider } from "native-base";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
@@ -14,28 +16,30 @@ import { StyleSheet, Text, View } from 'react-native';
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
 
-function HomeStack(){
-  return(
+function HomeStack() {
+  return (
     <Stack.Navigator>
-    <Stack.Screen name="HomeScreen" component={HomeScreen} />
-    <Stack.Screen name="QRScanner" component={QRScanner} />
-    <Stack.Screen name="OfficerForm" component={OfficerForm} />
+      <Stack.Screen name="HomeScreen" component={HomeScreen} />
+      <Stack.Screen name="QRScanner" component={QRScanner} />
+      <Stack.Screen name="OfficerForm" component={OfficerForm} />
     </Stack.Navigator>
   )
 }
 
 export default function App() {
   return (
-    <NativeBaseProvider>
-      <NavigationContainer>
-        <Stack.Navigator>
-          <Stack.Screen name="HomeScreen" component={HomeScreen} />
-          <Stack.Screen name="QRScanner" component={QRScanner} />
-          <Stack.Screen name="OfficerForm" component={OfficerForm} />
-          <Stack.Screen name="InterviewForm" component={InterviewForm} />
-        </Stack.Navigator>
-      </NavigationContainer>
-    </NativeBaseProvider>
+    <Provider store={store}>
+      <NativeBaseProvider>
+        <NavigationContainer>
+          <Stack.Navigator>
+            <Stack.Screen name="HomeScreen" component={HomeScreen} />
+            <Stack.Screen name="QRScanner" component={QRScanner} />
+            <Stack.Screen name="OfficerForm" component={OfficerForm} />
+            <Stack.Screen name="InterviewForm" component={InterviewForm} />
+          </Stack.Navigator>
+        </NavigationContainer>
+      </NativeBaseProvider>
+    </Provider>
   );
 }
 
