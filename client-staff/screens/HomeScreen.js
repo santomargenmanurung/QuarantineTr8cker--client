@@ -1,4 +1,6 @@
-import React from "react";
+import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux"
+import { setToken } from "../store/actions";
 import { View, Button, StyleSheet } from "react-native";
 import { VStack, Center, Heading, Box, Icon, Pressable, Circle, Text} from "native-base"
 import LottieView from 'lottie-react-native';
@@ -6,6 +8,9 @@ import { MaterialIcons, Ionicons } from "@expo/vector-icons"
 
 
 export default function HomeScreen({ navigation }) {
+  let dispatch = useDispatch()
+  let state = useSelector(state => state)
+
   return (
     <VStack flex={1} space={4} alignItems="center" bg="#193498">
       <Box
@@ -19,6 +24,7 @@ export default function HomeScreen({ navigation }) {
       <Text fontSize="xl" textAlign="left" color="black" shadow={5}>
         Nama    : Denis Irawan{'\n'}
         Jabatan : Airport Officer
+        {state.access_token}
       </Text>
       </Box>
       <Box w="80%" h="50%" p="10" backgroundColor="white" rounded="md" shadow={1}>
@@ -35,7 +41,7 @@ export default function HomeScreen({ navigation }) {
 
       <Pressable
         _pressed={{ transform: [{ scale: 0.9 }] }}
-        onPress={() => navigation.navigate("QRScanner", {screen: "QRScanner"})}
+        onPress={() => navigation.navigate("QRScanner", { screen: "QRScanner" })}
       >
         <Circle size={98} bg="#1597E5" shadow={3}>
           <Icon as={<Ionicons name="qr-code" />} color="white" size={12} />

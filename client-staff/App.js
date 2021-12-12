@@ -1,5 +1,7 @@
 import { StatusBar } from "expo-status-bar";
 import React from "react";
+import { Provider } from "react-redux"
+import store from "./store"
 import { NativeBaseProvider } from "native-base";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
@@ -30,26 +32,24 @@ function HomeStack() {
 
 export default function App() {
   return (
-    <NativeBaseProvider>
-      <NavigationContainer>
-        <Stack.Navigator>
-          <Stack.Screen
-            options={{ headerShown: false }}
-            name="LoginScreen"
-            component={LoginScreen}
-          />
-          <Stack.Screen
-            options={{ headerShown: false }}
-            name="HomeScreen"
-            component={HomeScreen}
-          />
-          <Stack.Screen name="QRScanner" component={QRScanner} />
-          <Stack.Screen name="OfficerForm" component={OfficerForm} />
-          <Stack.Screen name="InterviewForm" component={InterviewForm} />
-          <Stack.Screen name="BriefingForm" component={BriefingForm} />
-        </Stack.Navigator>
-      </NavigationContainer>
-    </NativeBaseProvider>
+    <Provider store={store}>
+      <NativeBaseProvider>
+        <NavigationContainer>
+          <Stack.Navigator>
+            <Stack.Screen
+              options={{ headerShown: false }}
+              name="LoginScreen"
+              component={LoginScreen}
+            />
+            <Stack.Screen name="HomeScreen" component={HomeScreen} />
+            <Stack.Screen name="QRScanner" component={QRScanner} />
+            <Stack.Screen name="OfficerForm" component={OfficerForm} />
+            <Stack.Screen name="InterviewForm" component={InterviewForm} />
+            <Stack.Screen name="BriefingForm" component={BriefingForm} />
+          </Stack.Navigator>
+        </NavigationContainer>
+      </NativeBaseProvider>
+    </Provider>
   );
 }
 
