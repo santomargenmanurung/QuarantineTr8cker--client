@@ -6,6 +6,7 @@ import { StyleSheet, SafeAreaView, View, Text, FlatList } from "react-native";
 import { SvgXml } from "react-native-svg";
 const axios = require("axios");
 import { useNavigation } from "@react-navigation/native";
+import { useDispatch, useSelector } from "react-redux";
 import {
   barButtom,
   mytrips,
@@ -17,25 +18,24 @@ import {
   logout,
 } from "../../assets/mytrips";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { setToken } from "../store/actionCreator/itemAction";
 const { baseUrl } = require("../../assets/baseUrl");
-
 // import { fetchMovies } from "../store/actionCreator/itemAction";
 
 export default function Detail() {
   const navigation = useNavigation();
   const [myQuarantine, setMyQuarantine] = useState([]);
+  const dispatch = useDispatch();
 
   useEffect(() => {
     const unsubscribe = navigation.addListener("focus", async () => {
       try {
         const value = await AsyncStorage.getItem("access_token");
-        // console.log(value, "INI VALUNYE");
         let resp = await axios.get(`${baseUrl}/quarantines/`, {
           headers: {
             access_token: value,
           },
         });
-        console.log(resp.data, "DISINI ADA FETCH DATA");
         setMyQuarantine(resp.data);
       } catch (error) {
         console.log(error);
@@ -51,8 +51,11 @@ export default function Detail() {
 
   const logoutAction = async () => {
     try {
+      console.log("KELUARRRR");
       await AsyncStorage.removeItem("access_token");
       // setFoundToken(""); //kalau logout
+      dispatch(setToken("")); //*************** */
+
       navigation.navigate("Login");
     } catch (error) {
       console.log(error);

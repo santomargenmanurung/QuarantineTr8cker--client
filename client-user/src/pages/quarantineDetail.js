@@ -1,22 +1,10 @@
 import { StatusBar } from "expo-status-bar";
 import React, { useEffect, useCallback, useRef } from "react";
-import {
-  SearchBar,
-  Card,
-  ListItem,
-  Button,
-  Input,
-} from "react-native-elements";
+import { useDispatch, useSelector } from "react-redux";
+
 import { TextInput } from "react-native-paper";
 const axios = require("axios");
-import {
-  StyleSheet,
-  TouchableWithoutFeedback,
-  FlatList,
-  SafeAreaView,
-  View,
-  Text,
-} from "react-native";
+import { StyleSheet, Text } from "react-native";
 import { SvgXml } from "react-native-svg";
 const { baseUrl } = require("../../assets/baseUrl");
 import { useState } from "react";
@@ -33,9 +21,11 @@ import {
 } from "../../assets/quarantinedetail";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import QRCode from "react-native-qrcode-svg";
+import { setToken } from "../store/actionCreator/itemAction";
 
 export default function Detail({ route }) {
   const navigation = useNavigation();
+  const dispatch = useDispatch();
   const [myQuarantine, setMyQuarantine] = useState([]);
   const [quarStatus, setQuarStatus] = useState({});
   const [isLoading, setIsloading] = useState(true);
@@ -64,27 +54,24 @@ export default function Detail({ route }) {
         setQuarStatus(resp.data);
         // console.log(quarStatus, "quarStatus");
         if (quarStatus) setIsloading(false);
-        // setInterval(async () => {
-        //   let resp2 = await axios.get(`${baseUrl}/quarantines/`, {
-        //     headers: {
-        //       access_token: value,
-        //     },
-        //   });
-        //   const getId = await resp2.data.find((e) => e.id === user);
-        //   setMyQuarantine(getId);
-        //   let resp3 = axios.get(`${baseUrl}/users/${getId.userId}`, {
-        //     headers: {
-        //       access_token: value,
-        //     },
-        //   });
-        //   setQuarStatus(resp3.data);
-        // }, 2000);
       } catch (error) {
         console.log(error);
       }
     });
     return unsubscribe;
   }, [navigation]);
+
+  const logoutAction = async () => {
+    try {
+      console.log("EXIT");
+      await AsyncStorage.removeItem("access_token");
+      dispatch(setToken("")); //*************** */
+
+      navigation.navigate("Login");
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   if (isLoading)
     return (
@@ -141,7 +128,7 @@ export default function Detail({ route }) {
         xml={addtrips}
       ></SvgXml>
       <SvgXml
-        onPress={() => navigation.navigate("Login")}
+        onPress={() => logoutAction()}
         style={{
           position: "absolute",
           zIndex: 40,
@@ -232,7 +219,6 @@ export default function Detail({ route }) {
       >
         {myQuarantine?.roomNumber}
       </Text>
-      {/* disini */}
       <Text
         style={{
           fontFamily: "Helvetica",

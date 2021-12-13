@@ -11,10 +11,11 @@ import {
   Text,
   TextInput,
 } from "react-native";
+import { useDispatch, useSelector } from "react-redux";
+
 import { SvgXml } from "react-native-svg";
 import { useState } from "react";
 import { useNavigation } from "@react-navigation/native";
-// import { useDispatch, useSelector } from "react-redux"
 import Animated, {
   useSharedValue,
   useAnimatedStyle,
@@ -28,13 +29,14 @@ import {
   sideItem,
 } from "../../assets/loginAssets";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { setToken } from "../store/actionCreator/itemAction";
 
 export default function Login({ navigation }) {
   // const navigation = useNavigation();
   const [email, onChangeEmail] = useState("");
   const [password, onChangePassword] = useState("");
   const [errorLogin, setErrorLogin] = useState(false);
-  // const dispatch = useDispatch();
+  const dispatch = useDispatch();
   // const offset = useSharedValue(-0.18);
   const offset = useSharedValue(2);
 
@@ -74,11 +76,12 @@ export default function Login({ navigation }) {
       // console.log(resp, "INI HASIL");
       await AsyncStorage.setItem("access_token", resp.data.access_token);
       const value = await AsyncStorage.getItem("access_token");
-      console.log(value);
       setErrorLogin(false);
       onChangeEmail("");
       onChangePassword("");
       if (value) {
+        console.log("MASUK KE LOGIN");
+        dispatch(setToken(value)); //*************** */
         navigation.navigate("MyTrips");
       }
 

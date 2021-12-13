@@ -1,62 +1,30 @@
-import {
-  ITEMS_LOADING,
-  QUARLIST,
-  ISLOGIN,
-  DELETEMOVIE,
-  ADD_MOVIE,
-} from "../actionType/itemActionType";
-// import swal from "sweetalert";
 const axios = require("axios");
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { baseUrl } from "../../../assets/baseUrl";
 
-// import { baseUrl } from "../helper/url";
-
-// export function setIsLogin(payload) {
-//   return {
-//     type: ISLOGIN,
-//     payload,
-//   };
-// }
-
-// export function setAddMovie(payload) {
-//   return {
-//     type: ADD_MOVIE,
-//     payload,
-//   };
-// }
-
-function setQuarantineList(payload) {
-  return {
-    type: QUARLIST,
-    payload,
+//*************** */
+export function setToken(token) {
+  return (dispatch) => {
+    dispatch({
+      type: "user/set",
+      payload: token,
+    });
   };
 }
-
-// function setDeleteMovie(payload) {
-//   return {
-//     type: DELETEMOVIE,
-//     payload,
-//   };
-// }
-
-// function itemsLoading(payload) {
-//   return {
-//     type: ITEMS_LOADING,
-//     payload,
-//   };
-// }
+//   const isLogin = useSelector((state) => state.isLogin);
 
 //diperlukan
 export function fetchQuarantine() {
   return async function (dispatch, getState) {
     try {
       const value = await AsyncStorage.getItem("access_token");
-      let resp = await axios.get(`http://192.168.100.77:3000/quarantines/`, {
+      let resp = await axios.get(`${baseUrl}/quarantines/`, {
         headers: {
           access_token: value,
         },
       });
       // setMyQuarantine(resp.data);
+      setToken(value);
       dispatch(setQuarantineList(resp.data));
     } catch (error) {
       console.log(error);
