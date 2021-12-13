@@ -30,7 +30,7 @@ export default function LoginBasic({ navigation }) {
 
   const handleLogin = async (email, password) => {
     try {
-      const response = await axios(`http://192.168.5.11:3000/login`, {
+      const response = await axios(`${baseUrl}/login`, {
         method: "POST",
         data: {
           email,
