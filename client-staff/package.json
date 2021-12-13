@@ -32,7 +32,8 @@
     "@react-native-picker/picker": "2.1.0",
     "@react-native-community/datetimepicker": "3.5.2",
     "react-redux": "^7.2.6",
-    "redux-thunk": "^2.4.1"
+    "redux-thunk": "^2.4.1",
+    "expo-linear-gradient": "~10.0.3"
   },
   "devDependencies": {
     "@babel/core": "^7.12.9"

@@ -15,16 +15,19 @@ import {
 import { MaterialIcons, Ionicons } from "@expo/vector-icons";
 import axios from "axios";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-const {baseUrl} = require('../assets/baseUrl')
+const { baseUrl } = require("../assets/baseUrl");
+
 
 export default function OfficerForm({ navigation, route }) {
-  const [officerToken, setOfficerToken] = useState('');
+  const [officerToken, setOfficerToken] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
 
-  useEffect(async ()=>{
-    const token = await AsyncStorage.getItem('access_token')
-    setOfficerToken(token)
-   },[])
-  
+
+  useEffect(async () => {
+    const token = await AsyncStorage.getItem("access_token");
+    setOfficerToken(token);
+  }, []);
+
   const userData = route.params.userData;
 
   const successAlert = () => {
@@ -50,7 +53,7 @@ export default function OfficerForm({ navigation, route }) {
   // },[]);
 
   const handleArrivalProcedure = async () => {
-    console.log("pressed");
+    setIsLoading(true);
     let statusData;
     switch (userData.status) {
       case "ArrivalProcedure":
@@ -74,33 +77,51 @@ export default function OfficerForm({ navigation, route }) {
     try {
       console.log(userData.id);
       //await AsyncStorage()
-      const response = await axios(
-        `${baseUrl}/users/${userData.id}`,
-        {
-          method: "PUT",
-          headers: {
-            access_token: officerToken
-          },
-        }
-      );
+      const response = await axios(`${baseUrl}/users/${userData.id}`, {
+        method: "PUT",
+        headers: {
+          access_token: officerToken,
+        },
+      });
       console.log(response.data);
+      setIsLoading(false);
       successAlert();
       navigation.navigate("HomeScreen");
     } catch (error) {
+      setIsLoading(false);
       Alert.alert("Error", `${error.response.data.message}`, [
         { text: "OK", onPress: () => console.log("OK Pressed") },
       ]);
       console.log(error.response.data);
     }
   };
-
+  
+  if(isLoading){
+    return(
+      <View style={{flex:1,justifyContent:'center',alignItems:'center'}}>
+        <Circle size={50} />
+      </View>
+    )
+  }
   return (
-    <Center flex={1} bg="#193498">
-      <Box m={5} w="90%" h="2/4" bg="white" rounded="2xl">
+    <Box 
+    safeArea 
+    flex={1} 
+    bg={{
+      linearGradient: {
+        colors: ["#0e3599", "#02023A"],
+        start: [0, 0],
+      },
+    }}>
+      <Heading
+      m={5}
+      color={"white"}
+      >Officer Form</Heading>
+      <Box m={5} w="90%" bg="white" rounded="2xl">
         <Box my={5} mx={2} ml={5}>
           <Heading>Profil Pengunjung</Heading>
           <Divider my="2" />
-          <HStack mt={6}>
+          <HStack>
             <Text fontSize="xl" w="1/3" bold>
               Nama:
             </Text>
@@ -143,14 +164,16 @@ export default function OfficerForm({ navigation, route }) {
         </Box>
       </Box>
       <VStack space={4} alignItems="center">
-        <Pressable onPress={() => handleArrivalProcedure()}>
-          <Center maxW="80" rounded="lg" bg="#ABA5DB" p="5">
+        <Pressable
+         _pressed={{ transform: [{ scale: 0.9 }] }}
+        onPress={() => handleArrivalProcedure()}>
+          <Center maxW="80" rounded="lg" bg="#5A1C94" p="5" pt="5" shadow={3}>
             <Text fontSize="xl" textAlign="center" color="white">
               Proceed Next Step
             </Text>
           </Center>
         </Pressable>
       </VStack>
-    </Center>
+    </Box>
   );
 }

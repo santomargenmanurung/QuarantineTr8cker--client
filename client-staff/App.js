@@ -19,6 +19,15 @@ import LoginBasic from "./screens/LoginBasic";
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
 
+//nativebase config
+const config = {
+  dependencies: {
+    'linear-gradient': require('expo-linear-gradient').LinearGradient
+  }
+}
+
+
+
 function HomeStack() {
   return (
     <Stack.Navigator>
@@ -34,11 +43,14 @@ function HomeStack() {
 export default function App() {
   return (
     <Provider store={store}>
-      <NativeBaseProvider>
+      <NativeBaseProvider config={config}>
         <NavigationContainer>
           <Stack.Navigator
-
+    screenOptions={{
+      headerShown: false
+    }}
           >
+            {/* <Stack.Screen name="LoginScreen" component={LoginScreen} /> */}
             <Stack.Screen name="LoginBasic" component={LoginBasic} />
             <Stack.Screen name="HomeScreen" component={HomeScreen} />
             <Stack.Screen name="QRScanner" component={QRScanner} />

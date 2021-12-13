@@ -40,7 +40,8 @@ export default function QRScanner({ navigation }) {
       userData.status === "Exit Terminal" ||
       userData.status === "On route" ||
       userData.status === "Quarantine" ||
-      userData.status === "SwabPertama"
+      userData.status === "1st Swab" ||
+      userData.status === "2nd Swab"
     ) {
       navigation.navigate("OfficerForm", { userData });
     } else if (userData.status === "Interview") {
@@ -71,7 +72,7 @@ export default function QRScanner({ navigation }) {
   return (
     <View style={styles.container}>
       <Modal
-        animationType="slide"
+        animationType="fade"
         transparent={true}
         visible={modalVisible}
         onRequestClose={() => {
@@ -156,7 +157,7 @@ const styles = StyleSheet.create({
     marginBottom: 15,
   },
   buttonClose: {
-    backgroundColor: "#E6E6E6",
+    backgroundColor: "#360759",
   },
   textStyle: {
     color: "white",

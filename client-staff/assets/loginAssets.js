@@ -48,6 +48,9 @@ const logo = `<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3
 <rect id="Logo" width="385" height="385" fill="url(#pattern)"/>
 </svg>
 `;
+
+
+
 module.exports = {
   backgroundSvg,
   logo,
