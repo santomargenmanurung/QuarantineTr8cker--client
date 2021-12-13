@@ -2,11 +2,11 @@ import { useState } from "react";
 import { useSelector, useDispatch } from 'react-redux'
 import ReactDOM from 'react-dom';
 import { useNavigate } from "react-router-dom";
-
-import axios from "axios";
+// import { addFood } from "../store/actionCreator/action";
+import axios, { Axios } from 'axios'
 export default function FormInput() {
   const dispatch = useDispatch()
-const navigate = useNavigate()
+    let navigate = useNavigate()
     const [inputs, setInputs] = useState({});
     const [isSubmit, setIsubmit] = useState(false);
 
@@ -26,7 +26,7 @@ const navigate = useNavigate()
         let payload = inputs
         console.log(localStorage.access_token);
         try {
-            const posted =  await axios.post('https://quarantine-tr8cker.herokuapp.com/staffs',
+            const posted =  await axios.post('https://quarantine-tr8cker.herokuapp.com/locations',
            payload,{
              headers: {
                  access_token: localStorage.access_token,
@@ -37,7 +37,7 @@ const navigate = useNavigate()
                 navigate('/locations')
             }
         } catch (error) {
-            console.log(error.response.data.message, 'masuk error');
+            console.log(error, 'masuk error');
         }
         setIsubmit(true)
         // dispatch(addFood(inputs))
@@ -46,13 +46,13 @@ const navigate = useNavigate()
     return (
         <div>
         <div className="container">
-            <h1>ADD NEW STAFF</h1>
+            <h1>ADD NEW LOCATON</h1>
             <form onSubmit={handleSubmit}>
                 <fieldset>
                     <div className="row border" style={{ border: "1px" }}>
                         <div className="col-6 border">
                             <div className="form-group">
-                                <label className="form-label">Enter Fullname:
+                                <label className="form-label"> Location Name:
                                 </label>
                                 <br />
                                 <input
@@ -63,56 +63,30 @@ const navigate = useNavigate()
                                 />
                             </div>
                             <div className="form-group">
-                                <label>Enter Email
-                                </label>
-                                <br />
-                                <input
-                                    type="email"
-                                    name="email"
-                                    value={inputs.email || ""}
-                                    onChange={handleChange}
-                                />
-                            </div>
-                            <div className="form-group">
-                                <label className="form-label">Enter Password
-                                </label>
-                                <br />
-                                <input
-                                    type="password"
-                                    name="password"
-                                    value={inputs.password || ""}
-                                    onChange={handleChange}
-                                />
-                            </div>
-                            <div className="form-group">
-                                <label>Enter PhoneNumber
+                                <label>Address
                                 </label>
                                 <br />
                                 <input
                                     type="text"
-                                    name="phoneNumber"
-                                    value={inputs.phoneNumber || ""}
+                                    name="address"
+                                    value={inputs.address || ""}
                                     onChange={handleChange}
                                 />
                             </div>
+                          
                             <div className="form-group">
-                                <label className="form-label">Select Role:
+                                <label className="form-label">Select Type:
                                 </label>
                                 <br />
                                 <select
-                                    name="role"
+                                    name="type"
                                 
-                                value={inputs.role || "Chose One"} 
+                                value={inputs.type || "Chose One"} 
                                 onChange={handleChange}>
                                     <option disabled value="Chose One">--chose one--</option>
-                                    <option value="Admin">Admin</option>
-                                    <option value="OfficeAirport">OfficeAirport</option>
-                                    <option value="DriverWisma">DriverWisma</option>
-                                    <option value="DriveHotel">DriveHotel</option>
-                                    <option value="OfficerHotel">OfficerHotel</option>
-                                    <option value="OfficerWisma">OfficerWisma</option>
-                                    <option value="HealthOfficial">HealthOfficial</option>
-                                    <option value="User">User</option>
+                                    <option value="Wisma">Wisma</option>
+                                    <option value="Hotel">Hotel</option>
+                                    
                                     
                                 </select>
                             </div>
