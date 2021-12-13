@@ -64,53 +64,6 @@ const AppWrap = () => {
 };
 
 export default function App() {
-  // if (isLoad == true) {
-  //   return (
-  //     <>
-  //       <Text>HALOOOOOOO SABAR YAAAA</Text>
-  //     </>
-  //   );
-  // }
-
-  // return (
-  //   <NavigationContainer initialRouteName="Home">
-  //     <HomeStack.Navigator>
-  //       {!foundToken ? (
-  //         <>
-  //           {/* <Text>{JSON.stringify("ASSAS")}</Text> */}
-  //           <HomeStack.Screen
-  //             options={{ headerShown: false }}
-  //             name="Login"
-  //             component={login}
-  //           />
-  //           <HomeStack.Screen
-  //             options={{ headerShown: false }}
-  //             name="Register"
-  //             component={register}
-  //           />
-  //         </>
-  //       ) : (
-  //         <>
-  //           <HomeStack.Screen
-  //             options={{ headerShown: false }}
-  //             name="MyTrips"
-  //             component={mytrips}
-  //           />
-  //           <HomeStack.Screen
-  //             options={{ headerShown: false }}
-  //             name="quarantineDetail"
-  //             component={quarantineDetail}
-  //           />
-  //           <HomeStack.Screen
-  //             options={{ headerShown: false }}
-  //             name="AddQuarantine"
-  //             component={addQuarantine}
-  //           />
-  //         </>
-  //       )}
-  //     </HomeStack.Navigator>
-  //   </NavigationContainer>
-  // );
   return (
     <Provider store={store}>
       <AppWrap />

@@ -7,7 +7,7 @@ const backgroundSvg = `<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http
       <stop offset="1" stop-color="#0e3599"/>
     </linearGradient>
   </defs>
-  <rect id="Background" width="377" height="815" transform="translate(0.5 0.5)" stroke="#e8a3a3" stroke-miterlimit="10" stroke-width="1" fill="url(#linear-gradient)"/>
+  <rect id="Background" width="410" height="900" transform="translate(0.5 0.5)" stroke="#e8a3a3" stroke-miterlimit="10" stroke-width="1" fill="url(#linear-gradient)"/>
 </svg>
 `;
 const loginButton = `<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="147.588" height="55.388" viewBox="0 0 147.588 55.388">

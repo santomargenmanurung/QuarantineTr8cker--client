@@ -277,7 +277,12 @@ export default function AddQuarantine({ navigation }) {
           zIndex: 888,
         }}
         onPress={() => {
-          navigation.navigate("MyTrips");
+          kananY.value = -19.5;
+          kananX.value = 0;
+          setTimeout(() => {
+            navigation.navigate("MyTrips");
+            // navigation.navigate("Login");
+          }, 500);
         }}
       >
         {" "}
