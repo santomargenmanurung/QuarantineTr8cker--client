@@ -12,6 +12,7 @@ import {
   Divider,
   Heading,
 } from "native-base";
+import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
 import { TextInput, View, StyleSheet, Alert } from "react-native";
 import { useFormik } from "formik";
@@ -31,19 +32,27 @@ export default function InterviewForm({ navigation, route }) {
   const [locations, setLocations] = useState([]);
   const [officerToken, setOfficerToken] = useState('')
   const userData = route.params.userData;
+  const dispatch = useDispatch()
+  const { access_token } = useSelector((state) => state);
 
   useEffect(async() => {
-    getLocations();
+    setLocations([])
     const token = await AsyncStorage.getItem('access_token')
+    console.log(token)
     setOfficerToken(token)
+    if(token){
+      getLocations(token);
+    }
+    // console.log(access_token)
   }, []);
 
-  const getLocations = async () => {
+  const getLocations = async (token) => {
     try {
+      console.log(officerToken, 'officerToken')
       const response = await axios(`${baseUrl}/locations`, {
         method: "GET",
         headers: {
-          access_token: officerToken
+          access_token: token,
         },
       });
       setLocations(response.data.pageData);
@@ -130,6 +139,7 @@ export default function InterviewForm({ navigation, route }) {
 
   return (
     <Box
+      safeArea
       flex={1}
       bg="#193498"
       _text={{

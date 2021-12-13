@@ -22,27 +22,58 @@ export default function HomeScreen({ navigation }) {
    setOfficerRole(role)
   },[])
 
+  const logout = async () => {
+    try {
+      await AsyncStorage.clear()
+      navigation.navigate('LoginBasic')
+    } catch (error) {
+      console.log('error logout', error)
+    }
+  }
+
   return (
-    <VStack flex={1} space={4} alignItems="center" bg="#193498">
+    <Box
+    safeArea 
+    flex={1}
+    bg={{
+      linearGradient: {
+        colors: ["#0e3599", "#02023A"],
+        start: [0, 0],
+      },
+    }}
+    >
+      <VStack flex={1} space={4} alignItems="center">
       <Box
-      bg="blue.100"
+      bg="blue.200"
       mt="10"
       px="10"
       py="5"
       w="80%"
       rounded={"md"}
       >
-      <Text fontSize="xl" textAlign="left" color="black" shadow={5}>
+      <Text fontSize="xl" textAlign="left" color="black">
         Nama    : {officerName}{'\n'}
         Jabatan : {officerRole}
       </Text>
       </Box>
+      <Pressable
+      onPress={()=>logout()}
+      >
+      <Box
+      bg={"blue.500"}
+      _text={{
+        color: "white",
+      }}
+      >
+        logout
+      </Box>
+      </Pressable>
       <Box w="80%" h="50%" p="10" backgroundColor="white" rounded="md" shadow={1}>
         <LottieView source={require('../assets/lottie-qr-scan.json')} autoPlay loop />
       </Box>
       <Center
       py={5}
-      background="blue.100"
+      background="blue.200"
       px={10}
       rounded="2xl"
       >
@@ -58,6 +89,7 @@ export default function HomeScreen({ navigation }) {
         </Circle>
       </Pressable>
     </VStack>
+    </Box>
   );
 }
 

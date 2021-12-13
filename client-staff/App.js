@@ -26,6 +26,8 @@ const config = {
   }
 }
 
+
+
 function HomeStack() {
   return (
     <Stack.Navigator>
