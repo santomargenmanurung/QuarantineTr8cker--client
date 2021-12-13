@@ -19,6 +19,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useSelector, useDispatch } from "react-redux";
 const { baseUrl } = require("../assets/baseUrl");
 import { setToken } from "../store/actions";
+import { Alert } from "react-native";
 import Svg, { SvgXml, SvgUri } from "react-native-svg";
 import { logo, backgroundSvg, logoBase64 } from "../assets/loginAssets";
 const imgLogo = require('../assets/crop.png');
@@ -45,8 +46,9 @@ export default function LoginBasic({ navigation }) {
       if (value) navigation.navigate("HomeScreen");
       //   dispatch(login(true))
     } catch (error) {
-      console.log(error);
       console.log(error.response.data.message);
+      Alert.alert(`Error`,`${error.response.data.message}`);
+      
     }
   };
   const formik = useFormik({
