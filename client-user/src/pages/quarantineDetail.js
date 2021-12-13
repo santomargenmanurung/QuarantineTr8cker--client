@@ -61,6 +61,8 @@ export default function Detail({ route }) {
     return unsubscribe;
   }, [navigation]);
 
+  console.log("MASUKKKKK");
+
   const logoutAction = async () => {
     try {
       console.log("EXIT");
