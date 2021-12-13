@@ -130,8 +130,14 @@ export default function BriefingForm({ navigation, route }) {
 
   return (
     <Box
+      safeArea
       flex={1}
-      bg="#193498"
+      bg={{
+        linearGradient: {
+          colors: ["#0e3599", "#02023A"],
+          start: [0, 0],
+        },
+      }}
       _text={{
         fontSize: "md",
         fontWeight: "medium",
@@ -139,47 +145,51 @@ export default function BriefingForm({ navigation, route }) {
         letterSpacing: "lg",
       }}
     >
-      <Box m={5} h="2/4" bg="white" rounded="2xl">
+      <Heading
+      color={"white"}
+      m="5"
+      >Briefing Form</Heading>
+      <Box m={5} bg="white" rounded="2xl">
         <Box my={5} mx={5}>
           <Heading>Profil Pengunjung</Heading>
           <Divider my="2" />
-          <HStack mt={6}>
-            <Text fontSize="xl" w="1/3" bold>
+          <HStack mt={5}>
+            <Text fontSize="md" w="1/3" bold>
               Nama:
             </Text>
-            <Text fontSize="xl" ml="2">
+            <Text fontSize="md" ml="2">
               {userData?.name}
             </Text>
           </HStack>
           <HStack mt={6}>
-            <Text fontSize="xl" w="1/3" bold>
+            <Text fontSize="md" w="1/3" bold>
               Passport:
             </Text>
-            <Text fontSize="xl" ml="2">
+            <Text fontSize="md" ml="2">
               {userData?.passportNumber}
             </Text>
           </HStack>
-          <HStack mt={6} fontSize="xl">
-            <Text fontSize="xl" w="1/3" bold>
+          <HStack mt={6} fontSize="md">
+            <Text fontSize="md" w="1/3" bold>
               Status:{" "}
             </Text>
-            <Text fontSize="xl" ml="2">
+            <Text fontSize="md" ml="2">
               {userData?.status}
             </Text>
           </HStack>
-          <HStack mt={6} fontSize="xl">
-            <Text fontSize="xl" w="1/3" bold>
+          <HStack mt={6} fontSize="md">
+            <Text fontSize="md" w="1/3" bold>
               Email:{" "}
             </Text>
-            <Text fontSize="xl" ml="2">
+            <Text fontSize="md" ml="2">
               {userData?.email}
             </Text>
           </HStack>
-          <HStack mt={6} fontSize="xl">
-            <Text fontSize="xl" w="1/3" bold>
+          <HStack mt={6} fontSize="md">
+            <Text fontSize="md" w="1/3" bold>
               Telepon:{" "}
             </Text>
-            <Text fontSize="xl" ml="2">
+            <Text fontSize="md" ml="2">
               {userData?.phoneNumber}
             </Text>
           </HStack>
@@ -198,6 +208,9 @@ export default function BriefingForm({ navigation, route }) {
                   onChangeText={formik.handleChange("roomNumber")}
                   value={formik.values.roomNumber}
                 />
+                <Stack
+                mt="5"
+                >
                 <FormControl.Label>Tanggal Selesai</FormControl.Label>
                 <Input
                   type={"text"}
@@ -205,6 +218,7 @@ export default function BriefingForm({ navigation, route }) {
                   InputRightElement={
                     <Button
                       size="xs"
+                      bg="#2A2052"
                       rounded="none"
                       w="2/5"
                       h="full"
@@ -227,6 +241,7 @@ export default function BriefingForm({ navigation, route }) {
                     />
                   )}
                 </Box>
+                </Stack>
               </Stack>
             </FormControl>
           </VStack>
@@ -237,7 +252,7 @@ export default function BriefingForm({ navigation, route }) {
           p={5}
           mt={5}
           borderRadius={"md"}
-          bg="#ABA5DB"
+          bg="#0E3599"
           shadow={5}
           onPress={formik.handleSubmit}
         >

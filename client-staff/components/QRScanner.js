@@ -40,7 +40,8 @@ export default function QRScanner({ navigation }) {
       userData.status === "Exit Terminal" ||
       userData.status === "On route" ||
       userData.status === "Quarantine" ||
-      userData.status === "SwabPertama"
+      userData.status === "SwabPertama" ||
+      userData.status === "SwabKedua"
     ) {
       navigation.navigate("OfficerForm", { userData });
     } else if (userData.status === "Interview") {
