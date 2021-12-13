@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 
 import { TextInput } from "react-native-paper";
 const axios = require("axios");
-import { StyleSheet, Text } from "react-native";
+import { StyleSheet, Text, Image, View } from "react-native";
 import { SvgXml } from "react-native-svg";
 const { baseUrl } = require("../../assets/baseUrl");
 import { useState } from "react";

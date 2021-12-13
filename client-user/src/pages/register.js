@@ -1,12 +1,10 @@
 import { StatusBar } from "expo-status-bar";
 import React, { useEffect, useCallback, useRef } from "react";
-import {
-  SearchBar,
-  Card,
-  ListItem,
-  Button,
-  Input,
-} from "react-native-elements";
+import Animated, {
+  useSharedValue,
+  useAnimatedStyle,
+  withSpring,
+} from "react-native-reanimated";
 const { baseUrl } = require("../../assets/baseUrl");
 
 import {
@@ -37,15 +35,32 @@ export default function Detail() {
   const [passport, onChangePassport] = useState("");
   const [phone, onChangePhone] = useState("");
   const [fullName, onChangeFullName] = useState("");
+  const offset = useSharedValue(0);
 
   useEffect(() => {
-    // console.log("INI ADALAH LINK");
-  }, []);
+    const unsubscribe = navigation.addListener("focus", () => {
+      offset.value = 1.8;
+    });
+    return unsubscribe;
+  }, [navigation]);
+
+  useEffect(() => {
+    const unsubscribe = navigation.addListener("blur", () => {
+      offset.value = -2;
+    });
+    return unsubscribe;
+  }, [navigation]);
+
+  const rightStyle = useAnimatedStyle(() => {
+    return {
+      transform: [
+        { translateX: withSpring(-1.8 * 50) },
+        { translateY: withSpring(offset.value * 255) },
+      ],
+    };
+  });
 
   const registerButton = (e) => {
-    console.log("email", email);
-    console.log("password", password);
-    console.log("ASSSSSS");
     axios({
       method: "POST",
       url: `${baseUrl}/register/`,
@@ -72,21 +87,31 @@ export default function Detail() {
           left: -1,
           top: -2,
         }}
-        width="100%"
-        height="100%"
+        width="105%"
+        height="105%"
         xml={backgroundSvg}
       ></SvgXml>
-      <SvgXml
-        style={{
-          position: "absolute",
-          zIndex: 5,
-          left: -250,
-          top: -720,
-        }}
-        width="200%"
-        height="200%"
-        xml={sideItem}
-      ></SvgXml>
+      <Animated.View
+        style={[
+          {
+            flex: 1,
+            color: "#520F9A",
+          },
+          rightStyle,
+        ]}
+      >
+        <SvgXml
+          style={{
+            position: "absolute",
+            zIndex: 5,
+            left: -250,
+            top: -720,
+          }}
+          width="250%"
+          height="250%"
+          xml={sideItem}
+        ></SvgXml>
+      </Animated.View>
       <SvgXml
         style={{
           position: "absolute",
@@ -100,13 +125,13 @@ export default function Detail() {
       ></SvgXml>
 
       <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
-        <View style={{ flex: 1 }}>
+        <View style={{ flex: 2 }}>
           <TextInput
             style={{
               position: "absolute",
               zIndex: 9999,
               left: 70,
-              top: 380,
+              top: 85,
               width: 250,
             }}
             onChangeText={onChangeFullName}
@@ -119,7 +144,7 @@ export default function Detail() {
               position: "absolute",
               zIndex: 9999,
               left: 70,
-              top: 440,
+              top: 140,
               width: 250,
             }}
             onChangeText={onChangeEmail}
@@ -132,7 +157,7 @@ export default function Detail() {
               position: "absolute",
               zIndex: 9999,
               left: 70,
-              top: 500,
+              top: 205,
               width: 250,
             }}
             secureTextEntry={true}
@@ -146,7 +171,7 @@ export default function Detail() {
               position: "absolute",
               zIndex: 9999,
               left: 70,
-              top: 565,
+              top: 270,
               width: 250,
             }}
             // secureTextEntry={true}
@@ -160,7 +185,7 @@ export default function Detail() {
               position: "absolute",
               zIndex: 9999,
               left: 70,
-              top: 630,
+              top: 330,
               width: 250,
             }}
             onChangeText={onChangePhone}
@@ -191,7 +216,10 @@ export default function Detail() {
           zIndex: 888,
         }}
         onPress={() => {
-          navigation.navigate("Login");
+          offset.value = 0;
+          setTimeout(() => {
+            navigation.navigate("Login");
+          }, 500);
         }}
       >
         {" "}
