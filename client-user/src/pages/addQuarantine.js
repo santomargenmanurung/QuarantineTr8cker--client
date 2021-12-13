@@ -1,18 +1,13 @@
 import { StatusBar } from "expo-status-bar";
 import React, { useEffect, useCallback, useRef } from "react";
-import {
-  SearchBar,
-  Card,
-  ListItem,
-  Button,
-  Input,
-} from "react-native-elements";
+import { setToken } from "../store/actionCreator/itemAction";
 import Animated, {
   useSharedValue,
   useAnimatedStyle,
   withSpring,
 } from "react-native-reanimated";
 // import { TextInput } from "react-native-paper";
+import { useDispatch, useSelector } from "react-redux";
 import {
   StyleSheet,
   TouchableWithoutFeedback,
@@ -38,9 +33,9 @@ const { baseUrl } = require("../../assets/baseUrl");
 
 export default function AddQuarantine({ navigation }) {
   // const navigation = useNavigation();
+  const dispatch = useDispatch();
   const [origin, onChangeOrigin] = useState("");
   const [arrival, onChangeArrival] = useState("");
-  const [keyboardStatus, setKeyboardStatus] = useState(undefined);
   const [newQuarantine, setNewQuarantine] = useState(false);
   const [loading, setLoading] = useState(false);
   const [errorLogin, setErrorLogin] = useState(false);
@@ -90,6 +85,18 @@ export default function AddQuarantine({ navigation }) {
     });
     return unsubscribe;
   }, [navigation]);
+
+  const logoutAction = async () => {
+    try {
+      console.log("EXIT");
+      await AsyncStorage.removeItem("access_token");
+      dispatch(setToken("")); //*************** */
+
+      navigation.navigate("Login");
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   async function addQuarantineButton() {
     try {
