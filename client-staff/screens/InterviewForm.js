@@ -17,9 +17,9 @@ import axios from "axios";
 import { TextInput, View, StyleSheet, Alert } from "react-native";
 import { useFormik } from "formik";
 import { Picker } from "@react-native-picker/picker";
-const { baseUrl } = require ('../assets/baseUrl')
+const { baseUrl } = require("../assets/baseUrl");
 import AsyncStorage from "@react-native-async-storage/async-storage";
-
+import DateTimePicker from "@react-native-community/datetimepicker";
 
 // GET /locations
 // FORM
@@ -29,26 +29,44 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 // status -> interviewed
 
 export default function InterviewForm({ navigation, route }) {
-  const [locations, setLocations] = useState([]);
-  const [officerToken, setOfficerToken] = useState('')
   const userData = route.params.userData;
-  const dispatch = useDispatch()
+  const [locations, setLocations] = useState([]);
+  const [officerToken, setOfficerToken] = useState("");
+  const [date, setDate] = useState(new Date());
+  const [mode, setMode] = useState("date");
+  const [show, setShow] = useState(false);
+  const [disabled, setDisabled] = useState(false);
+  const dispatch = useDispatch();
   const { access_token } = useSelector((state) => state);
 
-  useEffect(async() => {
-    setLocations([])
-    const token = await AsyncStorage.getItem('access_token')
-    console.log(token)
-    setOfficerToken(token)
-    if(token){
+  useEffect(async () => {
+    setLocations([]);
+    const token = await AsyncStorage.getItem("access_token");
+    console.log(token);
+    setOfficerToken(token);
+    if (token) {
       getLocations(token);
     }
     // console.log(access_token)
   }, []);
 
+  const onChangeDate = (event, selectedDate) => {
+    const currentDate = selectedDate || date;
+    setShow(Platform.OS === "ios");
+    setDate(currentDate);
+    console.log(date);
+  };
+  const showMode = (currentMode) => {
+    setShow(true);
+    setMode(currentMode);
+  };
+  const showDatepicker = () => {
+    showMode("date");
+  };
+
   const getLocations = async (token) => {
     try {
-      console.log(officerToken, 'officerToken')
+      console.log(officerToken, "officerToken");
       const response = await axios(`${baseUrl}/locations`, {
         method: "GET",
         headers: {
@@ -57,7 +75,7 @@ export default function InterviewForm({ navigation, route }) {
       });
       setLocations(response.data.pageData);
     } catch (error) {
-      console.log(baseUrl)
+      console.log(baseUrl);
       console.log(error, "error getLocation");
     }
   };
@@ -72,18 +90,15 @@ export default function InterviewForm({ navigation, route }) {
 
   const changeStatus = async () => {
     try {
-      const response = await axios(
-        `${baseUrl}/users/${userData.id}`,
-        {
-          method: "PUT",
-          headers: {
-            access_token: officerToken
-          },
-          data: {
-            status: "Interviewed",
-          },
-        }
-      );
+      const response = await axios(`${baseUrl}/users/${userData.id}`, {
+        method: "PUT",
+        headers: {
+          access_token: officerToken,
+        },
+        data: {
+          status: "Interviewed",
+        },
+      });
       console.log("changeStatus berhasil");
       console.log(response.data, "from changeStatus");
     } catch (error) {
@@ -91,20 +106,18 @@ export default function InterviewForm({ navigation, route }) {
     }
   };
 
-  const putLocation = async (locationId) => {
+  const putLocation = async (locationId, date) => {
     try {
-      const response = await axios(
-        `${baseUrl}/quarantines/${userData.id}`,
-        {
-          method: "PUT",
-          headers: {
-            access_token: officerToken
-          },
-          data: {
-            locationId: locationId,
-          },
-        }
-      );
+      const response = await axios(`${baseUrl}/quarantines/${userData.id}`, {
+        method: "PUT",
+        headers: {
+          access_token: officerToken,
+        },
+        data: {
+          locationId: locationId,
+          quarantineUntil: date,
+        },
+      });
       console.log("putLocation berhasil");
       console.log(response.data, "dari putLocation");
     } catch (error) {
@@ -112,9 +125,9 @@ export default function InterviewForm({ navigation, route }) {
     }
   };
 
-  const handleSubmitForm = async (locationId) => {
+  const handleSubmitForm = async (locationId, date) => {
     try {
-      const locationResponse = await putLocation(locationId);
+      const locationResponse = await putLocation(locationId, date);
       const statusResponse = await changeStatus();
       successAlert();
       navigation.navigate("HomeScreen");
@@ -129,11 +142,13 @@ export default function InterviewForm({ navigation, route }) {
   const formik = useFormik({
     initialValues: {
       locations: "",
+      quarantineUntil: "",
     },
     onSubmit: (values) => {
       console.log(JSON.stringify(values, null, 2));
-      console.log(values.locations);
-      handleSubmitForm(values.locations);
+      console.log(values.locations, values.quarantineUntil);
+      setDisabled(true)
+      handleSubmitForm(values.locations, date);
     },
   });
 
@@ -195,13 +210,15 @@ export default function InterviewForm({ navigation, route }) {
           </HStack>
         </Box>
       </Box>
-      <Center>
+      <Center bg={"white"} p={5} m={5} rounded="lg">
+        <FormControl.Label>Lokasi</FormControl.Label>
         <View
           style={{
-            width: "90%",
+            width: "100%",
+            height: 50,
             borderRadius: 10,
             borderWidth: 1,
-            borderColor: "white",
+            borderColor: "black",
             overflow: "hidden",
           }}
         >
@@ -230,7 +247,51 @@ export default function InterviewForm({ navigation, route }) {
             })}
           </Picker>
         </View>
-        <Button w="2/4" p={5} mt={5} borderRadius={"md"} bg="#ABA5DB" shadow={5} onPress={formik.handleSubmit}>
+        <Center
+          mt={5}
+        >
+          <FormControl.Label>Tanggal Selesai</FormControl.Label>
+          <Input
+            type={"text"}
+            width={"full"}
+            mx={5}
+            InputRightElement={
+              <Button
+                size="xs"
+                bg="#2A2052"
+                rounded="none"
+                w="2/5"
+                h="full"
+                onPress={showDatepicker}
+              >
+                Pilih tanggal
+              </Button>
+            }
+            // date to localstring indonesia
+            placeholder={date.toLocaleDateString("en-GB")}
+          />
+          <Box>
+            {show && (
+              <DateTimePicker
+                value={date}
+                mode={mode}
+                is24Hour={true}
+                display="default"
+                onChange={onChangeDate}
+              />
+            )}
+          </Box>
+        </Center>
+        <Button
+          isDisabled={disabled}
+          w="2/4"
+          p={5}
+          mt={5}
+          borderRadius={"md"}
+          bg="#ABA5DB"
+          shadow={5}
+          onPress={formik.handleSubmit}
+        >
           Lanjut
         </Button>
       </Center>
