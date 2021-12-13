@@ -1,21 +1,29 @@
-import { useState } from "react";
 import { useSelector, useDispatch } from 'react-redux'
 import ReactDOM from 'react-dom';
-import { useNavigate } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
+import { useEffect,useState } from "react";
+import { baseUrl } from '../store/helper/url';
+import axios from 'axios';
 
-import axios from "axios";
-export default function FormInput() {
-  const dispatch = useDispatch()
-const navigate = useNavigate()
-    const [inputs, setInputs] = useState({});
+export default function UserEdit() {
+    const params = useParams()
+    const dispatch = useDispatch()
+    const navigate = useNavigate()
+    const [inputs, setInputs] = useState({
+        name:"",
+        email:"",
+        phoneNumber:"",
+        status:"",
+        role:""
+    });
     const [isSubmit, setIsubmit] = useState(false);
 
 
     const handleChange = (event) => {
         const name = event.target.name;
-        console.log(name);
+        // console.log(name);
         const value = event.target.value;
-        console.log(value);
+        // console.log(value);
         
         setInputs(values => ({ ...values, [name]: value }))
     }
@@ -26,7 +34,7 @@ const navigate = useNavigate()
         let payload = inputs
         console.log(localStorage.access_token);
         try {
-            const posted =  await axios.post('https://quarantine-tr8cker.herokuapp.com/staffs',
+            const posted =  await axios.put(`https://quarantine-tr8cker.herokuapp.com/staffs/${params.id}`,
            payload,{
              headers: {
                  access_token: localStorage.access_token,
@@ -34,7 +42,7 @@ const navigate = useNavigate()
              })
             if(posted){
                 console.log(posted);
-                navigate('/locations')
+                navigate('/user/userLists')
             }
         } catch (error) {
             console.log(error.response.data.message, 'masuk error');
@@ -43,16 +51,44 @@ const navigate = useNavigate()
         // dispatch(addFood(inputs))
     }
 
+    useEffect(() => {
+        fetch(`${baseUrl}/users/${params.id}`, {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            access_token: localStorage.access_token,
+          }
+        })
+          .then((response) => {
+            if (!response.ok) {
+              throw new Error(response.statusText);
+            }
+            return response.json();
+          })
+          .then((data) => {
+            setInputs({
+                name:data.name,
+                email:data.email,
+                phoneNumber:data.phoneNumber,
+                status:data.status,
+                role:data.role
+            });
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+      }, []);
     return (
         <div>
+         <h1>Edit Page</h1>
+         <div>
         <div className="container">
-            <h1>ADD NEW STAFF</h1>
             <form onSubmit={handleSubmit}>
                 <fieldset>
                     <div className="row border" style={{ border: "1px" }}>
                         <div className="col-6 border">
                             <div className="form-group">
-                                <label className="form-label">Enter Fullname:
+                                <label className="form-label"> Fullname
                                 </label>
                                 <br />
                                 <input
@@ -63,7 +99,7 @@ const navigate = useNavigate()
                                 />
                             </div>
                             <div className="form-group">
-                                <label>Enter Email
+                                <label> Email
                                 </label>
                                 <br />
                                 <input
@@ -74,18 +110,7 @@ const navigate = useNavigate()
                                 />
                             </div>
                             <div className="form-group">
-                                <label className="form-label">Enter Password
-                                </label>
-                                <br />
-                                <input
-                                    type="password"
-                                    name="password"
-                                    value={inputs.password || ""}
-                                    onChange={handleChange}
-                                />
-                            </div>
-                            <div className="form-group">
-                                <label>Enter PhoneNumber
+                                <label> PhoneNumber
                                 </label>
                                 <br />
                                 <input
@@ -106,23 +131,22 @@ const navigate = useNavigate()
                                 onChange={handleChange}>
                                     <option disabled value="Chose One">--chose one--</option>
                                     <option value="Admin">Admin</option>
-                                    <option value="OfficeAirport">OfficeAirport</option>
+                                    <option value="OfficerAirport">OfficerAirport</option>
                                     <option value="DriverWisma">DriverWisma</option>
                                     <option value="DriveHotel">DriveHotel</option>
                                     <option value="OfficerHotel">OfficerHotel</option>
                                     <option value="OfficerWisma">OfficerWisma</option>
                                     <option value="HealthOfficial">HealthOfficial</option>
-                                    <option value="User">User</option>
-                                    
                                 </select>
                             </div>
                             <br />
-                            <input type="submit" />
+                            <input type="submit" disabled={isSubmit}/>
 
                         </div>
                     </div>
                 </fieldset>
             </form>
+        </div>
         </div>
         </div>
     )

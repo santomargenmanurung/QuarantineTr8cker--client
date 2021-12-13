@@ -16,8 +16,8 @@ import navigation from '../_nav'
 
 const AppSidebar = () => {
   const dispatch = useDispatch()
-  const unfoldable = useSelector((state) => state.sidebarUnfoldable)
-  const sidebarShow = useSelector((state) => state.sidebarShow)
+  const unfoldable = useSelector((state) => state.changeState.sidebarUnfoldable)
+  const {sidebarShow} = useSelector((state) => state.changeState)
 
   return (
     <CSidebar
@@ -25,6 +25,7 @@ const AppSidebar = () => {
       unfoldable={unfoldable}
       visible={sidebarShow}
       onVisibleChange={(visible) => {
+        console.log(visible,'ini visibel');
         dispatch({ type: 'set', sidebarShow: visible })
       }}
     >
@@ -33,9 +34,7 @@ const AppSidebar = () => {
       <CImage rounded thumbnail src={logo} width={200} height={100} />
       </CSidebarBrand>
       <CSidebarNav>
-        <SimpleBar>
           <AppSidebarNav items={navigation} />
-        </SimpleBar>
       </CSidebarNav>
       <CSidebarToggler
         className="d-none d-lg-flex"

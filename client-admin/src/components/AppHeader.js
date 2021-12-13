@@ -18,8 +18,8 @@ import { AppHeaderDropdown } from './header/index'
 
 const AppHeader = () => {
   const dispatch = useDispatch()
-  const sidebarShow = useSelector((state) => state.sidebarShow)
-
+  const {sidebarShow} = useSelector((state) => state.changeState)
+  console.log(sidebarShow,'ini state sidebar');
   return (
     <CHeader position="sticky" className="mb-4">
       <CContainer fluid>
@@ -32,7 +32,7 @@ const AppHeader = () => {
         <CHeaderBrand className="mx-auto d-md-none" to="/">
           <CIcon height={48} alt="Logo" />
         </CHeaderBrand>
-        <CHeaderNav className="d-none d-md-flex me-auto">
+        {/* <CHeaderNav className="d-none d-md-flex me-auto">
           <CNavItem>
             <CNavLink to="/dashboard" component={NavLink} activeClassName="active">
               Dashboard
@@ -61,13 +61,16 @@ const AppHeader = () => {
               <CIcon icon={cilEnvelopeOpen} size="lg" />
             </CNavLink>
           </CNavItem>
-        </CHeaderNav>
+        </CHeaderNav> */}
         <CHeaderNav className="ms-3">
           <AppHeaderDropdown />
         </CHeaderNav>
       </CContainer>
       <CHeaderDivider />
       <CContainer fluid>
+        <h1>
+        Quarantine Tr8cker CMS Page
+        </h1>
       </CContainer>
     </CHeader>
   )

@@ -23,18 +23,11 @@ function App() {
   const FormInput = React.lazy(() => import('./views/addForm'))
   return (
         <React.Suspense fallback={loading}>
+          {/* <DefaultLayout/> */}
           <Routes>
             <Route path="/login" name="Login Page" element={<LoginPage/>} />
-            {/* <Route
-              exact
-              path="/register"
-              name="Register Page"
-              render={(props) => <Register {...props} />}
-            />
-            <Route exact path="/404" name="Page 404" render={(props) => <Page404 {...props} />} />
-            <Route exact path="/500" name="Page 500" render={(props) => <Page500 {...props} />} /> */}
-            <Route path="/" name="Home" element={<DefaultLayout/>} />
-            <Route path="/addUser" name="Add" element={<FormInput/>} />
+            <Route path="/*" name="Home" element={<DefaultLayout/>} />
+           
           </Routes>
         </React.Suspense>
   );
