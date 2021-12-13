@@ -1,5 +1,7 @@
 import { StatusBar } from "expo-status-bar";
 import React, { useEffect, useCallback, useRef } from "react";
+import { useDispatch, useSelector } from "react-redux"
+import { setToken } from "../store/actions";
 const { baseUrl } = require("../assets/baseUrl");
 const axios = require("axios");
 import {
@@ -26,6 +28,9 @@ import {
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export default function Login() {
+  let dispatch = useDispatch()
+  let state = useSelector(state => state)
+
   const navigation = useNavigation();
   const [email, onChangeEmail] = useState("");
   const [password, onChangePassword] = useState("");
@@ -55,6 +60,7 @@ export default function Login() {
       } else {
         await AsyncStorage.setItem("access_token", resp.data.access_token);
         const value = await AsyncStorage.getItem("access_token");
+        dispatch(setToken(resp.data.access_token))
         setErrorLogin(false);
         setIsUser(false);
         if (value) navigation.navigate("HomeScreen");
@@ -179,7 +185,6 @@ export default function Login() {
       {isUser ? (
         <Text
           style={{
-            fontFamily: "Helvetica",
             position: "absolute",
             color: "white",
             fontWeight: "bold",
@@ -202,7 +207,6 @@ export default function Login() {
           top: 160,
           color: "#02023A",
           textAlign: "center",
-          fontFamily: "Helvetica-Bold",
           fontSize: 15,
         }}
       >

@@ -16,6 +16,9 @@ import axios from "axios";
 import { TextInput, View, StyleSheet, Alert } from "react-native";
 import { useFormik } from "formik";
 import { Picker } from "@react-native-picker/picker";
+const { baseUrl } = require ('../assets/baseUrl')
+import AsyncStorage from "@react-native-async-storage/async-storage";
+
 
 // GET /locations
 // FORM
@@ -26,24 +29,26 @@ import { Picker } from "@react-native-picker/picker";
 
 export default function InterviewForm({ navigation, route }) {
   const [locations, setLocations] = useState([]);
+  const [officerToken, setOfficerToken] = useState('')
   const userData = route.params.userData;
 
-  useEffect(() => {
+  useEffect(async() => {
     getLocations();
+    const token = await AsyncStorage.getItem('access_token')
+    setOfficerToken(token)
   }, []);
 
   const getLocations = async () => {
     try {
-      const response = await axios(`http://192.168.5.11:3000/locations`, {
+      const response = await axios(`${baseUrl}/locations`, {
         method: "GET",
         headers: {
-          access_token:
-            "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwiZW1haWwiOiJvZmZpY2VyQGFpcnBvcnQuY29tIiwicm9sZSI6Ik9mZmljZXJBaXJwb3J0IiwiaWF0IjoxNjM5MTQwNTA5fQ.3cxJG7o9nSM5ffAnM2RdLHJWTJc9I1PQY1GkAqQMd-I",
+          access_token: officerToken
         },
       });
-      //jangan lupa diganti jadi response.data.pageData
       setLocations(response.data.pageData);
     } catch (error) {
+      console.log(baseUrl)
       console.log(error, "error getLocation");
     }
   };
@@ -59,12 +64,11 @@ export default function InterviewForm({ navigation, route }) {
   const changeStatus = async () => {
     try {
       const response = await axios(
-        `http://192.168.5.11:3000/users/${userData.id}`,
+        `${baseUrl}/users/${userData.id}`,
         {
           method: "PUT",
           headers: {
-            access_token:
-              "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwiZW1haWwiOiJvZmZpY2VyQGFpcnBvcnQuY29tIiwicm9sZSI6Ik9mZmljZXJBaXJwb3J0IiwiaWF0IjoxNjM5MTQwNTA5fQ.3cxJG7o9nSM5ffAnM2RdLHJWTJc9I1PQY1GkAqQMd-I",
+            access_token: officerToken
           },
           data: {
             status: "Interviewed",
@@ -81,12 +85,11 @@ export default function InterviewForm({ navigation, route }) {
   const putLocation = async (locationId) => {
     try {
       const response = await axios(
-        `http://192.168.5.11:3000/quarantines/${userData.id}`,
+        `${baseUrl}/quarantines/${userData.id}`,
         {
           method: "PUT",
           headers: {
-            access_token:
-              "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwiZW1haWwiOiJvZmZpY2VyQGFpcnBvcnQuY29tIiwicm9sZSI6Ik9mZmljZXJBaXJwb3J0IiwiaWF0IjoxNjM5MTQwNTA5fQ.3cxJG7o9nSM5ffAnM2RdLHJWTJc9I1PQY1GkAqQMd-I",
+            access_token: officerToken
           },
           data: {
             locationId: locationId,
