@@ -36,6 +36,7 @@ export default function HomeScreen({ navigation }) {
   const logout = async () => {
     try {
       await AsyncStorage.clear();
+      dispatch(setToken(""))
       navigation.navigate("LoginBasic");
     } catch (error) {
       console.log("error logout", error);
@@ -78,17 +79,6 @@ export default function HomeScreen({ navigation }) {
             </Text>
           </Box>
           <Pressable onPress={() => logout()}>
-            {/* <Box
-            bg={"blue.500"}
-            mt="10"
-            rounded={"2xl"}
-            _text={{
-              fontSize: "xl",
-              color: "white",
-            }}
-          >
-            logout
-          </Box> */}
             <Square
               size={75}
               bg="#1597E5"

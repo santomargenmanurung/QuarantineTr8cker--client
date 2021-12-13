@@ -37,16 +37,18 @@ export default function LoginBasic({ navigation }) {
           password,
         },
       });
-      console.log(response.data);
+      console.log(response.data.access_token, 'ini accessToken');
       await AsyncStorage.setItem("access_token", response.data.access_token);
       await AsyncStorage.setItem("name", response.data.name);
       await AsyncStorage.setItem("role", response.data.role);
       const value = await AsyncStorage.getItem("access_token");
-      dispatch(setToken(response.data.access_token));
-      if (value) navigation.navigate("HomeScreen");
-      //   dispatch(login(true))
+      console.log(value, "ini value");
+      if (value){
+        console.log('masuk ke login')
+        dispatch(setToken(response.data.access_token));
+        navigation.navigate("HomeScreen");
+      } 
     } catch (error) {
-      console.log(error.response.data.message);
       Alert.alert(`Error`,`${error.response.data.message}`);
       
     }
