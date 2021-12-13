@@ -70,7 +70,6 @@ export default function AddQuarantine({ navigation }) {
       } catch (error) {
         setNewQuarantine(false);
         setLoading(false);
-        console.log(error, "SINI JANCUCUUU");
       }
     });
     return unsubscribe;
