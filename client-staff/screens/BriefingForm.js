@@ -16,7 +16,6 @@ import {
 import axios from "axios";
 import { TextInput, View, StyleSheet, Alert } from "react-native";
 import { useFormik } from "formik";
-import DateTimePicker from "@react-native-community/datetimepicker";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 const { baseUrl } = require('../assets/baseUrl')
 
@@ -28,24 +27,6 @@ export default function BriefingForm({ navigation, route }) {
     const token = await AsyncStorage.getItem('access_token')
     setOfficerToken(token)
    },[])
-
-  const [date, setDate] = useState(new Date());
-  const [mode, setMode] = useState("date");
-  const [show, setShow] = useState(false);
-
-  const onChangeDate = (event, selectedDate) => {
-    const currentDate = selectedDate || date;
-    setShow(Platform.OS === "ios");
-    setDate(currentDate);
-    console.log(date);
-  };
-  const showMode = (currentMode) => {
-    setShow(true);
-    setMode(currentMode);
-  };
-  const showDatepicker = () => {
-    showMode("date");
-  };
 
   const successAlert = () => {
     Alert.alert(
@@ -74,7 +55,7 @@ export default function BriefingForm({ navigation, route }) {
     }
   };
 
-  const putQuarantine = async (roomNumber, date) => {
+  const putQuarantine = async (roomNumber) => {
     try {
       const response = await axios(
         `${baseUrl}/quarantines/${userData.id}`,
@@ -85,7 +66,6 @@ export default function BriefingForm({ navigation, route }) {
           },
           data: {
             roomNumber: roomNumber,
-            quarantineUntil: date,
           },
         }
       );
@@ -96,14 +76,14 @@ export default function BriefingForm({ navigation, route }) {
     }
   };
 
-  const handleSubmitForm = async (roomNumber, date) => {
-    console.log(roomNumber, date);
-    if(!roomNumber || date === new Date()){
+  const handleSubmitForm = async (roomNumber) => {
+    console.log(roomNumber);
+    if(!roomNumber){
       //throw error
       Alert.alert("Please fill all the fields");
     }
     try {
-    await putQuarantine(roomNumber, date)
+    await putQuarantine(roomNumber)
     await changeStatus()
     successAlert()
     navigation.navigate("HomeScreen")
@@ -118,13 +98,12 @@ export default function BriefingForm({ navigation, route }) {
   const formik = useFormik({
     initialValues: {
       roomNumber: "",
-      quarantineUntil: "",
     },
     onSubmit: (values) => {
       console.log("kepencet");
       console.log(JSON.stringify(values, null, 2));
       console.log(values.roomNumber);
-      handleSubmitForm(values.roomNumber, date);
+      handleSubmitForm(values.roomNumber);
     },
   });
 
@@ -208,40 +187,6 @@ export default function BriefingForm({ navigation, route }) {
                   onChangeText={formik.handleChange("roomNumber")}
                   value={formik.values.roomNumber}
                 />
-                <Stack
-                mt="5"
-                >
-                <FormControl.Label>Tanggal Selesai</FormControl.Label>
-                <Input
-                  type={"text"}
-                  mx="3"
-                  InputRightElement={
-                    <Button
-                      size="xs"
-                      bg="#2A2052"
-                      rounded="none"
-                      w="2/5"
-                      h="full"
-                      onPress={showDatepicker}
-                    >
-                      Pilih tanggal
-                    </Button>
-                  }
-                  // date to localstring indonesia
-                  placeholder={date.toLocaleDateString('en-GB')}
-                />
-                <Box>
-                  {show && (
-                    <DateTimePicker
-                      value={date}
-                      mode={mode}
-                      is24Hour={true}
-                      display="default"
-                      onChange={onChangeDate}
-                    />
-                  )}
-                </Box>
-                </Stack>
               </Stack>
             </FormControl>
           </VStack>
