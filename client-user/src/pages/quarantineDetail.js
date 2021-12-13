@@ -64,6 +64,21 @@ export default function Detail({ route }) {
         setQuarStatus(resp.data);
         // console.log(quarStatus, "quarStatus");
         if (quarStatus) setIsloading(false);
+        // setInterval(async () => {
+        //   let resp2 = await axios.get(`${baseUrl}/quarantines/`, {
+        //     headers: {
+        //       access_token: value,
+        //     },
+        //   });
+        //   const getId = await resp2.data.find((e) => e.id === user);
+        //   setMyQuarantine(getId);
+        //   let resp3 = axios.get(`${baseUrl}/users/${getId.userId}`, {
+        //     headers: {
+        //       access_token: value,
+        //     },
+        //   });
+        //   setQuarStatus(resp3.data);
+        // }, 2000);
       } catch (error) {
         console.log(error);
       }

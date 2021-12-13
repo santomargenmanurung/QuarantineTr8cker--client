@@ -28,7 +28,6 @@ export default function Detail() {
   useEffect(() => {
     const unsubscribe = navigation.addListener("focus", async () => {
       try {
-        // console.log(myQuarantine, "INI DIA TOLONG DI PIRENT");
         const value = await AsyncStorage.getItem("access_token");
         // console.log(value, "INI VALUNYE");
         let resp = await axios.get(`${baseUrl}/quarantines/`, {
@@ -36,7 +35,7 @@ export default function Detail() {
             access_token: value,
           },
         });
-        // console.log(resp.data, "DISINI ADA FETCH DATA");
+        console.log(resp.data, "DISINI ADA FETCH DATA");
         setMyQuarantine(resp.data);
       } catch (error) {
         console.log(error);

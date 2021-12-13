@@ -45,11 +45,11 @@ export default function AddQuarantine({ navigation }) {
   const [loading, setLoading] = useState(false);
   const [errorLogin, setErrorLogin] = useState(false);
 
-  // const kananX = useSharedValue(-1);
-  // const kananY = useSharedValue(-19.5);
+  const kananX = useSharedValue(1);
+  const kananY = useSharedValue(-19.5);
 
-  // const kiriX = useSharedValue(-3);
-  // const kiriY = useSharedValue(-47);
+  const kiriX = useSharedValue(-3);
+  const kiriY = useSharedValue(-47);
 
   useEffect(() => {
     const unsubscribe = navigation.addListener("focus", async () => {
@@ -62,11 +62,6 @@ export default function AddQuarantine({ navigation }) {
             access_token: value,
           },
         });
-        //JOKO FALSE
-        // console.log(
-        //   resp.data[resp.data.length - 1].isQuarantined,
-        //   "LIHAT DISINI"
-        // );
         if (!resp.data[resp.data.length - 1].isQuarantined) {
           setNewQuarantine(true);
         }
@@ -75,27 +70,27 @@ export default function AddQuarantine({ navigation }) {
       } catch (error) {
         setNewQuarantine(false);
         setLoading(false);
-        console.log(error, "SINI JANCUCUUU");
       }
     });
     return unsubscribe;
   }, [navigation]);
 
-  // useEffect(() => {
-  //   const unsubscribe = navigation.addListener("focus", () => {
-  //     kananX.value = 2;
-  //     kananY.value = -21;
-  //   });
-  //   return unsubscribe;
-  // }, [navigation]);
+  useEffect(() => {
+    const unsubscribe = navigation.addListener("focus", () => {
+      kananX.value = -1;
+      kananY.value = -18.5;
+    });
+    return unsubscribe;
+  }, [navigation]);
 
-  // useEffect(() => {
-  //   const unsubscribe = navigation.addListener("blur", () => {
-  //     kananX.value = 1;
-  //     kananY.value = -21;
-  //   });
-  //   return unsubscribe;
-  // }, [navigation]);
+  useEffect(() => {
+    const unsubscribe = navigation.addListener("blur", () => {
+      kananX.value = 1;
+      kananY.value = -19.5;
+    });
+    return unsubscribe;
+  }, [navigation]);
+
   async function addQuarantineButton() {
     try {
       // console.log("MASUK SINII0", origin, arrival);
@@ -123,26 +118,24 @@ export default function AddQuarantine({ navigation }) {
     }
   }
 
-  // const rightStyle = useAnimatedStyle(() => {
-  //   return {
-  //     transform: [
-  //       // { translateX: withSpring(2 * 100) },
-  //       // { translateY: withSpring(-11 * 100) },
-  //       { translateX: withSpring(kananX.value * 50) },
-  //       { translateY: withSpring(kananY.value * 50) },
-  //     ],
-  //   };
-  // });
-  // const leftStyle = useAnimatedStyle(() => {
-  //   return {
-  //     transform: [
-  //       // { translateX: withSpring(2 * 100) },
-  //       // { translateY: withSpring(-11 * 100) },
-  //       { translateX: withSpring(kiriX.value * 50) },
-  //       { translateY: withSpring(kiriY.value * 50) },
-  //     ],
-  //   };
-  // });
+  const rightStyle = useAnimatedStyle(() => {
+    return {
+      transform: [
+        { translateX: withSpring(kananX.value * 100) },
+        { translateY: withSpring(kananY.value * 100) },
+      ],
+    };
+  });
+  const leftStyle = useAnimatedStyle(() => {
+    return {
+      transform: [
+        { translateX: withSpring(-1 * 100) },
+        { translateY: withSpring(1 * 100) },
+        // { translateX: withSpring(kiriX.value * 50) },
+        // { translateY: withSpring(kiriY.value * 50) },
+      ],
+    };
+  });
 
   if (loading) {
     return (
@@ -160,11 +153,43 @@ export default function AddQuarantine({ navigation }) {
           position: "relative",
           left: -1,
           top: -2,
+          flex: 1,
         }}
-        width="100%"
-        height="100%"
+        width="105%"
+        height="105%"
         xml={backgroundSvg}
       ></SvgXml>
+
+      <Animated.View
+        style={
+          ({
+            position: "absolute",
+            flex: 1,
+            zIndex: 999,
+            left: -10,
+            top: 1,
+          },
+          [rightStyle])
+        }
+      >
+        <SvgXml width="150%" height="150%" xml={RightTop}></SvgXml>
+      </Animated.View>
+
+      <Animated.View
+        style={
+          ({
+            position: "absolute",
+            flex: 1,
+            zIndex: 999999,
+            left: 1,
+            top: -0.9,
+          },
+          [leftStyle])
+        }
+      >
+        <SvgXml width="150%" height="150%" xml={LeftTop}></SvgXml>
+      </Animated.View>
+
       <SvgXml
         style={{
           position: "absolute",
@@ -176,40 +201,11 @@ export default function AddQuarantine({ navigation }) {
         height="75%"
         xml={loginForm}
       ></SvgXml>
-      {/* <Animated.View
-        style={
-          ({
-            position: "absolute",
-            zIndex: 99999,
-            left: -1,
-            top: 1,
-          },
-          [rightStyle])
-        }
-      >
-        <SvgXml width="150%" height="150%" xml={RightTop}></SvgXml>
-      </Animated.View> */}
-
-      {/* <Animated.View
-        style={
-          ({
-            position: "absolute",
-            zIndex: 920,
-            left: 1,
-            top: -0.1,
-          },
-          [leftStyle])
-        }
-      >
-        <SvgXml width="150%" height="150%" xml={LeftTop}></SvgXml>
-      </Animated.View> */}
 
       <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
         <View style={{ flex: 0, position: "absolute", zIndex: 2 }}>
           <TextInput
             style={{
-              // position: "absolute",
-              // zIndex: 9999,
               left: 70,
               top: 375,
               width: 250,
@@ -222,8 +218,6 @@ export default function AddQuarantine({ navigation }) {
           />
           <TextInput
             style={{
-              // position: "absolute",
-              // zIndex: 9999,
               left: 70,
               top: 425,
               width: 250,
@@ -281,7 +275,6 @@ export default function AddQuarantine({ navigation }) {
       >
         {" "}
         Back to My Quarantines
-        {/* {JSON.stringify(newQuarantine)} */}
       </Text>
       {errorLogin ? (
         <Text

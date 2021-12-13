@@ -76,11 +76,14 @@ export default function Login({ navigation }) {
       const value = await AsyncStorage.getItem("access_token");
       console.log(value);
       setErrorLogin(false);
-      if (value) navigation.navigate("MyTrips");
+      onChangeEmail("");
+      onChangePassword("");
+      if (value) {
+        navigation.navigate("MyTrips");
+      }
 
       // console.log(value, "RS_");
     } catch (error) {
-      // console.log("MASUK SINI JANCOOOKKK");
       console.log(error.message, "INI ERRORNYA");
       if (error.message == "Request failed with status code 400")
         setErrorLogin(true);
