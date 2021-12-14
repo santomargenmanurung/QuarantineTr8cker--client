@@ -40,6 +40,7 @@ export default function InterviewForm({ navigation, route }) {
   const { access_token } = useSelector((state) => state);
 
   useEffect(async () => {
+    setDisabled(false)
     setLocations([]);
     const token = await AsyncStorage.getItem("access_token");
     console.log(token);
