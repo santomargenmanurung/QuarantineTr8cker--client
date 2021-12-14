@@ -4,8 +4,10 @@ import '../login.css'
 import logo from '../assets/8quarantine.jpeg'
 import { useSelector, useDispatch } from "react-redux";
 import { setLogin } from "../store/actionCreator/HistoriesAction";
+import Swal from 'sweetalert2'
+
 export default function LoginPage() {
-  const dispatch = useDispatch()
+    const dispatch = useDispatch()
     const [inputs, setInputs] = useState({});
     const [isSubmit, setIsubmit] = useState(false);
     const navigate = useNavigate()
@@ -31,20 +33,27 @@ export default function LoginPage() {
         })
             .then((res) => {
                 if (res.ok) {
+                    Swal.fire({
+                        icon: "success",
+                        title: `Welcome `,
+                        showConfirmButton: false,
+                        timer: 3000,
+                      });    
                     return res.json()
                 } else {
-                    return new Error('Something wrong')
+                    throw new Error('Something wrong')
                 }
             })
             .then((data) => {
                 console.log(data);
+                
                 if (data.role !== "Admin") {
                     throw new Error('Only role Admin can access CMS')
                 } else {
                     localStorage.setItem("access_token", data.access_token)
                     dispatch(setLogin(true))
                     navigate('/')
-window.location.reload()
+                    window.location.reload()
                 }
             })
             .catch((error) => {

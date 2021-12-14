@@ -34,7 +34,7 @@ const navigate = useNavigate()
              })
             if(posted){
                 console.log(posted);
-                navigate('/locations')
+                navigate('/user/userlists')
             }
         } catch (error) {
             console.log(error.response.data.message, 'masuk error');

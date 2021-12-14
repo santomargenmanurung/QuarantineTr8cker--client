@@ -3,6 +3,8 @@ import { ISLOGIN,HISTORIES_LOADING,HISTORIES_FETCH } from "../actionType/Histori
 const initialState = {
   histories: [],
   isLogin: false,
+  isLoading: true,
+
 };
 
 export default function historiesReducer(state = initialState, action) {
@@ -10,6 +12,7 @@ export default function historiesReducer(state = initialState, action) {
     case HISTORIES_FETCH:
       return {
         ...state,
+        isLoading: false,
         histories: action.payload,
       };
        case ISLOGIN:
@@ -17,6 +20,11 @@ export default function historiesReducer(state = initialState, action) {
         ...state,
        isLogin: action.payload,
       };
+      case HISTORIES_LOADING:
+        return {
+          ...state,
+         isLoading: action.payload,
+        };
     default:
       return state;
   }
