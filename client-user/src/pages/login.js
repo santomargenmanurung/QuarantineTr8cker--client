@@ -37,7 +37,6 @@ export default function Login({ navigation }) {
   const [password, onChangePassword] = useState("");
   const [errorLogin, setErrorLogin] = useState(false);
   const dispatch = useDispatch();
-  // const offset = useSharedValue(-0.18);
   const offset = useSharedValue(2);
 
   useEffect(() => {
