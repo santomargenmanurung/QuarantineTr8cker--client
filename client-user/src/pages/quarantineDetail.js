@@ -214,8 +214,10 @@ export default function Detail({ route }) {
             color: "#0E3599",
             fontWeight: "bold",
             zIndex: 50,
-            left: 100,
+            width: windowWidth,
+            flex: 1,
             top: 300,
+            left: 100,
             fontSize: 25,
           }}
         >
