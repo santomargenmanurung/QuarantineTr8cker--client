@@ -11,6 +11,7 @@ import {
   RefreshControl,
   Dimensions,
 } from "react-native";
+import { Center } from "native-base";
 import { SvgXml } from "react-native-svg";
 const { baseUrl } = require("../../assets/baseUrl");
 import { useState } from "react";
@@ -18,7 +19,6 @@ import { useNavigation } from "@react-navigation/native";
 import {
   barButtom,
   logout,
-  cardCustom,
   backgroundSvg,
   triplist,
   addtrips,
@@ -28,6 +28,7 @@ import {
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import QRCode from "react-native-qrcode-svg";
 import { setToken } from "../store/actionCreator/itemAction";
+import LottieView from "lottie-react-native";
 
 export default function Detail({ route }) {
   const navigation = useNavigation();
@@ -111,7 +112,21 @@ export default function Detail({ route }) {
   if (isLoading)
     return (
       <>
-        <Text>LOADING SOB</Text>
+        <View
+          flex={1}
+          bg={{
+            linearGradient: {
+              colors: ["#0e3599", "#02023A"],
+              start: [0, 0],
+            },
+          }}
+        >
+          <LottieView
+            source={require("../../assets/loading_heartbeat.json")}
+            autoPlay
+            loop
+          />
+        </View>
       </>
     );
 
