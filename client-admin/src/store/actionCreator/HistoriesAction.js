@@ -28,7 +28,7 @@ export function  fetchHistories(payload) {
   return function (dispatch, getState) {
     dispatch(historiesLoading(true));
     console.log(payload,'cek payload');
-    fetch(`${baseUrl}/histories?email=${payload?payload.email:""}&size=30`, {
+    fetch(`${baseUrl}/histories?email=${payload?payload.email:""}&size=30&page=${payload?payload.page:''}`, {
       method: "get",
       headers: {
         "Content-Type": "application/json",

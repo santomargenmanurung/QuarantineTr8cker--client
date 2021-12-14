@@ -12,6 +12,7 @@ const loading = (
     <div className="sk-spinner sk-spinner-pulse"></div>
   </div>
 )
+
 function App() {
   const LoginPage = React.lazy(() => import('./views/Login.js'))
   // const DefaultLayout = React.lazy(() => import('./layout/DefaultLayout'))

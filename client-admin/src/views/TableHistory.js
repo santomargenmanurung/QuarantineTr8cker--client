@@ -83,6 +83,7 @@ console.log(histories,'ini histores');
                         }
                     </CTableBody>
                 </CTable>
+                
             </div>
         </div>
     )
