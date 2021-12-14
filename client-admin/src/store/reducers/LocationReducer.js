@@ -2,6 +2,7 @@ import { LOCATION_ADD,LOCATION_FETCH,LOCATION_LOADING } from "../actionType/Loca
 const initialState = {
   locations: [],
   isLogin: false,
+  isLoading: true
 };
 
 export default function locationReducer(state = initialState, action) {
@@ -10,7 +11,13 @@ export default function locationReducer(state = initialState, action) {
       return {
         ...state,
         locations: action.payload,
+        isLoading:false
       };
+      case LOCATION_LOADING:
+        return {
+          ...state,
+       isLoading: true
+        };
     default:
       return state;
   }

@@ -24,10 +24,11 @@ export function succesFetchHistories(payload) {
 }
 
 
-export function  fetchHistories() {
+export function  fetchHistories(payload) {
   return function (dispatch, getState) {
-    // dispatch(historiesLoading(true));
-    fetch(`${baseUrl}/histories?size=30`, {
+    dispatch(historiesLoading(true));
+    console.log(payload,'cek payload');
+    fetch(`${baseUrl}/histories?email=${payload?payload.email:""}&size=30`, {
       method: "get",
       headers: {
         "Content-Type": "application/json",
@@ -39,7 +40,7 @@ export function  fetchHistories() {
         return res.json();
       })
       .then((data) => {
-        console.log(data.pageData);
+        console.log(data.pageData, 'ini masuk data');
         dispatch(succesFetchHistories(data.pageData));
       })
       .catch((err) => console.log(err));

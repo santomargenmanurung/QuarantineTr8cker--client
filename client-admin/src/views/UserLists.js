@@ -5,11 +5,32 @@ import { CTable, CTableHead, CTableRow, CTableHeaderCell, CTableDataCell, CTable
 import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
 import { fetchUser } from "../store/actionCreator/UserAction";
+import ContentLoading from "../components/Loading";
+
 export default function UserLists() {
+    const [inputs, setInputs] = useState({});
     const dispatch= useDispatch()
-    const {users} = useSelector((state)=>
+    const {users, isLoading} = useSelector((state)=>
         state.userReducer
     )
+
+    const handleChange = (event) => {
+        const name = event.target.name;
+        console.log(name);
+        const value = event.target.value;
+        console.log(value);
+
+        setInputs(values => ({ ...values, [name]: value }))
+    }
+
+    const handleSubmit = async (event) => {
+        console.log(inputs);
+        event.preventDefault();
+        let payload = inputs
+        console.log(payload, 'payloooad');
+        dispatch(fetchUser(payload));
+        // setInputs({inputs : ''})
+    }
     useEffect(()=>{
         dispatch(fetchUser())
     },[])
@@ -18,10 +39,18 @@ export default function UserLists() {
     return (
         <div>
             <div>
-                <CInputGroup className="mb-3">
-                    <CFormInput placeholder="Search by username.." aria-label="Recipient's username" aria-describedby="basic-addon2" />
-                    <CInputGroupText id="basic-addon2">search</CInputGroupText>
-                </CInputGroup>
+          
+            <form onSubmit={handleSubmit}>
+                    <input
+                        placeholder="search by role"
+                        type="text"
+                        name="role"
+                        value={inputs.role || ""}
+                        onChange={handleChange}
+                    />
+                    <input type="submit" placeholder="search by role" />
+                </form >
+
             </div>
             <div>
                 <CTable striped>
@@ -34,7 +63,7 @@ export default function UserLists() {
                         </CTableRow>
                     </CTableHead>
                     <CTableBody>
-                        {users.map((user, i)=>{
+                        {isLoading?<ContentLoading/>:users.map((user, i)=>{
                             if(user.role !== "User"){
                                 return(
                                     <CTableRow key={user.id}>

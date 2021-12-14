@@ -12,17 +12,18 @@ function successFetchUser(payload) {
 }
 
 
-// function itemsLoading(payload) {
-//   return {
-//     type: ITEMS_LOADING,
-//     payload,
-//   };
-// }
+function userLoading(payload) {
+  return {
+    type: USER_LOADING,
+    payload,
+  };
+}
 
-export function fetchUser() {
+export function fetchUser(payload) {
   return function (dispatch, getState) {
-    // dispatch(itemsLoading());
-    fetch(`${baseUrl}/users?size=20`, {
+    console.log(payload,'reducer');
+    dispatch(userLoading(true));
+    fetch(`${baseUrl}/users?role=${payload?payload.role:''}&size=20`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",

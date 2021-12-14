@@ -18,9 +18,9 @@ import { LOCATION_ADD, LOCATION_LOADING, LOCATION_FETCH } from "../actionType/Lo
     };
   }
   
-  export function fetchLocations() {
+  export function fetchLocations(payload) {
     return function (dispatch, getState) {
-    //   dispatch(locationLoading());
+      dispatch(locationLoading(true));
       fetch(`${baseUrl}/locations?size=20`, {
         method: "GET",
         headers: {

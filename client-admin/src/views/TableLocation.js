@@ -5,7 +5,27 @@ import { CTable, CTableHead, CTableRow, CTableHeaderCell, CTableDataCell, CTable
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { fetchLocations } from "../store/actionCreator/LocationsAction";
+import ContentLoading from "../components/Loading";
+
 export default function Locations() {
+    const [inputs, setInputs] = useState({});
+    const handleChange = (event) => {
+        const name = event.target.name;
+        console.log(name);
+        const value = event.target.value;
+        console.log(value);
+
+        setInputs(values => ({ ...values, [name]: value }))
+    }
+
+    const handleSubmit = async (event) => {
+        console.log(inputs);
+        event.preventDefault();
+        let payload = inputs
+        console.log(payload, 'payloooad');
+        dispatch(fetchLocations(payload));
+        // setInputs({inputs : ''})
+    }
     let navigate = useNavigate()
     const { locations, isLoading } = useSelector((state) => state.locationReducer);
     const dispatch = useDispatch();
@@ -15,10 +35,6 @@ export default function Locations() {
     }, []);
     return (
         <div>
-            <CInputGroup className="mb-3">
-                    <CFormInput placeholder="Search by name location.." aria-label="Recipient's username" aria-describedby="basic-addon2" />
-                    <CInputGroupText id="basic-addon2">search</CInputGroupText>
-                </CInputGroup>
             <div>
             <CButton onClick={()=>{
                 navigate("/addLocation")
@@ -36,7 +52,7 @@ export default function Locations() {
                         </CTableRow>
                     </CTableHead>
                     <CTableBody>
-                        {
+                        {isLoading?<ContentLoading/>:
                             locations.map((location,i)=>{
                                 return(
                                     <CTableRow key={location.id}>
