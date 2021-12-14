@@ -46,9 +46,7 @@ useEffect(() => {
   return (
     <CDropdown variant="nav-item">
       <CDropdownToggle placement="bottom-end" className="py-0" caret={false}>
-        <CAvatar src=
-      "https://assets.pikiran-rakyat.com/crop/0x0:0x0/x/photo/2020/11/12/2857352854.png"
-         size="md" />
+        <CAvatar  color="primary" textColor="white">Adm</CAvatar>
       </CDropdownToggle>
       <CDropdownMenu className="pt-0" placement="bottom-end">
         <CDropdownHeader className="bg-light fw-semibold py-2">Account</CDropdownHeader>
