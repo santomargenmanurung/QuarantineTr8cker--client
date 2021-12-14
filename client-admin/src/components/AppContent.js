@@ -1,7 +1,7 @@
 import React, { Suspense } from 'react'
 import { Route, Routes } from 'react-router-dom'
 import { CContainer, CSpinner } from '@coreui/react'
-
+// import '../scss/style.scss'
 // routes config
 import routes from '../routes'
 

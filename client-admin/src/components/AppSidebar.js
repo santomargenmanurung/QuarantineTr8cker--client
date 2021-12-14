@@ -29,15 +29,17 @@ const AppSidebar = () => {
         dispatch({ type: 'set', sidebarShow: visible })
       }}
     >
-      <CSidebarBrand className="d-none d-md-flex" to="/">
+      <CSidebarBrand className="" to="/">
         {/* <img src="../assets/8quarantine.jpeg"/> */}
       <CImage rounded thumbnail src={logo} width={200} height={100} />
       </CSidebarBrand>
       <CSidebarNav>
+      {/* <SimpleBar> */}
           <AppSidebarNav items={navigation} />
+        {/* </SimpleBar> */}
       </CSidebarNav>
       <CSidebarToggler
-        className="d-none d-lg-flex"
+        className=""
         onClick={() => dispatch({ type: 'set', sidebarUnfoldable: !unfoldable })}
       />
     </CSidebar>

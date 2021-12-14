@@ -21,10 +21,28 @@ import {
   cilUser,
 } from '@coreui/icons'
 import CIcon from '@coreui/icons-react'
-
+import { useState,useEffect } from 'react'
+import { useNavigate } from 'react-router-dom'
+import { useSelector, useDispatch } from 'react-redux'
+import { setLogin } from '../../store/actionCreator/HistoriesAction'
 // import avatar8 from './../../assets/images/avatars/8.jpg'
 
-const AppHeaderDropdown = () => {
+export default function AppHeaderDropdown ()  {
+  const navigate = useNavigate()
+  const dispatch = useDispatch()
+  const {isLogin}=useSelector((state)=> state.historiesReducer)
+  const handleSubmit = (event) => {
+    localStorage.clear()
+   dispatch(setLogin(false))
+window.location.reload()
+}
+console.log(isLogin, 'ini isLogin');
+
+useEffect(() => {
+  if (localStorage.access_token) {
+   dispatch(setLogin(true))
+  }
+}, [localStorage.access_token]);
   return (
     <CDropdown variant="nav-item">
       <CDropdownToggle placement="bottom-end" className="py-0" caret={false}>
@@ -32,67 +50,16 @@ const AppHeaderDropdown = () => {
       "https://assets.pikiran-rakyat.com/crop/0x0:0x0/x/photo/2020/11/12/2857352854.png"
          size="md" />
       </CDropdownToggle>
-      {/* <CDropdownMenu className="pt-0" placement="bottom-end">
+      <CDropdownMenu className="pt-0" placement="bottom-end">
         <CDropdownHeader className="bg-light fw-semibold py-2">Account</CDropdownHeader>
-        <CDropdownItem href="#">
-          <CIcon icon={cilBell} className="me-2" />
-          Updates
-          <CBadge color="info" className="ms-2">
-            42
-          </CBadge>
-        </CDropdownItem>
-        <CDropdownItem href="#">
-          <CIcon icon={cilEnvelopeOpen} className="me-2" />
-          Messages
-          <CBadge color="success" className="ms-2">
-            42
-          </CBadge>
-        </CDropdownItem>
-        <CDropdownItem href="#">
-          <CIcon icon={cilTask} className="me-2" />
-          Tasks
-          <CBadge color="danger" className="ms-2">
-            42
-          </CBadge>
-        </CDropdownItem>
-        <CDropdownItem href="#">
-          <CIcon icon={cilCommentSquare} className="me-2" />
-          Comments
-          <CBadge color="warning" className="ms-2">
-            42
-          </CBadge>
-        </CDropdownItem>
-        <CDropdownHeader className="bg-light fw-semibold py-2">Settings</CDropdownHeader>
-        <CDropdownItem href="#">
-          <CIcon icon={cilUser} className="me-2" />
-          Profile
-        </CDropdownItem>
-        <CDropdownItem href="#">
-          <CIcon icon={cilSettings} className="me-2" />
-          Settings
-        </CDropdownItem>
-        <CDropdownItem href="#">
-          <CIcon icon={cilCreditCard} className="me-2" />
-          Payments
-          <CBadge color="secondary" className="ms-2">
-            42
-          </CBadge>
-        </CDropdownItem>
-        <CDropdownItem href="#">
-          <CIcon icon={cilFile} className="me-2" />
-          Projects
-          <CBadge color="primary" className="ms-2">
-            42
-          </CBadge>
-        </CDropdownItem>
-        <CDropdownDivider />
-        <CDropdownItem href="#">
+          <CDropdownDivider />
+        <CDropdownItem  onClick={handleSubmit}  >
           <CIcon icon={cilLockLocked} className="me-2" />
-          Lock Account
+          Log Out
         </CDropdownItem>
-      </CDropdownMenu> */}
+      </CDropdownMenu>
     </CDropdown>
   )
 }
 
-export default AppHeaderDropdown
+// export default AppHeaderDropdown
