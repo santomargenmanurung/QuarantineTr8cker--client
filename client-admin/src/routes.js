@@ -19,7 +19,6 @@ const routes = [
   { path: '/user/editUser/:id', name: 'EditUser', component: EditUser},
   { path: '/addLocation', name: 'AddLocation', component: AddLocation, exact: true},
   { path: '/locations', name: 'Location', component: Locations},
-  
 ]
 
 export default routes
