@@ -1,10 +1,17 @@
-import { HISTORIES_FETCH, HISTORIES_DELETE, HISTORIES_LOADING } from "../actionType/HistoriesType";
+import { ISLOGIN,HISTORIES_FETCH, HISTORIES_DELETE, HISTORIES_LOADING } from "../actionType/HistoriesType";
 import { baseUrl } from "../helper/url";
 
 
 export function historiesLoading(payload) {
   return {
     type: HISTORIES_LOADING,
+    payload,
+  };
+}
+
+export function setLogin(payload) {
+  return {
+    type: ISLOGIN,
     payload,
   };
 }
@@ -20,7 +27,7 @@ export function succesFetchHistories(payload) {
 export function  fetchHistories() {
   return function (dispatch, getState) {
     // dispatch(historiesLoading(true));
-    fetch(`${baseUrl}/histories`, {
+    fetch(`${baseUrl}/histories?size=30`, {
       method: "get",
       headers: {
         "Content-Type": "application/json",

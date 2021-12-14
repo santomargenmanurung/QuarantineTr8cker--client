@@ -8,13 +8,11 @@ import { useEffect } from "react";
 export default function LogHistory() {
     const { histories, isLoading } = useSelector((state) => state.historiesReducer);
     const dispatch = useDispatch();
-  
     useEffect(() => {
       dispatch(fetchHistories());
     }, []);
-
     function date(input){
-        return (`${new Date(input).toLocaleDateString('id-ID')}, @${input.split('T')[1].slice(0,8)}`)
+        return (`${input.toLocaleString('id-ID').split('T')[0]}, @${input.split('T')[1].slice(0,8)}`)
     }
     return (
         <div>

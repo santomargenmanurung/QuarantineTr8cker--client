@@ -1,4 +1,4 @@
-import { HISTORIES_LOADING,HISTORIES_FETCH } from "../actionType/HistoriesType";
+import { ISLOGIN,HISTORIES_LOADING,HISTORIES_FETCH } from "../actionType/HistoriesType";
 
 const initialState = {
   histories: [],
@@ -11,6 +11,11 @@ export default function historiesReducer(state = initialState, action) {
       return {
         ...state,
         histories: action.payload,
+      };
+       case ISLOGIN:
+      return {
+        ...state,
+       isLogin: action.payload,
       };
     default:
       return state;
