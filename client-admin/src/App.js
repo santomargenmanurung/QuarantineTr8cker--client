@@ -18,7 +18,6 @@ function App() {
   const FormInput = React.lazy(() => import('./views/addForm'))
   return (
     <React.Suspense fallback={loading}>
-      {/* <DefaultLayout/> */}
       <Routes>
         <Route path="/login" name="Login Page" element={<LoginPage />} />
         <Route path="/*" name="Home" element=
