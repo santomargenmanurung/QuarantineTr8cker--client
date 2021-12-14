@@ -30,6 +30,7 @@ import {
 } from "../../assets/addQuarantine";
 const axios = require("axios");
 const { baseUrl } = require("../../assets/baseUrl");
+import { Picker } from "@react-native-picker/picker";
 
 export default function AddQuarantine({ navigation }) {
   // const navigation = useNavigation();
@@ -42,9 +43,6 @@ export default function AddQuarantine({ navigation }) {
 
   const kananX = useSharedValue(1);
   const kananY = useSharedValue(-19.5);
-
-  const kiriX = useSharedValue(-3);
-  const kiriY = useSharedValue(-47);
 
   useEffect(() => {
     const unsubscribe = navigation.addListener("focus", async () => {
@@ -86,18 +84,6 @@ export default function AddQuarantine({ navigation }) {
     return unsubscribe;
   }, [navigation]);
 
-  const logoutAction = async () => {
-    try {
-      console.log("EXIT");
-      await AsyncStorage.removeItem("access_token");
-      dispatch(setToken("")); //*************** */
-
-      navigation.navigate("Login");
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
   async function addQuarantineButton() {
     try {
       // console.log("MASUK SINII0", origin, arrival);
@@ -117,7 +103,6 @@ export default function AddQuarantine({ navigation }) {
       if (error.message == "Request failed with status code 400") {
         setErrorLogin(true);
       } else {
-        console.log("MASUK ERROR");
         setErrorLogin(false);
         navigation.navigate("MyTrips");
         console.log(error.message, "INI ERROR");
@@ -138,8 +123,6 @@ export default function AddQuarantine({ navigation }) {
       transform: [
         { translateX: withSpring(-1 * 100) },
         { translateY: withSpring(1 * 100) },
-        // { translateX: withSpring(kiriX.value * 50) },
-        // { translateY: withSpring(kiriY.value * 50) },
       ],
     };
   });
@@ -223,6 +206,7 @@ export default function AddQuarantine({ navigation }) {
             placeholder="Origin"
             keyboardType="default"
           />
+
           <TextInput
             style={{
               left: 70,
