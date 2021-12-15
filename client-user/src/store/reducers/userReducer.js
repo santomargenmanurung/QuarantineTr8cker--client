@@ -5,10 +5,8 @@ const initializeState = {
 };
 
 export default function userReducer(state = initializeState, action) {
-  console.log(action, "INI ADLAH ACTIONYA");
   switch (action.type) {
     case "user/set":
-      console.log(action.payload, "INI DI USER REDUCER");
       return {
         ...state,
         access_token: action.payload,
