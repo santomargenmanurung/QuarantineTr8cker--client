@@ -30,7 +30,7 @@ import {
 } from "../../assets/addQuarantine";
 const axios = require("axios");
 const { baseUrl } = require("../../assets/baseUrl");
-import LottieView from "lottie-react-native";
+import { Picker } from "@react-native-picker/picker";
 
 export default function AddQuarantine({ navigation }) {
   // const navigation = useNavigation();
@@ -130,21 +130,7 @@ export default function AddQuarantine({ navigation }) {
   if (loading) {
     return (
       <>
-        <View
-          flex={1}
-          bg={{
-            linearGradient: {
-              colors: ["#0e3599", "#02023A"],
-              start: [0, 0],
-            },
-          }}
-        >
-          <LottieView
-            source={require("../../assets/loading_heartbeat.json")}
-            autoPlay
-            loop
-          />
-        </View>
+        <Text>Loading</Text>
       </>
     );
   }
