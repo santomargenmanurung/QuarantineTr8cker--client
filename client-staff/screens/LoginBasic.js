@@ -22,13 +22,16 @@ import { setToken } from "../store/actions";
 import { Alert } from "react-native";
 import Svg, { SvgXml, SvgUri } from "react-native-svg";
 import { logo, backgroundSvg, logoBase64 } from "../assets/loginAssets";
+import LottieView from "lottie-react-native";
 const imgLogo = require('../assets/crop.png');
 
 export default function LoginBasic({ navigation }) {
   const dispatch = useDispatch();
   let state = useSelector((state) => state);
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleLogin = async (email, password) => {
+    setIsLoading(true);
     try {
       const response = await axios(`${baseUrl}/login`, {
         method: "POST",
@@ -43,14 +46,15 @@ export default function LoginBasic({ navigation }) {
       await AsyncStorage.setItem("role", response.data.role);
       const value = await AsyncStorage.getItem("access_token");
       console.log(value, "ini value");
+      setIsLoading(false);
       if (value){
         console.log('masuk ke login')
         dispatch(setToken(response.data.access_token));
         navigation.navigate("HomeScreen");
       } 
     } catch (error) {
-      Alert.alert(`Error`,`${error.response.data.message}`);
-      
+      setIsLoading(false);
+      Alert.alert(`Error`,`${error.response.data.message}`);   
     }
   };
   const formik = useFormik({
@@ -65,6 +69,26 @@ export default function LoginBasic({ navigation }) {
       handleLogin(values.email, values.password);
     },
   });
+
+  if (isLoading) {
+    return (
+      <Center
+        flex={1}
+        bg={{
+          linearGradient: {
+            colors: ["#0e3599", "#02023A"],
+            start: [0, 0],
+          },
+        }}
+      >
+        <LottieView
+          source={require("../assets/loading_heartbeat.json")}
+          autoPlay
+          loop
+        />
+      </Center>
+    );
+  }
 
   return (
     <Box

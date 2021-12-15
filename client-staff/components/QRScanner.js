@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Text, View, StyleSheet, Button, Modal, Pressable } from "react-native";
+import { Text, View, StyleSheet, Button, Modal, Pressable, Alert } from "react-native";
 import { Box, Center, Factory } from "native-base";
 import { BarCodeScanner } from "expo-barcode-scanner";
 import { Camera } from "expo-camera";
@@ -17,10 +17,14 @@ export default function QRScanner({ navigation }) {
   const isFocused = useIsFocused();
 
   const handleBarCodeScanned = ({ type, data }) => {
-    console.log(data);
-    setModalVisible(true);
-    setScanned(true);
-    setScannedData(data);
+    try {
+      setModalVisible(true);
+      setScanned(true);
+      setScannedData(data);
+      setUserData(JSON.parse(scannedData))
+    } catch (error) {
+      Alert.alert("Error", "QR Code tidak valid");
+    }
   };
 
   const handleCloseModal = () => {
@@ -29,25 +33,30 @@ export default function QRScanner({ navigation }) {
   };
 
   const handleProceedScan = () => {
-    setScanned(false);
-
-    console.log(scannedData)
-    setUserData(JSON.parse(scannedData))
-
-    if (
-      userData.status === "ArrivalProcedure" ||
-      userData.status === "Interviewed" ||
-      userData.status === "Exit Terminal" ||
-      userData.status === "On route" ||
-      userData.status === "Quarantine" ||
-      userData.status === "1st Swab" ||
-      userData.status === "2nd Swab"
-    ) {
-      navigation.navigate("OfficerForm", { userData });
-    } else if (userData.status === "Interview") {
-      navigation.navigate("InterviewForm", { userData });
-    } else if (userData.status === "Briefing") {
-      navigation.navigate("BriefingForm", { userData });
+    try {
+      setScanned(false);
+      console.log(scannedData)
+      setUserData(JSON.parse(scannedData))
+      if (
+        userData.status === "ArrivalProcedure" ||
+        userData.status === "Interviewed" ||
+        userData.status === "Exit Terminal" ||
+        userData.status === "On route" ||
+        userData.status === "Quarantine" ||
+        userData.status === "1st Swab" ||
+        userData.status === "2nd Swab"
+      ) {
+        navigation.navigate("OfficerForm", { userData });
+      } else if (userData.status === "Interview") {
+        navigation.navigate("InterviewForm", { userData });
+      } else if (userData.status === "Briefing") {
+        navigation.navigate("BriefingForm", { userData });
+      } else {
+        Alert.alert("Error", "Status tidak diketahui");
+      }
+    } catch (error) {
+      Alert.alert("Error", "QR Code tidak valid");
+      console.log(error)
     }
   };
 
@@ -82,7 +91,7 @@ export default function QRScanner({ navigation }) {
         <View style={styles.centeredView}>
           <View style={styles.modalView}>
             <Text style={styles.modalText}>
-              is this Data true? {scannedData}
+              Scan berhasil, lanjut ke tahap berikutnya?
             </Text>
             <Pressable
               style={[styles.button, styles.buttonOpen]}
