@@ -334,7 +334,7 @@ export default function Detail({ route }) {
           // height: 600,
         }}
       >
-        <QRCode value={JSON.stringify(quarStatus)} logo={baseLogo} />
+        <QRCode value={JSON.stringify(quarStatus)} logo={baseLogo} ecl="L" />
       </View>
     </ScrollView>
   );
