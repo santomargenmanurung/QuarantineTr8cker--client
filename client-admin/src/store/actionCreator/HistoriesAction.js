@@ -24,11 +24,11 @@ export function succesFetchHistories(payload) {
 }
 
 
-export function  fetchHistories(payload) {
+export function fetchHistories(payload) {
   return function (dispatch, getState) {
     dispatch(historiesLoading(true));
-    console.log(payload,'cek payload');
-    fetch(`${baseUrl}/histories?email=${payload?payload.email:""}&size=30&page=${payload?payload.page:''}`, {
+    console.log(payload?.page);
+    fetch(`${baseUrl}/histories?email=${payload?.email?payload.email:""}&size=10&page=${payload?.page?payload.page:0}`, {
       method: "get",
       headers: {
         "Content-Type": "application/json",

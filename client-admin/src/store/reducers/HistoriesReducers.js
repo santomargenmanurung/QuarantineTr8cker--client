@@ -4,7 +4,7 @@ const initialState = {
   histories: [],
   isLogin: false,
   isLoading: true,
-
+  page: 1
 };
 
 export default function historiesReducer(state = initialState, action) {
