@@ -11,6 +11,8 @@ import {
   RefreshControl,
   Dimensions,
 } from "react-native";
+import { SafeAreaView, FlatList, TouchableOpacity } from "react-native";
+import { Center } from "native-base";
 import { SvgXml } from "react-native-svg";
 const { baseUrl } = require("../../assets/baseUrl");
 import { useState } from "react";
@@ -18,7 +20,6 @@ import { useNavigation } from "@react-navigation/native";
 import {
   barButtom,
   logout,
-  cardCustom,
   backgroundSvg,
   triplist,
   addtrips,
@@ -28,6 +29,7 @@ import {
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import QRCode from "react-native-qrcode-svg";
 import { setToken } from "../store/actionCreator/itemAction";
+import LottieView from "lottie-react-native";
 
 export default function Detail({ route }) {
   const navigation = useNavigation();
@@ -88,17 +90,13 @@ export default function Detail({ route }) {
         access_token: value,
       },
     });
-    // console.log(getId, "myquar");
     setQuarStatus(resp.data);
-    // console.log(quarStatus, "quarStatus");
     if (quarStatus) setIsloading(false);
-    console.log("SINIIII");
     setRefreshing(false);
   }, []);
 
   const logoutAction = async () => {
     try {
-      console.log("EXIT");
       await AsyncStorage.removeItem("access_token");
       dispatch(setToken("")); //*************** */
 
@@ -111,12 +109,25 @@ export default function Detail({ route }) {
   if (isLoading)
     return (
       <>
-        <Text>LOADING SOB</Text>
+        <View
+          flex={1}
+          bg={{
+            linearGradient: {
+              colors: ["#0e3599", "#02023A"],
+              start: [0, 0],
+            },
+          }}
+        >
+          <LottieView
+            source={require("../../assets/loading_heartbeat.json")}
+            autoPlay
+            loop
+          />
+        </View>
       </>
     );
 
   return (
-    // <>
     <ScrollView
       style={{ flex: 1 }}
       refreshControl={
@@ -127,7 +138,6 @@ export default function Detail({ route }) {
         <SvgXml
           style={{
             position: "absolute",
-            // zIndex: 0,
             left: -1,
             top: -2,
           }}
@@ -138,7 +148,6 @@ export default function Detail({ route }) {
         <SvgXml
           style={{
             position: "absolute",
-            // zIndex: 999,
             left: -50,
             top: 410,
           }}
@@ -186,7 +195,7 @@ export default function Detail({ route }) {
           style={{
             position: "absolute",
             zIndex: 40,
-            left: 0,
+            left: 5,
             top: 0,
           }}
           width="100%"
@@ -217,7 +226,8 @@ export default function Detail({ route }) {
             width: windowWidth,
             flex: 1,
             top: 300,
-            left: 100,
+            // left: 100,
+            textAlign: "center",
             fontSize: 25,
           }}
         >
@@ -237,6 +247,7 @@ export default function Detail({ route }) {
         >
           {myQuarantine?.tripDestination}
         </Text>
+
         <Text
           style={{
             fontFamily: "Helvetica",
@@ -244,6 +255,7 @@ export default function Detail({ route }) {
             color: "#092475",
             fontWeight: "bold",
             justifyContent: "center",
+            // backgroundColor: "red",
             zIndex: 50,
             left: 40,
             top: 440,
@@ -254,6 +266,7 @@ export default function Detail({ route }) {
         <Text
           style={{
             fontFamily: "Helvetica",
+            // backgroundColor: "red",
             position: "absolute",
             color: "#092475",
             fontWeight: "bold",
@@ -268,58 +281,62 @@ export default function Detail({ route }) {
           style={{
             fontFamily: "Helvetica",
             position: "absolute",
+            // backgroundColor: "red",
+            textAlign: "center",
             color: "#092475",
             fontWeight: "bold",
             zIndex: 50,
-            left: 110,
+            width: windowWidth,
+            // flex: 1,
+            // left: 110,
             top: 440,
           }}
         >
           {myQuarantine?.QuarantineLocation?.name}
         </Text>
-        <Text
-          style={{
-            fontFamily: "Helvetica",
-            position: "absolute",
-            color: "#092475",
-            fontWeight: "bold",
-            zIndex: 50,
-            left: 25,
-            fontSize: 10,
-            top: 530,
-          }}
-        >
-          {new Date(myQuarantine?.createdAt).toDateString()}
-        </Text>
-        <Text
-          style={{
-            fontFamily: "Helvetica",
-            position: "absolute",
-            color: "#092475",
-            fontWeight: "bold",
-            zIndex: 50,
-            left: 150,
-            fontSize: 10,
-            top: 530,
-          }}
-        >
-          {myQuarantine.quarantineUntil
-            ? new Date(myQuarantine?.quarantineUntil).toDateString()
-            : null}
-        </Text>
-        <Text
-          style={{
-            position: "absolute",
-            zIndex: 50,
-            left: 150,
-            top: 660,
-          }}
-        >
-          <QRCode value={JSON.stringify(quarStatus)} logo={baseLogo} />
-        </Text>
+      </View>
+      <Text
+        style={{
+          fontFamily: "Helvetica",
+          position: "absolute",
+          color: "#092475",
+          fontWeight: "bold",
+          zIndex: 50,
+          left: 30,
+          fontSize: 10,
+          top: 530,
+        }}
+      >
+        {new Date(myQuarantine?.createdAt).toDateString()}
+      </Text>
+      <Text
+        style={{
+          fontFamily: "Helvetica",
+          position: "absolute",
+          color: "#092475",
+          fontWeight: "bold",
+          zIndex: 50,
+          left: 155,
+          fontSize: 10,
+          top: 530,
+        }}
+      >
+        {myQuarantine.quarantineUntil
+          ? new Date(myQuarantine?.quarantineUntil).toDateString()
+          : null}
+      </Text>
+      <View
+        style={{
+          position: "absolute",
+          zIndex: 50,
+          left: 160,
+          top: 660,
+          // height: 600,
+        }}
+      >
+        <QRCode value={JSON.stringify(quarStatus)} logo={baseLogo} />
       </View>
     </ScrollView>
-    // </>
   );
 }
 

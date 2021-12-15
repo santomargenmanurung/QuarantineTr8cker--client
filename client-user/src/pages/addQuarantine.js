@@ -31,6 +31,7 @@ import {
 const axios = require("axios");
 const { baseUrl } = require("../../assets/baseUrl");
 import { Picker } from "@react-native-picker/picker";
+import LottieView from "lottie-react-native";
 
 export default function AddQuarantine({ navigation }) {
   // const navigation = useNavigation();
@@ -40,7 +41,7 @@ export default function AddQuarantine({ navigation }) {
   const [newQuarantine, setNewQuarantine] = useState(false);
   const [loading, setLoading] = useState(false);
   const [errorLogin, setErrorLogin] = useState(false);
-
+  const [isLoading, setIsloading] = useState(true);
   const kananX = useSharedValue(1);
   const kananY = useSharedValue(-19.5);
 
@@ -58,7 +59,7 @@ export default function AddQuarantine({ navigation }) {
         if (!resp.data[resp.data.length - 1].isQuarantined) {
           setNewQuarantine(true);
         }
-        // console.log("MASUK SINI");
+        console.log("MASUK SINI");
         setLoading(false);
       } catch (error) {
         setNewQuarantine(false);
@@ -130,11 +131,24 @@ export default function AddQuarantine({ navigation }) {
   if (loading) {
     return (
       <>
-        <Text>Loading</Text>
+        <View
+          flex={1}
+          bg={{
+            linearGradient: {
+              colors: ["#0e3599", "#02023A"],
+              start: [0, 0],
+            },
+          }}
+        >
+          <LottieView
+            source={require("../../assets/loading_heartbeat.json")}
+            autoPlay
+            loop
+          />
+        </View>
       </>
     );
   }
-
   return (
     <>
       <SvgXml

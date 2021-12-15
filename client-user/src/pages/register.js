@@ -73,7 +73,12 @@ export default function Detail() {
       },
     })
       .then((data) => {
-        if (data.status == 201) navigation.navigate("Login");
+        if (data.status == 201) {
+          offset.value = 0;
+          setTimeout(() => {
+            navigation.navigate("Login");
+          }, 500);
+        }
       })
       .catch((error) => {
         console.log(error.message);

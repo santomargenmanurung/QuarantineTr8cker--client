@@ -2,7 +2,14 @@ import { StatusBar } from "expo-status-bar";
 import React, { useEffect, useCallback, useRef } from "react";
 import { TextInput } from "react-native-paper";
 import { useState } from "react";
-import { StyleSheet, SafeAreaView, View, Text, FlatList } from "react-native";
+import {
+  StyleSheet,
+  SafeAreaView,
+  View,
+  Text,
+  FlatList,
+  TouchableOpacity,
+} from "react-native";
 import { SvgXml } from "react-native-svg";
 const axios = require("axios");
 import { useNavigation } from "@react-navigation/native";
