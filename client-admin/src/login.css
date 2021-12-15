@@ -12,11 +12,10 @@ body {
   .h2Cms {
     position: absolute;
     top: 30%;
-    left: 56%;
+    left: 52%;
     width: 400px;
     color: #fff;
-    font-family: "robotic", sans-serif;
-
+    font-family: "robotic"
    }
 
   .login {

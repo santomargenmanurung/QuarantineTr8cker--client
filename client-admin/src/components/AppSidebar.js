@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from 'react-redux'
 
 import { CSidebar, CSidebarBrand, CSidebarNav, CSidebarToggler,CImage } from '@coreui/react'
 import CIcon from '@coreui/icons-react'
-import logo from '../assets/8quarantine.jpeg'
+import logo from '../assets/8quarantine.png'
 
 import { AppSidebarNav } from './AppSidebarNav'
 
@@ -28,10 +28,11 @@ const AppSidebar = () => {
         console.log(visible,'ini visibel');
         dispatch({ type: 'set', sidebarShow: visible })
       }}
+      style={{backgroundColor:'	#010048'}}
     >
       <CSidebarBrand className="" to="/">
         {/* <img src="../assets/8quarantine.jpeg"/> */}
-      <CImage rounded thumbnail src={logo} width={200} height={100} />
+      <CImage src={logo} width={200} height={200} />
       </CSidebarBrand>
       <CSidebarNav>
       {/* <SimpleBar> */}

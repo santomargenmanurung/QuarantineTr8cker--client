@@ -13,8 +13,8 @@ import {
 } from '@coreui/react'
 import CIcon from '@coreui/icons-react'
 import { cilBell, cilEnvelopeOpen, cilList, cilMenu } from '@coreui/icons'
-
 import { AppHeaderDropdown } from './header/index'
+import logo from '../assets/Logo.png'
 
 const AppHeader = () => {
   const dispatch = useDispatch()
@@ -32,6 +32,11 @@ const AppHeader = () => {
         <CHeaderBrand className="mx-auto d-md-none" to="/">
           <CIcon height={48} alt="Logo" />
         </CHeaderBrand>
+        <img
+          style={{height:100, marginTop:5}}
+          src={logo}
+          alt="logo"
+        /> {/**tambahan */}
         {/* <CHeaderNav className="d-none d-md-flex me-auto">
           <CNavItem>
             <CNavLink to="/dashboard" component={NavLink} activeClassName="active">
@@ -66,12 +71,7 @@ const AppHeader = () => {
           <AppHeaderDropdown />
         </CHeaderNav>
       </CContainer>
-      <CHeaderDivider />
-      <CContainer fluid>
-        <h1>
-        Quarantine Tr8cker CMS Page
-        </h1>
-      </CContainer>
+      {/* <CHeaderDivider /> */}
     </CHeader>
   )
 }

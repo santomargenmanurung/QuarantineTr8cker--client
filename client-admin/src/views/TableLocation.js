@@ -6,6 +6,8 @@ import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { fetchLocations } from "../store/actionCreator/LocationsAction";
 import ContentLoading from "../components/Loading";
+import logo from '../assets/loading-buffering.gif'
+
 
 export default function Locations() {
     const [inputs, setInputs] = useState({});
@@ -36,27 +38,29 @@ export default function Locations() {
     return (
         <div>
             <div>
+        <h1 style={{marginBottom:20, fontFamily:'monospace'}}>Location Table</h1>
             <CButton onClick={()=>{
                 navigate("/addLocation")
-            }} color="secondary">Add New Location</CButton>
+            }} className="btn btn-primary" style={{height:50}}>New Location</CButton>
             </div>
+            <br/>
             <div>
-                <CTable striped>
+                <CTable style={{backgroundColor:'white', borderRadius:10}}>
                     <CTableHead>
-                        <CTableRow>
-                            <CTableHeaderCell scope="col">No</CTableHeaderCell>
+                        <CTableRow style={{height:70}}>
+                            <CTableHeaderCell style={{textAlign:'center'}}  scope="col">No</CTableHeaderCell>
                             <CTableHeaderCell scope="col">Name Location</CTableHeaderCell>
                             <CTableHeaderCell scope="col">Address</CTableHeaderCell>
                             <CTableHeaderCell scope="col">Type</CTableHeaderCell>
                     
                         </CTableRow>
                     </CTableHead>
+                    { isLoading? <img src={logo} style={{marginLeft:'80%'}}/>:
                     <CTableBody>
-                        {isLoading?<ContentLoading/>:
-                            locations.map((location,i)=>{
+                            {locations.map((location,i)=>{
                                 return(
                                     <CTableRow key={location.id}>
-                                    <CTableHeaderCell scope="row">{i+1}</CTableHeaderCell>
+                                    <CTableHeaderCell style={{textAlign:'center'}}  scope="row">{i+1}</CTableHeaderCell>
                                     <CTableDataCell>{location.name}</CTableDataCell>
                                     <CTableDataCell>{location.address}</CTableDataCell>
                                     <CTableDataCell>{location.type}</CTableDataCell>
@@ -65,6 +69,7 @@ export default function Locations() {
                             })
                         }
                     </CTableBody>
+                    }
                 </CTable>
             </div>
         </div>

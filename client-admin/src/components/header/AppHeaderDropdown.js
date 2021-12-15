@@ -25,7 +25,8 @@ import { useState,useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
 import { setLogin } from '../../store/actionCreator/HistoriesAction'
-// import avatar8 from './../../assets/images/avatars/8.jpg'
+// import profil from './../../assets/images/avatars/8.jpg'
+import profil from './../../assets/profil.png'
 
 export default function AppHeaderDropdown ()  {
   const navigate = useNavigate()
@@ -46,12 +47,17 @@ useEffect(() => {
   return (
     <CDropdown variant="nav-item">
       <CDropdownToggle placement="bottom-end" className="py-0" caret={false}>
-        <CAvatar  color="primary" textColor="white">Adm</CAvatar>
+        {/* <CAvatar color="primary" textColor="white" >adm</CAvatar> */}
+        <img
+          style={{height:60, marginTop:5}}
+          src={profil}
+          alt="logo"
+        />
       </CDropdownToggle>
       <CDropdownMenu className="pt-0" placement="bottom-end">
         <CDropdownHeader className="bg-light fw-semibold py-2">Account</CDropdownHeader>
           <CDropdownDivider />
-        <CDropdownItem  onClick={handleSubmit}  >
+        <CDropdownItem  style={{cursor: 'pointer'}} onClick={handleSubmit}  >
           <CIcon icon={cilLockLocked} className="me-2" />
           Log Out
         </CDropdownItem>
