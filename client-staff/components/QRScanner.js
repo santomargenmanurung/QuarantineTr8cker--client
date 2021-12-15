@@ -17,10 +17,14 @@ export default function QRScanner({ navigation }) {
   const isFocused = useIsFocused();
 
   const handleBarCodeScanned = ({ type, data }) => {
-    console.log(data);
-    setModalVisible(true);
-    setScanned(true);
-    setScannedData(data);
+    try {
+      setModalVisible(true);
+      setScanned(true);
+      setScannedData(data);
+      setUserData(JSON.parse(scannedData))
+    } catch (error) {
+      Alert.alert("Error", "QR Code tidak valid");
+    }
   };
 
   const handleCloseModal = () => {
@@ -47,6 +51,8 @@ export default function QRScanner({ navigation }) {
         navigation.navigate("InterviewForm", { userData });
       } else if (userData.status === "Briefing") {
         navigation.navigate("BriefingForm", { userData });
+      } else {
+        Alert.alert("Error", "Status tidak diketahui");
       }
     } catch (error) {
       Alert.alert("Error", "QR Code tidak valid");
