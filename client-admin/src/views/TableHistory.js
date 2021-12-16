@@ -22,7 +22,7 @@ export default function LogHistory() {
   const [page, setPage] = useState(0);
   const [limit, setLimit] = useState(1);
   const [isSubmit, setIsubmit] = useState(false);
-  const { histories, isLoading } = useSelector(
+  const { histories, isLoading, totalItems } = useSelector(
     (state) => state.historiesReducer
   );
   const dispatch = useDispatch();
@@ -88,24 +88,42 @@ export default function LogHistory() {
         </h1>
         <form onSubmit={handleSubmit}>
           <input
-            style={{ width: 300, height: 35, borderRadius: 5, padding:10 }}
+            style={{ width: 300, height: 35, borderRadius: 5, padding: 10 }}
             placeholder="search by email"
             type="text"
             name="email"
             value={inputs.email || ""}
             onChange={handleChange}
           />
+          <input
+            style={{ width: 300, height: 35, borderRadius: 5, padding:10, marginLeft:10 }}
+            placeholder="search by email Staff"
+            type="text"
+            name="emailUpdater"
+            value={inputs.emailUpdater || ""}
+            onChange={handleChange}
+          />
           <button
+            type="submit"
+            style={{ marginLeft: 10, fontSize:14, marginBottom:5}}
+            className="btn btn-primary"
+          >
+            Submit
+          </button>
+          {/* <button
             type="submit"
             style={{ marginLeft: 5 }}
             className="btn btn-primary"
           >
             Submit
-          </button>
+          </button> */}
         </form>
       </div>
       <div>
         <div>
+        {isLoading ? (
+              <img src={logo} style={{ marginLeft: '40%', marginTop:'10%' }} />
+            ) : (
           <CTable
             style={{
               backgroundColor: "white",
@@ -114,26 +132,23 @@ export default function LogHistory() {
             }}
           >
             <CTableHead>
-              <CTableRow style={{ height: 70 }}>
+              <CTableRow style={{ height: 70, verticalAlign:'middle' }}>
                 <CTableHeaderCell
                   scope="col"
-                  style={{ textAlign: "center", width: 100 }}
+                  style={{ textAlign: "center", width: 100, fontSize:'1.3em'}}
                 >
                   No
                 </CTableHeaderCell>
-                <CTableHeaderCell scope="col">User</CTableHeaderCell>
-                <CTableHeaderCell scope="col">UpdatedBy</CTableHeaderCell>
-                <CTableHeaderCell scope="col" style={{ width: 640 }}>
+                <CTableHeaderCell scope="col" style={{fontSize:'1.3em'}}>User</CTableHeaderCell>
+                <CTableHeaderCell scope="col" style={{fontSize:'1.3em'}}>UpdatedBy</CTableHeaderCell>
+                <CTableHeaderCell scope="col" style={{ width: 640, fontSize:'1.3em' }}>
                   Description
                 </CTableHeaderCell>
-                <CTableHeaderCell scope="col" style={{ width: 160 }}>
+                <CTableHeaderCell scope="col" style={{ width: 190, fontSize:'1.3em' }}>
                   Updated On
                 </CTableHeaderCell>
               </CTableRow>
             </CTableHead>
-            {isLoading ? (
-              <img src={logo} style={{ marginLeft: 500 }} />
-            ) : (
               <CTableBody>
                 {histories.map((history, i) => {
                   return (
@@ -142,7 +157,7 @@ export default function LogHistory() {
                         style={{ textAlign: "center" }}
                         scope="row"
                       >
-                        {(i+1)}
+                        {i + (1 + page * 10)}
                       </CTableHeaderCell>
                       <CTableDataCell>
                         {history.updatedUser?.email}
@@ -153,27 +168,33 @@ export default function LogHistory() {
                     </CTableRow>
                   );
                 })}
+                <CTableRow style={{height:80, position:'relative', verticalAlign:'inline'}}>
+                  <CTableHeaderCell></CTableHeaderCell>
+                  <CTableDataCell></CTableDataCell>
+                  <CTableDataCell></CTableDataCell>
+                  <CTableDataCell style={{ fontFamily:'monospace', verticalAlign:'middle', fontSize:'1.1em'}}>Showing {(1 + page * 10)} to {(histories.length + page * 10)} from {totalItems} data</CTableDataCell>
+                  <CTableDataCell style={{verticalAlign:'middle' }}>
+                      <button
+                        onClick={handlePrev}
+                        type="button"
+                        style={{ marginLeft: 3, width:80}}
+                        className="btn btn-primary"
+                      >
+                        Prev
+                      </button>
+                      <button
+                        onClick={handleNext}
+                        type="button"
+                        style={{ marginLeft: 5, width:80 }}
+                        className="btn btn-primary"
+                      >
+                        Next
+                      </button>
+                  </CTableDataCell>
+                </CTableRow>
               </CTableBody>
-            )}
           </CTable>
-          <div style={{ marginLeft: "90%" }}>
-            <button
-              onClick={handlePrev}
-              type="button"
-              style={{ marginLeft: 5 }}
-              className="btn btn-primary"
-            >
-              Prev
-            </button>
-            <button
-              onClick={handleNext}
-              type="button"
-              style={{ marginLeft: 5 }}
-              className="btn btn-primary"
-            >
-              Next
-            </button>
-          </div>
+            )}
         </div>
       </div>
     </>

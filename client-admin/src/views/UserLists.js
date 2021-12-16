@@ -54,7 +54,7 @@ export default function UserLists() {
         </h1>
         <form onSubmit={handleSubmit}>
           <input
-            style={{ width: 300, height: 35, borderRadius:5 }}
+            style={{ width: 300, height: 35, borderRadius:5, padding:10 }}
             placeholder="search by role"
             type="text"
             name="role"
@@ -63,7 +63,7 @@ export default function UserLists() {
           />
           <button
             type="submit"
-            style={{ marginLeft: 5 }}
+            style={{ marginLeft: 10, fontSize:14, marginBottom:5}}
             className="btn btn-primary"
           >
             Submit
@@ -71,16 +71,16 @@ export default function UserLists() {
         </form>
       </div>
       <div>
+      { isLoading? <img src={logo} style={{marginLeft: '40%', marginTop:'10%' }}/>: (
         <CTable style={{backgroundColor:'white', borderRadius:10, marginTop:20}}>
           <CTableHead>
-            <CTableRow style={{height:70}}>
-              <CTableHeaderCell style={{textAlign:'center'}} scope="col">No</CTableHeaderCell>
-              <CTableHeaderCell scope="col">User</CTableHeaderCell>
-              <CTableHeaderCell scope="col">Role</CTableHeaderCell>
-              <CTableHeaderCell scope="col">Actions</CTableHeaderCell>
+            <CTableRow style={{height:70, verticalAlign:'middle'}}>
+              <CTableHeaderCell style={{textAlign:'center', width: 100, fontSize:'1.3em'}} scope="col">No</CTableHeaderCell>
+              <CTableHeaderCell style={{fontSize:'1.3em'}} scope="col">User</CTableHeaderCell>
+              <CTableHeaderCell style={{fontSize:'1.3em'}}scope="col">Role</CTableHeaderCell>
+              <CTableHeaderCell style={{fontSize:'1.3em'}}scope="col">Actions</CTableHeaderCell>
             </CTableRow>
           </CTableHead>
-          { isLoading? <img src={logo} style={{marginLeft:'80%'}}/>:
           <CTableBody>
               {users.map((user, i) => {
                 if (user.role !== "User") {
@@ -106,8 +106,8 @@ export default function UserLists() {
               })
             }
           </CTableBody>
-          }
         </CTable>
+      )}
       </div>
     </div>
   );

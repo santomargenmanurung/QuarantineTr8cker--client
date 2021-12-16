@@ -144,7 +144,7 @@ export default function FormInput() {
         </div> */}
       <form onSubmit={handleSubmit} style={{ width: "40%" }}>
         <div className="row border" style={{ border: "1px", padding:20, backgroundColor:'white', borderRadius:10}}>
-          <h3 style={{color:'blue', marginTop:20, marginBottom:20}}>Add New Staff</h3>
+          <h3 style={{color:'blue', marginTop:20, marginBottom:20, fontFamily: 'serif', fontSize:'2.5em'}}>Add Staff</h3>
           <div className="form-group mb-3">
             <label className="form-label">Enter Fullname:</label>
             <br />

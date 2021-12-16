@@ -162,7 +162,7 @@ export default function UserEdit() {
             borderRadius: 10,
           }}
         >
-          <h3 style={{ color: "blue", marginTop: 20, marginBottom: 20 }}>
+          <h3 style={{ color: "blue", marginTop: 20, marginBottom: 20, fontFamily: 'serif', fontSize:'2.5em' }}>
             Edit Staff
           </h3>
           <div className="form-group mb-3">

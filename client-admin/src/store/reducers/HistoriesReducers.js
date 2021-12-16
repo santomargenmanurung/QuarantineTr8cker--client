@@ -4,7 +4,7 @@ const initialState = {
   histories: [],
   isLogin: false,
   isLoading: true,
-  page: 1
+  totalItems: 0
 };
 
 export default function historiesReducer(state = initialState, action) {
@@ -13,7 +13,8 @@ export default function historiesReducer(state = initialState, action) {
       return {
         ...state,
         isLoading: false,
-        histories: action.payload,
+        histories: action.payload.pageData,
+        totalItems: action.payload.totalItems
       };
        case ISLOGIN:
       return {
