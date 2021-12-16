@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router";
 import "../login.css";
-import logo from "../assets/8quarantine.jpeg";
+import logo from "../assets/LogoIn.png";
 import { useSelector, useDispatch } from "react-redux";
 import { setLogin } from "../store/actionCreator/HistoriesAction";
 import Swal from "sweetalert2";
@@ -65,15 +65,9 @@ export default function LoginPage() {
       });
   };
   return (
-    <div className="container">
-      <div>
-        <img src={logo} className="myFlexedImage"></img>
-      </div>
-      <div>
-        <h3 className="h2Cms">CMS LOGIN</h3>
-      </div>
-      <div>
+    <div className="">
         <form className="login" onSubmit={handleSubmit}>
+        <img style={{width:250, marginBottom:10}} src={logo} alt='logo'/>
           <input
             type="email"
             id="exampleInputEmail1"
@@ -93,7 +87,6 @@ export default function LoginPage() {
           <button>Login</button>
         </form>
       </div>
-    </div>
     // <div className="col-3" style={{justifyContent:"center", marginTop: "10vh",marginLeft: "40%"}}>
     //     <div className="card border-primary md-6 mb-3" style={{width: "25rem", height:"40vh"}}>
     //     <form onSubmit={handleSubmit}>

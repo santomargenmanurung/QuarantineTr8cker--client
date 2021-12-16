@@ -10,8 +10,6 @@ const AddLocation = React.lazy(() => import('./views/AddLocation'))
 const Locations = React.lazy(() => import('./views/TableLocation'))
 
 
-
-
 const routes = [
   { path: '/', name: 'Dashboard', component: LogHistory },
   { path: '/user/userLists', name: 'UserList', component: Userlists},
