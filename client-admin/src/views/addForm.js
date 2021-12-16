@@ -207,7 +207,7 @@ export default function FormInput() {
                 --chose one--
               </option>
               <option value="Admin">Admin</option>
-              <option value="OfficeAirport">Office Airport</option>
+              <option value="OfficerAirport">Officer Airport</option>
               <option value="DriverWisma">Driver Wisma</option>
               <option value="DriverHotel">Driver Hotel</option>
               <option value="OfficerHotel">Officer Hotel</option>
